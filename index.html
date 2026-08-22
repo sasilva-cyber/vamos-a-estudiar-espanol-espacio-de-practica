@@ -3,107 +3,122 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Quiz de espanhol por níveis — básico, intermediário e avançado — do projeto Vamos a Estudiar Español." />
+  <meta name="description" content="Vamos a Estudiar Español: quizzes por níveis e leituras em espanhol com atividades de compreensão." />
   <meta name="theme-color" content="#8f1d2c" />
-  <title>Vamos a Estudiar Español | Quiz por Níveis</title>
+  <title>Vamos a Estudiar Español | Quiz e Lecturas</title>
   <link rel="stylesheet" href="style.css?v=20260822-1051" />
+  <link rel="stylesheet" href="readings.css?v=20260822-1109" />
 </head>
 <body>
   <header class="site-header">
     <div class="header-inner">
-      <a class="brand" href="./" aria-label="Vamos a Estudiar Español — início">
+      <button class="brand" type="button" data-route="home" aria-label="Vamos a Estudiar Español — início">
         <span class="brand-mark" aria-hidden="true">Ñ</span>
         <span class="brand-copy">
           <strong>Vamos a Estudiar Español</strong>
           <small>¡Aprende, practica y avanza!</small>
         </span>
-      </a>
-      <span class="header-badge">Quiz interactivo</span>
+      </button>
+
+      <nav class="main-nav" aria-label="Navegação principal">
+        <button class="nav-link active" type="button" data-route="home">Inicio</button>
+        <button class="nav-link" type="button" data-route="quiz">Quiz</button>
+        <button class="nav-link" type="button" data-route="readings">Lecturas</button>
+      </nav>
     </div>
     <div class="heritage-stripe" aria-hidden="true"></div>
   </header>
 
   <main class="app" id="app">
-    <section class="level-screen" id="level-screen" aria-labelledby="level-title">
-      <div class="hero-copy">
-        <p class="eyebrow">Elige tu reto</p>
+    <section class="home-screen" id="home-screen" aria-labelledby="home-title">
+      <div class="home-hero">
+        <div class="home-copy">
+          <p class="eyebrow">Tu espacio de práctica</p>
+          <h1 id="home-title">Aprende español practicando de verdad.</h1>
+          <p class="hero-text">
+            Escolha seu nível, teste gramática e vocabulário ou entre na biblioteca de leituras para desenvolver compreensão escrita em espanhol.
+          </p>
+          <div class="hero-actions">
+            <button class="primary-button" type="button" data-route="quiz">Hacer un quiz</button>
+            <button class="secondary-button" type="button" data-route="readings">Explorar lecturas</button>
+          </div>
+        </div>
+
+        <aside class="hero-panel" aria-label="Recursos disponíveis">
+          <span class="hero-panel-kicker">Hoy puedes practicar</span>
+          <div class="hero-stat"><strong>3</strong><span>niveles de quiz</span></div>
+          <div class="hero-stat"><strong>30</strong><span>preguntas</span></div>
+          <div class="hero-stat"><strong>4</strong><span>lecturas guiadas</span></div>
+          <p>Todo em uma experiência responsiva, com feedback imediato e progresso salvo no navegador.</p>
+        </aside>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature-card">
+          <span class="feature-number">01</span>
+          <p class="eyebrow">Quiz por niveles</p>
+          <h2>Básico, intermediário e avançado</h2>
+          <p>Pratique estruturas de A1–A2, B1–B2 e C1–C2 com perguntas embaralhadas e explicações após cada resposta.</p>
+          <button class="text-cta" type="button" data-route="quiz">Elegir nivel →</button>
+        </article>
+
+        <article class="feature-card reading-feature">
+          <span class="feature-number">02</span>
+          <p class="eyebrow">Lecturas</p>
+          <h2>Leia histórias e teste sua compreensão</h2>
+          <p>Textos didáticos em espanhol, glossário de apoio, nível sugerido e atividades de compreensão ao final.</p>
+          <button class="text-cta" type="button" data-route="readings">Abrir biblioteca →</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="level-screen hidden" id="level-screen" aria-labelledby="level-title">
+      <div class="section-heading">
+        <p class="eyebrow">Quiz por niveles</p>
         <h1 id="level-title">¿Qué nivel quieres practicar hoy?</h1>
-        <p class="hero-text">
-          Escolha uma faixa de dificuldade e pratique vocabulário, gramática e uso da língua em um quiz com feedback imediato.
-        </p>
+        <p class="hero-text">Escolha uma faixa de dificuldade e pratique vocabulário, gramática e uso da língua com feedback imediato.</p>
       </div>
 
       <div class="level-grid" role="list" aria-label="Níveis de espanhol disponíveis">
         <button class="level-card basic" type="button" data-level="basic" role="listitem">
-          <span class="level-topline">
-            <span class="level-icon" aria-hidden="true">¡Hola!</span>
-            <span class="cefr-tag">A1–A2</span>
-          </span>
+          <span class="level-topline"><span class="level-icon">¡Hola!</span><span class="cefr-tag">A1–A2</span></span>
           <strong>Básico</strong>
-          <span>Vocabulário cotidiano, presente, estruturas essenciais e situações simples.</span>
+          <span>Vocabulário cotidiano, presente, ser/estar, preposições e estruturas essenciais.</span>
           <span class="level-cta">Empezar →</span>
         </button>
 
         <button class="level-card intermediate" type="button" data-level="intermediate" role="listitem">
-          <span class="level-topline">
-            <span class="level-icon" aria-hidden="true">¿Qué tal?</span>
-            <span class="cefr-tag">B1–B2</span>
-          </span>
+          <span class="level-topline"><span class="level-icon">¿Qué tal?</span><span class="cefr-tag">B1–B2</span></span>
           <strong>Intermediário</strong>
-          <span>Tempos verbais, conectores, pronomes e situações de comunicação mais complexas.</span>
+          <span>Tempos do passado, subjuntivo, condicional, pronomes, conectores e expressões.</span>
           <span class="level-cta">Continuar →</span>
         </button>
 
         <button class="level-card advanced" type="button" data-level="advanced" role="listitem">
-          <span class="level-topline">
-            <span class="level-icon" aria-hidden="true">¡A por ello!</span>
-            <span class="cefr-tag">C1–C2</span>
-          </span>
+          <span class="level-topline"><span class="level-icon">¡A por ello!</span><span class="cefr-tag">C1–C2</span></span>
           <strong>Avançado</strong>
-          <span>Subjuntivo, nuances normativas, expressões idiomáticas e usos sofisticados.</span>
+          <span>Subjuntivo avançado, regência, perífrases, conectores e léxico idiomático.</span>
           <span class="level-cta">Desafiarme →</span>
         </button>
       </div>
 
-      <aside class="note" aria-label="Observação sobre os níveis">
-        <span aria-hidden="true">✦</span>
-        <p>As faixas A1–C2 são usadas aqui como referência pedagógica de dificuldade. Este quiz não substitui um exame oficial de proficiência.</p>
-      </aside>
+      <aside class="note"><span aria-hidden="true">✦</span><p>As faixas A1–C2 são usadas como referência pedagógica de dificuldade. Este quiz não substitui um exame oficial de proficiência.</p></aside>
     </section>
 
     <section class="quiz-screen hidden" id="quiz-screen" aria-live="polite" aria-labelledby="question">
       <div class="quiz-toolbar">
         <button class="text-button" id="back-button" type="button">← Trocar nível</button>
-        <div class="quiz-status">
-          <span class="level-pill" id="level-pill">Básico · A1–A2</span>
-          <span id="score">0 pontos</span>
-        </div>
+        <div class="quiz-status"><span class="level-pill" id="level-pill">Básico · A1–A2</span><span id="score">0 pontos</span></div>
       </div>
-
-      <div class="progress-meta">
-        <span id="progress">Pergunta 1 de 10</span>
-        <span id="best-score">Melhor: —</span>
-      </div>
-      <div class="progress-track" aria-hidden="true">
-        <div class="progress-bar" id="progress-bar"></div>
-      </div>
+      <div class="progress-meta"><span id="progress">Pergunta 1 de 10</span><span id="best-score">Melhor: —</span></div>
+      <div class="progress-track" aria-hidden="true"><div class="progress-bar" id="progress-bar"></div></div>
 
       <article class="question-card">
-        <div class="question-meta">
-          <span class="category" id="category">Gramática</span>
-          <span class="question-number" id="question-number">01</span>
-        </div>
+        <div class="question-meta"><span class="category" id="category">Gramática</span><span class="question-number" id="question-number">01</span></div>
         <h2 id="question">Pergunta</h2>
         <div class="answers" id="answers" role="group" aria-label="Alternativas da pergunta"></div>
-
-        <div class="feedback hidden" id="feedback" role="status">
-          <strong id="feedback-title"></strong>
-          <p id="feedback-text"></p>
-        </div>
-
-        <div class="question-actions">
-          <button class="primary-button hidden" id="next-button" type="button">Próxima pergunta</button>
-        </div>
+        <div class="feedback hidden" id="feedback" role="status"><strong id="feedback-title"></strong><p id="feedback-text"></p></div>
+        <div class="question-actions"><button class="primary-button hidden" id="next-button" type="button">Próxima pergunta</button></div>
       </article>
     </section>
 
@@ -112,28 +127,81 @@
         <p class="eyebrow">Resultado</p>
         <span class="result-level" id="result-level">Intermediário · B1–B2</span>
         <h2 id="result-title">¡Quiz completado!</h2>
-        <div class="score-ring" aria-hidden="true">
-          <span id="final-score">0/10</span>
-        </div>
+        <div class="score-ring" aria-hidden="true"><span id="final-score">0/10</span></div>
         <p class="result-message" id="result-message"></p>
         <p class="result-detail" id="result-detail"></p>
-
         <div class="result-actions">
           <button class="primary-button" id="restart-button" type="button">Refazer este nível</button>
           <button class="secondary-button" id="choose-level-button" type="button">Escolher outro nível</button>
         </div>
       </div>
     </section>
+
+    <section class="readings-screen hidden" id="readings-screen" aria-labelledby="readings-title">
+      <div class="section-heading readings-heading">
+        <p class="eyebrow">Biblioteca de lecturas</p>
+        <h1 id="readings-title">Historias para leer en español</h1>
+        <p class="hero-text">Leia no seu ritmo, consulte o glossário e responda às perguntas de compreensão. Os textos são adaptações didáticas originais de contos tradicionais em domínio público.</p>
+      </div>
+
+      <div class="reading-toolbar" aria-label="Filtros de leitura">
+        <span>Filtrar por nível:</span>
+        <div class="filter-group" role="group" aria-label="Nível das leituras">
+          <button class="filter-button active" type="button" data-reading-filter="all">Todos</button>
+          <button class="filter-button" type="button" data-reading-filter="A1–A2">A1–A2</button>
+          <button class="filter-button" type="button" data-reading-filter="A2–B1">A2–B1</button>
+        </div>
+      </div>
+
+      <div class="reading-grid" id="reading-grid"></div>
+
+      <aside class="coming-soon">
+        <div>
+          <p class="eyebrow">Biblioteca em expansão</p>
+          <h2>Próximas leituras</h2>
+        </div>
+        <p><em>Pinocho</em>, <em>El gato con botas</em>, <em>Aladino y el Genio de la lámpara</em> e outras adaptações didáticas serão adicionadas gradualmente. Para <em>El Principito</em>, a proposta será trabalhar apenas com resumo didático original e atividades, sem reproduzir traduções comerciais.</p>
+      </aside>
+    </section>
+
+    <section class="reader-screen hidden" id="reader-screen" aria-labelledby="reader-title">
+      <button class="text-button reader-back" id="reader-back-button" type="button">← Voltar para Lecturas</button>
+      <div class="reader-layout">
+        <article class="story-paper">
+          <div class="story-meta" id="story-meta"></div>
+          <h1 id="reader-title"></h1>
+          <p class="story-intro" id="story-intro"></p>
+          <div class="story-body" id="story-body"></div>
+          <div class="story-finish">
+            <button class="primary-button" id="mark-read-button" type="button">Marcar como leída</button>
+            <span class="saved-note" id="saved-note" aria-live="polite"></span>
+          </div>
+        </article>
+
+        <aside class="reader-sidebar">
+          <section class="glossary-card">
+            <p class="eyebrow">Vocabulario</p>
+            <h2>Glossário</h2>
+            <dl class="glossary-list" id="glossary-list"></dl>
+          </section>
+
+          <section class="comprehension-card">
+            <p class="eyebrow">Comprensión</p>
+            <h2>¿Entendiste la historia?</h2>
+            <form id="comprehension-form"></form>
+            <button class="primary-button comprehension-submit" id="check-comprehension-button" type="button">Corregir respuestas</button>
+            <div class="comprehension-result hidden" id="comprehension-result" role="status"></div>
+          </section>
+        </aside>
+      </div>
+    </section>
   </main>
 
   <footer>
-    <p>
-      <strong>Vamos a Estudiar Español</strong> · Projeto de aprendizagem de espanhol
-      <span aria-hidden="true">•</span>
-      <a href="http://vamosaestudiarespanol.com.br/" target="_blank" rel="noreferrer">Visitar site principal</a>
-    </p>
+    <p><strong>Vamos a Estudiar Español</strong> · Projeto de aprendizagem de espanhol <span aria-hidden="true">•</span> <a href="http://vamosaestudiarespanol.com.br/" target="_blank" rel="noreferrer">Visitar site principal</a></p>
   </footer>
 
   <script src="script.js?v=20260822-1051"></script>
+  <script src="readings.js?v=20260822-1109"></script>
 </body>
 </html>
