@@ -118,6 +118,7 @@ h1, h2 {
   line-height: 1.08;
 }
 h1 { font-size: clamp(2rem, 4.2vw, 3.35rem); letter-spacing: -.025em; }
+#about-title { font-size: 25px; letter-spacing: -.01em; }
 h2 { font-size: clamp(1.7rem, 4vw, 2.45rem); }
 .about-lead {
   margin: 22px 0 0;
