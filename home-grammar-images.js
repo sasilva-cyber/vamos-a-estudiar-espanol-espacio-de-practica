@@ -102,12 +102,19 @@
   document.head.appendChild(script);
 })();
 
-/* Carrega a área Escritura en español. */
+/* Carrega a área Escritura en español e o pesquisador da biblioteca. */
 (function loadWritingArea() {
   if (document.getElementById("writing-area-loader")) return;
   const script = document.createElement("script");
   script.id = "writing-area-loader";
   script.src = "writing.js?v=20260822-1842";
+  script.onload = () => {
+    if (document.getElementById("writing-search-loader")) return;
+    const search = document.createElement("script");
+    search.id = "writing-search-loader";
+    search.src = "writing-search.js?v=20260822-1859";
+    document.head.appendChild(search);
+  };
   document.head.appendChild(script);
 })();
 
