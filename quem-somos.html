@@ -6,7 +6,7 @@
   <meta name="description" content="Conheça Samantha Bezerra e a história do projeto Vamos a Estudiar Español, criado para compartilhar estudos e tornar a aprendizagem da língua espanhola mais simples, didática e acolhedora." />
   <meta name="theme-color" content="#8f1d2c" />
   <title>Quem somos | Vamos a Estudiar Español</title>
-  <link rel="stylesheet" href="quem-somos.css?v=20260822-1946" />
+  <link rel="stylesheet" href="quem-somos.css?v=20260822-1949" />
 </head>
 <body>
   <header class="about-header">
@@ -40,7 +40,7 @@
       </article>
 
       <aside class="about-card" aria-label="Apresentação de Samantha Bezerra">
-        <img id="profile-photo" class="profile-photo" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="Samantha Bezerra, criadora do Vamos a Estudiar Español" width="480" height="640" />
+        <img id="profile-photo" class="profile-photo" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="Samantha Bezerra, criadora do Vamos a Estudiar Español" width="300" height="400" />
         <h2>Samantha Bezerra</h2>
         <p>Historiadora, pesquisadora, estudante de Letras e criadora do Vamos a Estudiar Español.</p>
 
@@ -95,10 +95,23 @@
   <script>
     (async function loadProfilePhoto() {
       try {
-        const urls = [1,2,3,4].map((part) => `assets/about/samantha-photo-${part}.b64?v=20260822-1946`);
-        const parts = await Promise.all(urls.map(async (url) => {
-          const response = await fetch(url);
-          if (!response.ok) throw new Error(`Falha ao carregar ${url}`);
+        const files = [
+          'profile300-01.b64',
+          'profile300-02.b64',
+          'profile300-03.b64',
+          'profile300-04.b64',
+          'profile300-05a.b64',
+          'profile300-05b.b64',
+          'profile300-06.b64',
+          'profile300-07.b64',
+          'profile300-08.b64',
+          'profile300-09.b64',
+          'profile300-10.b64',
+          'profile300-11.b64'
+        ];
+        const parts = await Promise.all(files.map(async (file) => {
+          const response = await fetch(`assets/about/${file}?v=20260822-1949`);
+          if (!response.ok) throw new Error(`Falha ao carregar ${file}`);
           return (await response.text()).trim();
         }));
         const photo = document.getElementById('profile-photo');
