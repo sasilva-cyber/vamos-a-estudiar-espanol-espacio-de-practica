@@ -30,6 +30,32 @@
     return true;
   }
 
+  function adjustHomeTitle() {
+    if (!document.getElementById("home-title-adjustment")) {
+      const style = document.createElement("style");
+      style.id = "home-title-adjustment";
+      style.textContent = `
+        #home-title {
+          max-width: 650px;
+          font-size: clamp(2rem, 4.4vw, 3.25rem);
+          line-height: 1.12;
+          letter-spacing: -0.02em;
+          text-align: justify;
+          text-justify: inter-word;
+          text-align-last: left;
+          hyphens: auto;
+        }
+        @media (max-width: 600px) {
+          #home-title {
+            max-width: 100%;
+            font-size: clamp(1.9rem, 9vw, 2.6rem);
+          }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  }
+
   function loadRouteQuery() {
     if (document.getElementById("route-query-loader")) return;
     const script = document.createElement("script");
@@ -60,6 +86,7 @@
   }
 
   function install() {
+    adjustHomeTitle();
     if (!installMenu()) {
       setTimeout(install, 200);
       return;
