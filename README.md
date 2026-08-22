@@ -1,6 +1,6 @@
-# Vamos a Estudiar Español — Quiz por Níveis
+# Vamos a Estudiar Español — Quiz e Lecturas
 
-Quiz interativo de espanhol desenvolvido como projeto complementar à iniciativa **Vamos a Estudiar Español**, voltada ao ensino e à aprendizagem da língua espanhola.
+Aplicação educacional desenvolvida como projeto complementar à iniciativa **Vamos a Estudiar Español**, voltada ao ensino e à aprendizagem da língua espanhola.
 
 ## Demonstração online
 
@@ -10,39 +10,57 @@ Quiz interativo de espanhol desenvolvido como projeto complementar à iniciativa
 
 ## Sobre o projeto
 
-A aplicação transforma conteúdos de espanhol em uma experiência de aprendizagem interativa. O usuário escolhe uma faixa de dificuldade, responde a perguntas de múltipla escolha, recebe feedback explicativo imediatamente e acompanha sua pontuação ao longo do quiz.
+A aplicação reúne duas experiências de aprendizagem em uma mesma interface:
 
-O projeto conecta ensino de línguas e desenvolvimento web em uma interface autoral inspirada em elementos visuais associados ao universo hispânico, com destaque para a letra **Ñ**, tipografia editorial e uma paleta em vermelho, dourado e tons quentes.
+- **Quiz por níveis**, com perguntas de gramática, vocabulário e uso da língua;
+- **Lecturas**, com histórias em espanhol, glossário e atividades de compreensão leitora.
 
-## Níveis disponíveis
+A identidade visual utiliza a letra **Ñ**, tipografia editorial e uma paleta em vermelho, dourado e tons quentes.
 
-- **Básico — A1–A2:** vocabulário cotidiano, presente, estruturas essenciais, ser/estar, preposições e situações simples;
-- **Intermediário — B1–B2:** tempos do passado, subjuntivo, condicional, conectores, pronomes, relativos e expressões idiomáticas;
-- **Avançado — C1–C2:** estruturas concessivas, subjuntivo avançado, regência normativa, perífrases verbais, conectores discursivos e léxico idiomático.
+## Quiz por níveis
 
-As faixas A1–C2 são utilizadas como **referência pedagógica de dificuldade**. O quiz não substitui um exame oficial de proficiência.
+- **Básico — A1–A2**
+- **Intermediário — B1–B2**
+- **Avançado — C1–C2**
+
+O banco atual possui 30 questões, com 10 perguntas por nível, embaralhamento das perguntas e alternativas, feedback explicativo, pontuação, indicador de progresso e registro local da melhor pontuação.
+
+As faixas A1–C2 são utilizadas como referência pedagógica de dificuldade. O quiz não substitui um exame oficial de proficiência.
+
+## Biblioteca de Lecturas
+
+A seção **Lecturas** foi criada para desenvolver compreensão escrita em espanhol. Cada leitura apresenta nível sugerido, tempo aproximado, texto didático, glossário e perguntas de compreensão.
+
+Leituras disponíveis nesta versão:
+
+- **Ricitos de Oro y los tres osos** — A1–A2;
+- **Los tres cerditos** — A1–A2;
+- **Caperucita Roja** — A1–A2;
+- **La paloma y la hormiga** — A2–B1.
+
+Os textos são adaptações didáticas originais de narrativas tradicionais em domínio público. O progresso de leitura pode ser marcado e salvo localmente no navegador.
 
 ## Funcionalidades
 
-- seleção entre três níveis de espanhol;
-- 30 questões no banco atual, com 10 perguntas por nível;
-- questões de vocabulário, gramática e uso da língua;
-- perguntas e alternativas embaralhadas a cada tentativa;
+- menu com **Inicio**, **Quiz** e **Lecturas**;
+- página inicial com acesso aos principais recursos;
+- seleção entre três níveis de quiz;
+- 30 questões no banco atual;
+- perguntas e alternativas embaralhadas;
 - feedback explicativo para cada resposta;
-- indicação visual de acertos e erros;
-- pontuação atualizada em tempo real;
-- indicador de progresso;
-- registro local da melhor pontuação de cada nível, quando permitido pelo navegador;
-- tela final personalizada de acordo com o desempenho;
-- opção de refazer o mesmo nível ou escolher outro;
+- melhor pontuação salva no navegador;
+- biblioteca de histórias com filtro por nível;
+- glossário de vocabulário em cada leitura;
+- atividade de compreensão ao final de cada história;
+- marcação de leitura concluída;
 - interface responsiva para computador e dispositivos móveis;
 - navegação por teclado e atributos básicos de acessibilidade.
 
 ## Tecnologias utilizadas
 
-- **HTML5** — estrutura semântica da aplicação;
-- **CSS3** — identidade visual, layout responsivo e estados de interação;
-- **JavaScript** — banco de perguntas, controle de estado, embaralhamento, validação das respostas, feedback, progresso e pontuação;
+- **HTML5** — estrutura semântica;
+- **CSS3** — identidade visual e responsividade;
+- **JavaScript** — lógica do quiz, navegação, biblioteca, atividades e persistência local;
 - **GitHub Pages** — publicação da aplicação na web.
 
 ## Estrutura do projeto
@@ -52,48 +70,22 @@ vamos-a-estudiar-espanol-quiz/
 ├── index.html
 ├── style.css
 ├── script.js
+├── readings.css
+├── readings.js
 ├── .nojekyll
 └── README.md
 ```
 
-## Como executar localmente
-
-1. Clone ou baixe este repositório.
-2. Abra o arquivo `index.html` em um navegador.
-3. Escolha o nível desejado e inicie o quiz.
-
-O projeto não possui dependências externas e não exige instalação adicional.
-
-## Aprendizados desenvolvidos
-
-Durante a construção do projeto, foram trabalhados conceitos como:
-
-- estruturação semântica de páginas web;
-- manipulação do DOM com JavaScript;
-- eventos e atualização dinâmica da interface;
-- organização de dados em objetos e arrays;
-- controle de estado da aplicação;
-- lógica condicional e cálculo de pontuação;
-- algoritmo de embaralhamento de perguntas e alternativas;
-- persistência simples com `localStorage`;
-- design responsivo;
-- acessibilidade básica;
-- organização de código, versionamento e documentação de projeto.
-
 ## Próximas evoluções
 
 - ampliar o banco de perguntas de cada nível;
-- criar categorias específicas, como gramática, vocabulário e compreensão;
-- adicionar um modo de revisão das respostas ao final;
-- incluir novos tipos de atividade além da múltipla escolha;
-- desenvolver recursos de acompanhamento de progresso;
+- adicionar novas leituras e filtros pedagógicos;
+- incluir categorias como gramática, vocabulário e compreensão;
+- criar modo de revisão das respostas;
+- desenvolver acompanhamento de progresso mais detalhado;
 - ampliar testes de acessibilidade e usabilidade.
 
-## Projeto relacionado
-
-O **Vamos a Estudiar Español** é uma iniciativa dedicada ao ensino e à divulgação de conteúdos sobre língua espanhola.
-
-Site: http://vamosaestudiarespanol.com.br/
+Entre as leituras planejadas estão adaptações didáticas de **Pinocho**, **El gato con botas** e **Aladino y el Genio de la lámpara**. Para obras com situação autoral específica, como **El Principito**, a proposta é trabalhar com resumo didático original e atividades, sem reproduzir traduções comerciais.
 
 ## Responsável pelo projeto
 
