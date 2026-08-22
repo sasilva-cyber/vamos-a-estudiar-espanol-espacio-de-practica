@@ -9,6 +9,23 @@
   text-align: center;
 }
 
+/* Padronização visual dos três botões do destaque inicial */
+.hero-actions .primary-button {
+  border: 1px solid rgba(143, 29, 44, 0.30);
+  background: white;
+  color: var(--red);
+  box-shadow: none;
+}
+
+.hero-actions .primary-button:hover,
+.hero-actions .primary-button:focus-visible {
+  border-color: var(--red);
+  background: #fff8f3;
+  color: var(--red);
+  transform: none;
+  outline: none;
+}
+
 .feature-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
