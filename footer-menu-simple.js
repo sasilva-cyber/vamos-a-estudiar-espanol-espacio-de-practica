@@ -1,7 +1,7 @@
 /* Ajusta o menu "Categorias" do rodapé para Início, Quem somos e Contato. */
 (function () {
   const ABOUT_URL = "quem-somos.html";
-  const CONTACT_URL = "https://www.vamosaestudiarespanol.com.br/p/contato.html";
+  const CONTACT_URL = "contato/";
 
   function installMenu() {
     const footer = document.querySelector(".site-footer-enhanced");
@@ -34,7 +34,7 @@
     if (document.getElementById("route-query-loader")) return;
     const script = document.createElement("script");
     script.id = "route-query-loader";
-    script.src = "route-query.js?v=20260822-1931";
+    script.src = "route-query.js?v=20260822-2010";
     document.head.appendChild(script);
   }
 
