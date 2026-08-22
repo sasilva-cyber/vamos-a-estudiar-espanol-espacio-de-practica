@@ -111,6 +111,15 @@
   document.head.appendChild(script);
 })();
 
+/* Amplia a biblioteca de Lecturas com práticas baseadas em Cuentos para quedarse en casa. */
+(function loadReadingsCasa() {
+  if (document.getElementById("readings-casa-loader")) return;
+  const script = document.createElement("script");
+  script.id = "readings-casa-loader";
+  script.src = "readings-cuentos-casa.js?v=20260822-1856";
+  document.head.appendChild(script);
+})();
+
 /* Carrega por último a camada responsiva global para celulares e tablets. */
 (function loadResponsiveStyles() {
   if (document.getElementById("responsive-styles")) return;
