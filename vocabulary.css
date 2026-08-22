@@ -416,3 +416,22 @@
     display: none;
   }
 }
+
+/* Padronização editorial: textos corridos justificados em toda a plataforma */
+.app p,
+.app li,
+.app dd,
+.app .hero-text,
+.app .level-card > span:not(.level-topline):not(.level-cta),
+.app .grammar-source-note,
+.app .vocabulary-example,
+.app .vocabulary-example span,
+.app .grammar-check-result,
+.app .vocabulary-practice-result,
+.app .comprehension-result,
+.app .answer-review p,
+footer p {
+  text-align: justify !important;
+  text-justify: inter-word;
+  hyphens: auto;
+}
