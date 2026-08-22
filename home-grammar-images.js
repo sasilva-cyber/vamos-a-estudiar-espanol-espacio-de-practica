@@ -151,6 +151,15 @@
   document.head.appendChild(script);
 })();
 
+/* Amplia a aba Quiz com testes de compreensão auditiva A1-C2. */
+(function loadQuizListening() {
+  if (document.getElementById("quiz-listening-loader")) return;
+  const script = document.createElement("script");
+  script.id = "quiz-listening-loader";
+  script.src = "quiz-listening.js?v=20260822-1920";
+  document.head.appendChild(script);
+})();
+
 /* Carrega por último a camada responsiva global para celulares e tablets. */
 (function loadResponsiveStyles() {
   if (document.getElementById("responsive-styles")) return;
