@@ -38,12 +38,21 @@
     document.head.appendChild(script);
   }
 
+  function loadFalseFriendsGame() {
+    if (document.getElementById("false-friends-game-loader")) return;
+    const script = document.createElement("script");
+    script.id = "false-friends-game-loader";
+    script.src = "quiz-falsos-amigos.js?v=20260822-2028";
+    document.head.appendChild(script);
+  }
+
   function install() {
     if (!installMenu()) {
       setTimeout(install, 200);
       return;
     }
     loadRouteQuery();
+    loadFalseFriendsGame();
   }
 
   if (document.readyState === "loading") {
