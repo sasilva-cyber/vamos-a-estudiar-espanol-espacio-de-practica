@@ -38,7 +38,7 @@
 
   function canonicalize(route, mode = "replace") {
     const target = routePath(route);
-    const current = `${cleanPath(window.location.pathname)}${window.location.search}`;
+    const current = `${window.location.pathname}${window.location.search}`;
     if (current === target) {
       document.title = (ROUTES[route] || ROUTES.home).title;
       return;
