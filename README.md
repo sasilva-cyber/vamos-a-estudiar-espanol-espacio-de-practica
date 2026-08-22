@@ -1,4 +1,4 @@
-# Vamos a Estudiar Español — Quiz e Lecturas
+# Vamos a Estudiar Español — Quiz, Gramática e Lecturas
 
 Aplicação educacional desenvolvida como projeto complementar à iniciativa **Vamos a Estudiar Español**, voltada ao ensino e à aprendizagem da língua espanhola.
 
@@ -10,9 +10,10 @@ Aplicação educacional desenvolvida como projeto complementar à iniciativa **V
 
 ## Sobre o projeto
 
-A aplicação reúne duas experiências de aprendizagem em uma mesma interface:
+A aplicação reúne três experiências de aprendizagem em uma mesma interface:
 
 - **Quiz por níveis**, com perguntas de gramática, vocabulário e uso da língua;
+- **Gramática**, com aulas curtas, exemplos, sínteses e prática rápida;
 - **Lecturas**, com histórias em espanhol, glossário e atividades de compreensão leitora.
 
 A identidade visual utiliza a letra **Ñ**, tipografia editorial e uma paleta em vermelho, dourado e tons quentes.
@@ -26,6 +27,27 @@ A identidade visual utiliza a letra **Ñ**, tipografia editorial e uma paleta em
 O banco atual possui 30 questões, com 10 perguntas por nível, embaralhamento das perguntas e alternativas, feedback explicativo, pontuação, indicador de progresso e registro local da melhor pontuação.
 
 As faixas A1–C2 são utilizadas como referência pedagógica de dificuldade. O quiz não substitui um exame oficial de proficiência.
+
+## Gramática del español
+
+A seção **Gramática** foi organizada como uma biblioteca de estudo para estudantes brasileiros, com explicações em português, exemplos em espanhol, resumo dos pontos-chave, uma atividade rápida de verificação e opção de marcar cada aula como estudada.
+
+A versão atual possui 12 aulas:
+
+- Acentuación ortográfica;
+- Los artículos: el, la, lo, un, una;
+- Pronombres personales;
+- Sustantivos: género y plural;
+- Verbos regulares e irregulares;
+- Indicativo, subjuntivo e tempos do passado;
+- Los numerales;
+- Adjetivos: concordância, posição e comparação;
+- Pronombres relativos;
+- Por, para e outras preposições;
+- Heterotónicos, heterogenéricos e falsos cognatos;
+- Signos de puntuación e interrogativos.
+
+A organização temática foi desenvolvida a partir de **SABINO, Maria de Lourdes. _Minimanual compacto de gramática língua espanhola: teoria e prática_. 1. ed. São Paulo: Rideel, 2005**. Os textos publicados na aplicação são sínteses e explicações didáticas originais: a obra é utilizada como referência temática, sem reprodução integral de seu conteúdo ou de seus exercícios.
 
 ## Biblioteca de Lecturas
 
@@ -42,13 +64,16 @@ Os textos são adaptações didáticas originais de narrativas tradicionais em d
 
 ## Funcionalidades
 
-- menu com **Inicio**, **Quiz** e **Lecturas**;
+- menu com **Inicio**, **Quiz**, **Gramática** e **Lecturas**;
 - página inicial com acesso aos principais recursos;
 - seleção entre três níveis de quiz;
 - 30 questões no banco atual;
 - perguntas e alternativas embaralhadas;
 - feedback explicativo para cada resposta;
 - melhor pontuação salva no navegador;
+- biblioteca com 12 aulas de gramática e filtro por nível;
+- explicações, exemplos, dicas e prática rápida em cada aula;
+- marcação de aula estudada;
 - biblioteca de histórias com filtro por nível;
 - glossário de vocabulário em cada leitura;
 - atividade de compreensão ao final de cada história;
@@ -60,7 +85,7 @@ Os textos são adaptações didáticas originais de narrativas tradicionais em d
 
 - **HTML5** — estrutura semântica;
 - **CSS3** — identidade visual e responsividade;
-- **JavaScript** — lógica do quiz, navegação, biblioteca, atividades e persistência local;
+- **JavaScript** — lógica do quiz, navegação, bibliotecas, atividades e persistência local;
 - **GitHub Pages** — publicação da aplicação na web.
 
 ## Estrutura do projeto
@@ -72,6 +97,8 @@ vamos-a-estudiar-espanol-quiz/
 ├── script.js
 ├── readings.css
 ├── readings.js
+├── grammar.css
+├── grammar.js
 ├── .nojekyll
 └── README.md
 ```
@@ -79,8 +106,8 @@ vamos-a-estudiar-espanol-quiz/
 ## Próximas evoluções
 
 - ampliar o banco de perguntas de cada nível;
+- adicionar novas aulas de gramática e exercícios de revisão;
 - adicionar novas leituras e filtros pedagógicos;
-- incluir categorias como gramática, vocabulário e compreensão;
 - criar modo de revisão das respostas;
 - desenvolver acompanhamento de progresso mais detalhado;
 - ampliar testes de acessibilidade e usabilidade.
