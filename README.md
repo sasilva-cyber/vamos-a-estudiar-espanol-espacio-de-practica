@@ -12,22 +12,41 @@ Aplicação educacional desenvolvida como projeto complementar à iniciativa **V
 
 A aplicação reúne quatro experiências de aprendizagem em uma mesma interface:
 
-- **Quiz por níveis**, com perguntas de gramática, vocabulário e uso da língua;
+- **Quiz**, com níveis A1–C2, testes temáticos, simulados e gabarito detalhado;
 - **Gramática**, com aulas curtas, exemplos, sínteses e prática rápida;
 - **Vocabulario**, com campos temáticos, comparação espanhol–português e exercícios rápidos;
 - **Lecturas**, com histórias em espanhol, glossário e atividades de compreensão leitora.
 
 A identidade visual utiliza a letra **Ñ**, tipografia editorial e uma paleta em vermelho, dourado e tons quentes.
 
-## Quiz por níveis
+## Quiz e testes
 
-- **Básico — A1–A2**
-- **Intermediário — B1–B2**
-- **Avançado — C1–C2**
+A área **Quiz** possui duas formas de prática.
 
-O banco atual possui 30 questões, com 10 perguntas por nível, embaralhamento das perguntas e alternativas, feedback explicativo, pontuação, indicador de progresso e registro local da melhor pontuação.
+### Quiz por níveis
 
-As faixas A1–C2 são utilizadas como referência pedagógica de dificuldade. O quiz não substitui um exame oficial de proficiência.
+- **Básico — A1–A2**;
+- **Intermediário — B1–B2**;
+- **Avançado — C1–C2**.
+
+São 30 questões, com 10 perguntas por nível, ordem embaralhada, feedback explicativo depois de cada resposta, pontuação, progresso e registro local da melhor pontuação.
+
+### Testes e atividades com gabarito final
+
+Foram adicionadas 6 atividades temáticas com 10 questões cada, totalizando mais 60 itens:
+
+- **Gramática essencial — A1–A2**;
+- **Verbos e tempos — B1–B2**;
+- **Pronomes e preposições — A2–B1**;
+- **Vocabulário cotidiano — A1–A2**;
+- **Compreensão de frases e expressões — B1–B2**;
+- **Desafio avançado — C1–C2**.
+
+Nessas atividades, a correção não é mostrada durante o teste. Ao final, o estudante recebe pontuação e um **gabarito detalhado**, com sua resposta, a alternativa correta e uma explicação para cada questão.
+
+O projeto passa, assim, a reunir **90 questões e atividades** na área de prática avaliativa.
+
+As faixas A1–C2 são utilizadas como referência pedagógica de dificuldade. Os testes não substituem um exame oficial de proficiência.
 
 ## Gramática del español
 
@@ -52,7 +71,7 @@ A organização temática foi desenvolvida a partir de **SABINO, Maria de Lourde
 
 ## Vocabulario por temas
 
-A nova seção **Vocabulario** reúne 22 campos temáticos com termos em espanhol, equivalentes em português, frase de exemplo e uma prática de cinco questões gerada a partir do próprio conjunto de palavras.
+A seção **Vocabulario** reúne 22 campos temáticos com termos em espanhol, equivalentes em português, frase de exemplo e uma prática de cinco questões gerada a partir do próprio conjunto de palavras.
 
 Temas disponíveis:
 
@@ -97,12 +116,11 @@ Os textos são adaptações didáticas originais de narrativas tradicionais em d
 ## Funcionalidades
 
 - menu com **Inicio**, **Quiz**, **Gramática**, **Vocabulario** e **Lecturas**;
-- página inicial com acesso aos principais recursos;
-- seleção entre três níveis de quiz;
-- 30 questões no banco atual;
-- perguntas e alternativas embaralhadas;
-- feedback explicativo para cada resposta;
-- melhor pontuação salva no navegador;
+- três quizzes por nível com feedback imediato;
+- seis testes temáticos com gabarito apenas no final;
+- 90 questões e atividades na área avaliativa;
+- gabarito detalhado com resposta do aluno, resposta correta e explicação;
+- registro local de melhores resultados;
 - biblioteca com 12 aulas de gramática e filtro por nível;
 - explicações, exemplos, dicas e prática rápida em cada aula;
 - biblioteca de vocabulário com 22 temas;
@@ -130,6 +148,8 @@ vamos-a-estudiar-espanol-quiz/
 ├── index.html
 ├── style.css
 ├── script.js
+├── quiz-activities.css
+├── quiz-activities.js
 ├── readings.css
 ├── readings.js
 ├── grammar.css
@@ -142,11 +162,11 @@ vamos-a-estudiar-espanol-quiz/
 
 ## Próximas evoluções
 
-- ampliar o banco de perguntas de cada nível;
+- adicionar simulados cumulativos com maior número de questões;
+- criar filtros de testes por nível e conteúdo;
 - adicionar novas aulas de gramática e exercícios de revisão;
 - ampliar o vocabulário e criar revisão por palavras favoritas;
 - adicionar novas leituras e filtros pedagógicos;
-- criar modo de revisão das respostas;
 - desenvolver acompanhamento de progresso mais detalhado;
 - ampliar testes de acessibilidade e usabilidade.
 
