@@ -181,11 +181,11 @@
   document.head.appendChild(script);
 })();
 
-/* Carrega as imagens temáticas das últimas aulas de Gramática na página inicial. */
+/* Carrega as imagens temáticas e as extensões mais recentes da plataforma. */
 (function loadHomeGrammarImages() {
   if (document.getElementById("home-grammar-images-loader")) return;
   const script = document.createElement("script");
   script.id = "home-grammar-images-loader";
-  script.src = "home-grammar-images.js?v=20260822-1807";
+  script.src = "home-grammar-images.js?v=20260822-1848";
   document.head.appendChild(script);
 })();
