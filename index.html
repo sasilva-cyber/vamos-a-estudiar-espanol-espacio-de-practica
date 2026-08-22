@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Vamos a Estudiar Español: quizzes por níveis, gramática, vocabulário e leituras em espanhol com atividades de prática." />
+  <meta name="description" content="Vamos a Estudiar Español: quizzes por níveis, testes com gabarito, gramática, vocabulário e leituras em espanhol." />
   <meta name="theme-color" content="#8f1d2c" />
   <title>Vamos a Estudiar Español | Quiz, Gramática, Vocabulario e Lecturas</title>
   <link rel="stylesheet" href="style.css?v=20260822-1051" />
   <link rel="stylesheet" href="readings.css?v=20260822-1128" />
   <link rel="stylesheet" href="grammar.css?v=20260822-1128" />
   <link rel="stylesheet" href="vocabulary.css?v=20260822-1320" />
+  <link rel="stylesheet" href="quiz-activities.css?v=20260822-1327" />
 </head>
 <body>
   <header class="site-header">
@@ -53,7 +54,7 @@
         <aside class="hero-panel" aria-label="Recursos disponíveis">
           <span class="hero-panel-kicker">Hoy puedes practicar</span>
           <div class="hero-stat"><strong>3</strong><span>niveles de quiz</span></div>
-          <div class="hero-stat"><strong>30</strong><span>preguntas</span></div>
+          <div class="hero-stat"><strong>90</strong><span>preguntas y actividades</span></div>
           <div class="hero-stat"><strong>12</strong><span>lecciones de gramática</span></div>
           <div class="hero-stat"><strong>22</strong><span>temas de vocabulario</span></div>
           <div class="hero-stat"><strong>4</strong><span>lecturas guiadas</span></div>
@@ -65,9 +66,9 @@
         <article class="feature-card">
           <span class="feature-number">01</span>
           <p class="eyebrow">Quiz por niveles</p>
-          <h2>Básico, intermediário e avançado</h2>
-          <p>Pratique estruturas de A1–A2, B1–B2 e C1–C2 com perguntas embaralhadas e explicações após cada resposta.</p>
-          <button class="text-cta" type="button" data-route="quiz">Elegir nivel →</button>
+          <h2>Níveis, testes temáticos e simulados</h2>
+          <p>Pratique A1–C2 e faça atividades temáticas sem correção imediata, com resultado e gabarito detalhado ao final.</p>
+          <button class="text-cta" type="button" data-route="quiz">Ver testes →</button>
         </article>
 
         <article class="feature-card grammar-feature">
@@ -99,8 +100,8 @@
     <section class="level-screen hidden" id="level-screen" aria-labelledby="level-title">
       <div class="section-heading">
         <p class="eyebrow">Quiz por niveles</p>
-        <h1 id="level-title">¿Qué nivel quieres practicar hoy?</h1>
-        <p class="hero-text">Escolha uma faixa de dificuldade e pratique vocabulário, gramática e uso da língua com feedback imediato.</p>
+        <h1 id="level-title">¿Qué quieres practicar hoy?</h1>
+        <p class="hero-text">Escolha um nível para receber feedback questão por questão ou faça um teste temático com gabarito completo somente no final.</p>
       </div>
 
       <div class="level-grid" role="list" aria-label="Níveis de espanhol disponíveis">
@@ -127,6 +128,15 @@
       </div>
 
       <aside class="note"><span aria-hidden="true">✦</span><p>As faixas A1–C2 são usadas como referência pedagógica de dificuldade. Este quiz não substitui um exame oficial de proficiência.</p></aside>
+
+      <section class="quiz-activities-block" id="quiz-activities-block" aria-labelledby="quiz-activities-title">
+        <div class="quiz-activities-heading">
+          <p class="eyebrow">Testes e atividades</p>
+          <h2 id="quiz-activities-title">Pratique por tema e confira o gabarito no final</h2>
+          <p>Nestes testes, a resposta correta não aparece imediatamente. Complete toda a atividade e receba sua pontuação, o gabarito e uma explicação para cada questão.</p>
+        </div>
+        <div class="activity-grid" id="activity-grid"></div>
+      </section>
     </section>
 
     <section class="quiz-screen hidden" id="quiz-screen" aria-live="polite" aria-labelledby="question">
@@ -159,6 +169,40 @@
           <button class="secondary-button" id="choose-level-button" type="button">Escolher outro nível</button>
         </div>
       </div>
+    </section>
+
+    <section class="activity-screen hidden" id="activity-screen" aria-labelledby="activity-title">
+      <div class="activity-toolbar">
+        <button class="text-button" id="activity-back" type="button">← Voltar para Quiz</button>
+        <span class="activity-badge" id="activity-badge">A1–A2</span>
+      </div>
+      <div class="activity-progress-meta"><span id="activity-progress">Questão 1 de 10</span><span>Gabarito somente ao final</span></div>
+      <div class="progress-track" aria-hidden="true"><div class="progress-bar" id="activity-progress-bar"></div></div>
+      <article class="activity-question-card">
+        <div class="question-meta"><span class="category">Atividade</span><span class="question-number" id="activity-question-number">01</span></div>
+        <h1 id="activity-title" class="hidden">Atividade</h1>
+        <h2 id="activity-question">Pergunta</h2>
+        <div class="activity-options" id="activity-options"></div>
+        <div class="activity-warning" id="activity-warning" role="status"></div>
+        <div class="activity-question-actions"><button class="primary-button" id="activity-next" type="button">Próxima questão</button></div>
+      </article>
+    </section>
+
+    <section class="activity-result-screen hidden" id="activity-result-screen" aria-labelledby="activity-result-title">
+      <article class="activity-result-card">
+        <p class="eyebrow">Resultado e gabarito</p>
+        <h1 id="activity-result-title">Atividade concluída</h1>
+        <div class="activity-result-summary">
+          <div class="activity-score-circle"><span id="activity-final-score">0/10</span></div>
+          <p class="activity-result-message" id="activity-result-message"></p>
+        </div>
+        <h2 class="answer-key-title">Gabarito detalhado</h2>
+        <div class="answer-key-list" id="answer-key-list"></div>
+        <div class="activity-result-actions">
+          <button class="primary-button" id="activity-retry" type="button">Refazer atividade</button>
+          <button class="secondary-button" id="activity-choose" type="button">Escolher outro teste</button>
+        </div>
+      </article>
     </section>
 
     <section class="grammar-screen hidden" id="grammar-screen" aria-labelledby="grammar-title">
@@ -337,5 +381,6 @@
   <script src="readings.js?v=20260822-1109"></script>
   <script src="grammar.js?v=20260822-1128"></script>
   <script src="vocabulary.js?v=20260822-1320"></script>
+  <script src="quiz-activities.js?v=20260822-1327"></script>
 </body>
 </html>
