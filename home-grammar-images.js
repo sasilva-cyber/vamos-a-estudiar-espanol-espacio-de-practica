@@ -86,3 +86,12 @@
   };
   document.head.appendChild(script);
 })();
+
+/* Carrega a área Escritura en español. */
+(function loadWritingArea() {
+  if (document.getElementById("writing-area-loader")) return;
+  const script = document.createElement("script");
+  script.id = "writing-area-loader";
+  script.src = "writing.js?v=20260822-1842";
+  document.head.appendChild(script);
+})();
