@@ -13,7 +13,7 @@ const extendedQuizActivities = {
       { q: "Qual combinação apresenta concordância correta?", options: ["una camisa blanco", "un coche roja", "unas casas grandes", "los mesa nuevas"], correct: "unas casas grandes", explanation: "Artigo, substantivo e adjetivo concordam no feminino plural: unas casas grandes." },
       { q: "Complete: “Yo ___ a las siete todos los días.”", options: ["me levanto", "te levantas", "se levanta", "nos levantamos"], correct: "me levanto", explanation: "Com yo e o verbo reflexivo levantarse, usa-se me levanto." },
       { q: "Complete: “Son ___ ocho y media.”", options: ["la", "las", "los", "el"], correct: "las", explanation: "Para horas no plural, usa-se son las..." },
-      { q: "Qual palavra está corretamente acentuada?", options: ["cancion", "canción", "cáncion", "canción"], correct: "canción", explanation: "Canción é aguda terminada em -n e recebe tilde na sílaba tônica." }
+      { q: "Qual palavra está corretamente acentuada?", options: ["cancion", "canción", "cáncion", "cancíon"], correct: "canción", explanation: "Canción é aguda terminada em -n e recebe tilde na sílaba tônica." }
     ]
   },
   verbs: {
@@ -104,7 +104,6 @@ const extendedQuizActivities = {
 };
 
 const activityState = { key: null, index: 0, answers: [] };
-const activitiesBlock = document.getElementById("quiz-activities-block");
 const activityGrid = document.getElementById("activity-grid");
 const activityScreen = document.getElementById("activity-screen");
 const activityResultScreen = document.getElementById("activity-result-screen");
@@ -166,7 +165,7 @@ function renderExtendedQuestion() {
   const current = activityState.index + 1;
   const total = activity.questions.length;
   activityTitle.textContent = activity.title;
-  activityBadge.textContent = activity.level;
+  activityBadge.textContent = `${activity.title} · ${activity.level}`;
   activityProgress.textContent = `Questão ${current} de ${total}`;
   activityQuestionNumber.textContent = String(current).padStart(2, "0");
   activityProgressBar.style.width = `${(current / total) * 100}%`;
@@ -258,10 +257,8 @@ document.getElementById("activity-choose")?.addEventListener("click", returnToQu
 
 document.querySelectorAll('[data-route]').forEach((button) => {
   button.addEventListener("click", () => {
-    if (button.dataset.route !== "quiz") {
-      activityScreen?.classList.add("hidden");
-      activityResultScreen?.classList.add("hidden");
-    }
+    activityScreen?.classList.add("hidden");
+    activityResultScreen?.classList.add("hidden");
   });
 });
 
