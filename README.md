@@ -1,4 +1,4 @@
-# Vamos a Estudiar Español — Quiz, Gramática e Lecturas
+# Vamos a Estudiar Español — Quiz, Gramática, Vocabulario e Lecturas
 
 Aplicação educacional desenvolvida como projeto complementar à iniciativa **Vamos a Estudiar Español**, voltada ao ensino e à aprendizagem da língua espanhola.
 
@@ -10,10 +10,11 @@ Aplicação educacional desenvolvida como projeto complementar à iniciativa **V
 
 ## Sobre o projeto
 
-A aplicação reúne três experiências de aprendizagem em uma mesma interface:
+A aplicação reúne quatro experiências de aprendizagem em uma mesma interface:
 
 - **Quiz por níveis**, com perguntas de gramática, vocabulário e uso da língua;
 - **Gramática**, com aulas curtas, exemplos, sínteses e prática rápida;
+- **Vocabulario**, com campos temáticos, comparação espanhol–português e exercícios rápidos;
 - **Lecturas**, com histórias em espanhol, glossário e atividades de compreensão leitora.
 
 A identidade visual utiliza a letra **Ñ**, tipografia editorial e uma paleta em vermelho, dourado e tons quentes.
@@ -49,6 +50,37 @@ A versão atual possui 12 aulas:
 
 A organização temática foi desenvolvida a partir de **SABINO, Maria de Lourdes. _Minimanual compacto de gramática língua espanhola: teoria e prática_. 1. ed. São Paulo: Rideel, 2005**. Os textos publicados na aplicação são sínteses e explicações didáticas originais: a obra é utilizada como referência temática, sem reprodução integral de seu conteúdo ou de seus exercícios.
 
+## Vocabulario por temas
+
+A nova seção **Vocabulario** reúne 22 campos temáticos com termos em espanhol, equivalentes em português, frase de exemplo e uma prática de cinco questões gerada a partir do próprio conjunto de palavras.
+
+Temas disponíveis:
+
+- Alimentación;
+- Carnes y pescados;
+- Comidas, condimentos y meriendas;
+- Frutas;
+- Postres;
+- Vegetales;
+- Bebidas;
+- Transporte;
+- Saludos y despedidas;
+- Preguntas útiles;
+- Profesiones;
+- Familia;
+- Estaciones del año;
+- Escuela y universidad;
+- Trabajo y ambiente profesional;
+- Días, meses y calendario;
+- Partes del cuerpo humano;
+- Cómo describir a una persona;
+- Colores;
+- La casa;
+- Muebles;
+- Objetos de la casa.
+
+A biblioteca permite busca por palavra ou tema, filtros por área e marcação local dos conteúdos estudados.
+
 ## Biblioteca de Lecturas
 
 A seção **Lecturas** foi criada para desenvolver compreensão escrita em espanhol. Cada leitura apresenta nível sugerido, tempo aproximado, texto didático, glossário e perguntas de compreensão.
@@ -64,7 +96,7 @@ Os textos são adaptações didáticas originais de narrativas tradicionais em d
 
 ## Funcionalidades
 
-- menu com **Inicio**, **Quiz**, **Gramática** e **Lecturas**;
+- menu com **Inicio**, **Quiz**, **Gramática**, **Vocabulario** e **Lecturas**;
 - página inicial com acesso aos principais recursos;
 - seleção entre três níveis de quiz;
 - 30 questões no banco atual;
@@ -73,7 +105,10 @@ Os textos são adaptações didáticas originais de narrativas tradicionais em d
 - melhor pontuação salva no navegador;
 - biblioteca com 12 aulas de gramática e filtro por nível;
 - explicações, exemplos, dicas e prática rápida em cada aula;
-- marcação de aula estudada;
+- biblioteca de vocabulário com 22 temas;
+- busca por tema ou palavra e filtros por área;
+- prática rápida de vocabulário em cada tema;
+- marcação de conteúdos estudados;
 - biblioteca de histórias com filtro por nível;
 - glossário de vocabulário em cada leitura;
 - atividade de compreensão ao final de cada história;
@@ -99,6 +134,8 @@ vamos-a-estudiar-espanol-quiz/
 ├── readings.js
 ├── grammar.css
 ├── grammar.js
+├── vocabulary.css
+├── vocabulary.js
 ├── .nojekyll
 └── README.md
 ```
@@ -107,6 +144,7 @@ vamos-a-estudiar-espanol-quiz/
 
 - ampliar o banco de perguntas de cada nível;
 - adicionar novas aulas de gramática e exercícios de revisão;
+- ampliar o vocabulário e criar revisão por palavras favoritas;
 - adicionar novas leituras e filtros pedagógicos;
 - criar modo de revisão das respostas;
 - desenvolver acompanhamento de progresso mais detalhado;
