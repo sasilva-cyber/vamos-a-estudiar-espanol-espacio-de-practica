@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Vamos a Estudiar Español: quizzes por níveis, aulas de gramática e leituras em espanhol com atividades de compreensão." />
+  <meta name="description" content="Vamos a Estudiar Español: quizzes por níveis, gramática, vocabulário e leituras em espanhol com atividades de prática." />
   <meta name="theme-color" content="#8f1d2c" />
-  <title>Vamos a Estudiar Español | Quiz, Gramática e Lecturas</title>
+  <title>Vamos a Estudiar Español | Quiz, Gramática, Vocabulario e Lecturas</title>
   <link rel="stylesheet" href="style.css?v=20260822-1051" />
   <link rel="stylesheet" href="readings.css?v=20260822-1128" />
   <link rel="stylesheet" href="grammar.css?v=20260822-1128" />
+  <link rel="stylesheet" href="vocabulary.css?v=20260822-1320" />
 </head>
 <body>
   <header class="site-header">
@@ -25,6 +26,7 @@
         <button class="nav-link active" type="button" data-route="home">Inicio</button>
         <button class="nav-link" type="button" data-route="quiz">Quiz</button>
         <button class="nav-link" type="button" data-route="grammar">Gramática</button>
+        <button class="nav-link" type="button" data-route="vocabulary">Vocabulario</button>
         <button class="nav-link" type="button" data-route="readings">Lecturas</button>
       </nav>
     </div>
@@ -38,11 +40,12 @@
           <p class="eyebrow">Tu espacio de práctica</p>
           <h1 id="home-title">Aprende español practicando de verdad.</h1>
           <p class="hero-text">
-            Escolha seu nível, revise gramática, teste seus conhecimentos ou entre na biblioteca de leituras para desenvolver compreensão escrita em espanhol.
+            Escolha seu nível, revise gramática e vocabulário, teste seus conhecimentos ou entre na biblioteca de leituras para desenvolver compreensão escrita em espanhol.
           </p>
           <div class="hero-actions">
-            <button class="primary-button" type="button" data-route="quiz">Hacer un quiz</button>
+            <button class="secondary-button" type="button" data-route="quiz">Hacer un quiz</button>
             <button class="secondary-button" type="button" data-route="grammar">Estudiar gramática</button>
+            <button class="secondary-button" type="button" data-route="vocabulary">Practicar vocabulario</button>
             <button class="secondary-button" type="button" data-route="readings">Explorar lecturas</button>
           </div>
         </div>
@@ -52,6 +55,7 @@
           <div class="hero-stat"><strong>3</strong><span>niveles de quiz</span></div>
           <div class="hero-stat"><strong>30</strong><span>preguntas</span></div>
           <div class="hero-stat"><strong>12</strong><span>lecciones de gramática</span></div>
+          <div class="hero-stat"><strong>22</strong><span>temas de vocabulario</span></div>
           <div class="hero-stat"><strong>4</strong><span>lecturas guiadas</span></div>
           <p>Conteúdo organizado para estudantes brasileiros, com exercícios, explicações e progresso salvo no navegador.</p>
         </aside>
@@ -74,8 +78,16 @@
           <button class="text-cta" type="button" data-route="grammar">Abrir gramática →</button>
         </article>
 
-        <article class="feature-card reading-feature">
+        <article class="feature-card vocabulary-feature">
           <span class="feature-number">03</span>
+          <p class="eyebrow">Vocabulario</p>
+          <h2>Amplie seu vocabulário por temas</h2>
+          <p>Alimentação, trabalho, família, transporte, casa, corpo humano, cores e outros campos do cotidiano.</p>
+          <button class="text-cta" type="button" data-route="vocabulary">Explorar vocabulario →</button>
+        </article>
+
+        <article class="feature-card reading-feature">
+          <span class="feature-number">04</span>
           <p class="eyebrow">Lecturas</p>
           <h2>Leia histórias e teste sua compreensão</h2>
           <p>Textos didáticos em espanhol, glossário de apoio, nível sugerido e atividades de compreensão ao final.</p>
@@ -207,6 +219,56 @@
       </div>
     </section>
 
+    <section class="vocabulary-screen hidden" id="vocabulary-screen" aria-labelledby="vocabulary-title">
+      <div class="section-heading vocabulary-heading">
+        <p class="eyebrow">Vocabulario por temas</p>
+        <h1 id="vocabulary-title">Aprenda palavras para situações reais</h1>
+        <p class="hero-text">Explore campos temáticos, compare espanhol e português e pratique cada conjunto com uma atividade rápida.</p>
+      </div>
+
+      <div class="vocabulary-toolbar">
+        <input class="vocabulary-search" id="vocabulary-search" type="search" placeholder="Buscar tema ou palavra..." aria-label="Buscar tema ou palavra de vocabulário" />
+        <div class="vocabulary-filter-group" role="group" aria-label="Categorias de vocabulário">
+          <button class="vocabulary-filter-button active" type="button" data-vocabulary-filter="all">Todos</button>
+          <button class="vocabulary-filter-button" type="button" data-vocabulary-filter="Alimentos">Alimentos</button>
+          <button class="vocabulary-filter-button" type="button" data-vocabulary-filter="Vida cotidiana">Vida cotidiana</button>
+          <button class="vocabulary-filter-button" type="button" data-vocabulary-filter="Estudio y trabajo">Estudio y trabajo</button>
+          <button class="vocabulary-filter-button" type="button" data-vocabulary-filter="Personas">Personas</button>
+          <button class="vocabulary-filter-button" type="button" data-vocabulary-filter="Tiempo y calendario">Tiempo</button>
+          <button class="vocabulary-filter-button" type="button" data-vocabulary-filter="Casa">Casa</button>
+        </div>
+      </div>
+
+      <div class="vocabulary-grid" id="vocabulary-grid"></div>
+    </section>
+
+    <section class="vocabulary-reader-screen hidden" id="vocabulary-reader-screen" aria-labelledby="vocabulary-reader-title">
+      <button class="text-button vocabulary-reader-back" id="vocabulary-reader-back" type="button">← Voltar para Vocabulario</button>
+      <div class="vocabulary-reader-layout">
+        <article class="vocabulary-paper">
+          <div class="vocabulary-reader-meta" id="vocabulary-reader-meta"></div>
+          <h1 id="vocabulary-reader-title"></h1>
+          <p class="vocabulary-reader-description" id="vocabulary-reader-description"></p>
+          <div class="vocabulary-example" id="vocabulary-example"></div>
+          <div class="vocabulary-term-head"><span>Español</span><span>Português</span></div>
+          <div class="vocabulary-terms" id="vocabulary-terms"></div>
+          <div class="vocabulary-finish">
+            <button class="primary-button" id="vocabulary-mark-button" type="button">Marcar como estudiado</button>
+            <span class="vocabulary-saved-note" id="vocabulary-saved-note" aria-live="polite"></span>
+          </div>
+        </article>
+
+        <aside class="vocabulary-sidebar">
+          <section class="vocabulary-practice-card">
+            <p class="eyebrow">Práctica rápida</p>
+            <h2>Comprueba tu vocabulario</h2>
+            <div class="vocabulary-practice" id="vocabulary-practice"></div>
+            <div class="vocabulary-practice-result hidden" id="vocabulary-practice-result" role="status"></div>
+          </section>
+        </aside>
+      </div>
+    </section>
+
     <section class="readings-screen hidden" id="readings-screen" aria-labelledby="readings-title">
       <div class="section-heading readings-heading">
         <p class="eyebrow">Biblioteca de lecturas</p>
@@ -274,5 +336,6 @@
   <script src="script.js?v=20260822-1051"></script>
   <script src="readings.js?v=20260822-1109"></script>
   <script src="grammar.js?v=20260822-1128"></script>
+  <script src="vocabulary.js?v=20260822-1320"></script>
 </body>
 </html>
