@@ -70,11 +70,19 @@
   }
 })();
 
-/* Carrega a área Escucha en español. */
+/* Carrega a área Escucha en español e, depois dela, os filtros da biblioteca. */
 (function loadListeningArea() {
   if (document.getElementById("listening-area-loader")) return;
+
   const script = document.createElement("script");
   script.id = "listening-area-loader";
   script.src = "listening.js?v=20260822-1816";
+  script.onload = () => {
+    if (document.getElementById("listening-filters-loader")) return;
+    const filters = document.createElement("script");
+    filters.id = "listening-filters-loader";
+    filters.src = "listening-filters.js?v=20260822-1830";
+    document.head.appendChild(filters);
+  };
   document.head.appendChild(script);
 })();
