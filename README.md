@@ -1,4 +1,4 @@
-# Vamos a Estudiar Español — Quiz de Vocabulário
+# Vamos a Estudiar Español — Quiz por Níveis
 
 Quiz interativo de espanhol desenvolvido como projeto complementar à iniciativa **Vamos a Estudiar Español**, voltada ao ensino e à aprendizagem da língua espanhola.
 
@@ -10,27 +10,40 @@ Quiz interativo de espanhol desenvolvido como projeto complementar à iniciativa
 
 ## Sobre o projeto
 
-O projeto transforma conteúdos de vocabulário em uma experiência de aprendizagem interativa. A aplicação apresenta perguntas de múltipla escolha, fornece feedback imediato e acompanha a pontuação do usuário ao longo da atividade.
+A aplicação transforma conteúdos de espanhol em uma experiência de aprendizagem interativa. O usuário escolhe uma faixa de dificuldade, responde a perguntas de múltipla escolha, recebe feedback explicativo imediatamente e acompanha sua pontuação ao longo do quiz.
 
-Além de explorar fundamentos de desenvolvimento web, o projeto conecta tecnologia e ensino de línguas em uma solução simples, funcional e acessível.
+O projeto conecta ensino de línguas e desenvolvimento web em uma interface autoral inspirada em elementos visuais associados ao universo hispânico, com destaque para a letra **Ñ**, tipografia editorial e uma paleta em vermelho, dourado e tons quentes.
+
+## Níveis disponíveis
+
+- **Básico — A1–A2:** vocabulário cotidiano, presente, estruturas essenciais, ser/estar, preposições e situações simples;
+- **Intermediário — B1–B2:** tempos do passado, subjuntivo, condicional, conectores, pronomes, relativos e expressões idiomáticas;
+- **Avançado — C1–C2:** estruturas concessivas, subjuntivo avançado, regência normativa, perífrases verbais, conectores discursivos e léxico idiomático.
+
+As faixas A1–C2 são utilizadas como **referência pedagógica de dificuldade**. O quiz não substitui um exame oficial de proficiência.
 
 ## Funcionalidades
 
-- quiz com perguntas de vocabulário em espanhol;
-- alternativas de múltipla escolha;
-- feedback visual para respostas corretas e incorretas;
-- pontuação atualizada durante a atividade;
+- seleção entre três níveis de espanhol;
+- 30 questões no banco atual, com 10 perguntas por nível;
+- questões de vocabulário, gramática e uso da língua;
+- perguntas e alternativas embaralhadas a cada tentativa;
+- feedback explicativo para cada resposta;
+- indicação visual de acertos e erros;
+- pontuação atualizada em tempo real;
 - indicador de progresso;
-- tela final com resultado;
-- opção de reiniciar o quiz;
+- registro local da melhor pontuação de cada nível, quando permitido pelo navegador;
+- tela final personalizada de acordo com o desempenho;
+- opção de refazer o mesmo nível ou escolher outro;
 - interface responsiva para computador e dispositivos móveis;
 - navegação por teclado e atributos básicos de acessibilidade.
 
 ## Tecnologias utilizadas
 
 - **HTML5** — estrutura semântica da aplicação;
-- **CSS3** — estilização, responsividade e estados visuais;
-- **JavaScript** — lógica do quiz, validação das respostas, controle de progresso e cálculo da pontuação.
+- **CSS3** — identidade visual, layout responsivo e estados de interação;
+- **JavaScript** — banco de perguntas, controle de estado, embaralhamento, validação das respostas, feedback, progresso e pontuação;
+- **GitHub Pages** — publicação da aplicação na web.
 
 ## Estrutura do projeto
 
@@ -39,6 +52,7 @@ vamos-a-estudiar-espanol-quiz/
 ├── index.html
 ├── style.css
 ├── script.js
+├── .nojekyll
 └── README.md
 ```
 
@@ -46,7 +60,7 @@ vamos-a-estudiar-espanol-quiz/
 
 1. Clone ou baixe este repositório.
 2. Abra o arquivo `index.html` em um navegador.
-3. Clique em **Começar quiz** e responda às perguntas.
+3. Escolha o nível desejado e inicie o quiz.
 
 O projeto não possui dependências externas e não exige instalação adicional.
 
@@ -57,19 +71,23 @@ Durante a construção do projeto, foram trabalhados conceitos como:
 - estruturação semântica de páginas web;
 - manipulação do DOM com JavaScript;
 - eventos e atualização dinâmica da interface;
+- organização de dados em objetos e arrays;
 - controle de estado da aplicação;
 - lógica condicional e cálculo de pontuação;
+- algoritmo de embaralhamento de perguntas e alternativas;
+- persistência simples com `localStorage`;
 - design responsivo;
-- organização de código e documentação de projeto.
+- acessibilidade básica;
+- organização de código, versionamento e documentação de projeto.
 
 ## Próximas evoluções
 
-- adicionar categorias temáticas de vocabulário;
-- criar níveis de dificuldade;
-- ampliar o banco de perguntas;
-- registrar a melhor pontuação no navegador;
-- incluir embaralhamento de perguntas e alternativas;
-- ampliar recursos de acessibilidade.
+- ampliar o banco de perguntas de cada nível;
+- criar categorias específicas, como gramática, vocabulário e compreensão;
+- adicionar um modo de revisão das respostas ao final;
+- incluir novos tipos de atividade além da múltipla escolha;
+- desenvolver recursos de acompanhamento de progresso;
+- ampliar testes de acessibilidade e usabilidade.
 
 ## Projeto relacionado
 
