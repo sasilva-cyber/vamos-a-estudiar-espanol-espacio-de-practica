@@ -109,11 +109,19 @@
   script.id = "writing-area-loader";
   script.src = "writing.js?v=20260822-1842";
   script.onload = () => {
-    if (document.getElementById("writing-search-loader")) return;
-    const search = document.createElement("script");
-    search.id = "writing-search-loader";
-    search.src = "writing-search.js?v=20260822-1859";
-    document.head.appendChild(search);
+    if (!document.getElementById("writing-search-loader")) {
+      const search = document.createElement("script");
+      search.id = "writing-search-loader";
+      search.src = "writing-search.js?v=20260822-1859";
+      document.head.appendChild(search);
+    }
+
+    if (!document.getElementById("home-writing-card-loader")) {
+      const homeCard = document.createElement("script");
+      homeCard.id = "home-writing-card-loader";
+      homeCard.src = "home-writing-card.js?v=20260822-1903";
+      document.head.appendChild(homeCard);
+    }
   };
   document.head.appendChild(script);
 })();
