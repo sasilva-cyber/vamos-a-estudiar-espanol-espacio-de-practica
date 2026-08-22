@@ -1,6 +1,6 @@
 /* Ajusta o menu "Categorias" do rodapé para Início, Quem somos e Contato. */
 (function () {
-  const ABOUT_URL = "https://www.vamosaestudiarespanol.com.br/p/sobre.html";
+  const ABOUT_URL = "quem-somos.html";
   const CONTACT_URL = "https://www.vamosaestudiarespanol.com.br/p/contato.html";
 
   function installMenu() {
