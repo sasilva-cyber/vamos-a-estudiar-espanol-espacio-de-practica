@@ -3,53 +3,134 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Quiz de vocabulário em espanhol do projeto Vamos a Estudiar Español." />
-  <title>Vamos a Estudiar Español | Quiz de Vocabulário</title>
+  <meta name="description" content="Quiz de espanhol por níveis — básico, intermediário e avançado — do projeto Vamos a Estudiar Español." />
+  <meta name="theme-color" content="#8f1d2c" />
+  <title>Vamos a Estudiar Español | Quiz por Níveis</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="app" aria-labelledby="app-title">
-    <section class="card" id="start-screen">
-      <p class="eyebrow">Vamos a Estudiar Español</p>
-      <h1 id="app-title">Quiz de Vocabulário</h1>
-      <p class="intro">
-        Teste seus conhecimentos de espanhol em uma atividade rápida com feedback imediato.
-      </p>
-      <button class="primary-button" id="start-button" type="button">Começar quiz</button>
-    </section>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./" aria-label="Vamos a Estudiar Español — início">
+        <span class="brand-mark" aria-hidden="true">Ñ</span>
+        <span class="brand-copy">
+          <strong>Vamos a Estudiar Español</strong>
+          <small>¡Aprende, practica y avanza!</small>
+        </span>
+      </a>
+      <span class="header-badge">Quiz interactivo</span>
+    </div>
+    <div class="heritage-stripe" aria-hidden="true"></div>
+  </header>
 
-    <section class="card hidden" id="quiz-screen" aria-live="polite">
-      <div class="quiz-header">
-        <span id="progress">Pergunta 1 de 8</span>
-        <span id="score">Pontuação: 0</span>
+  <main class="app" id="app">
+    <section class="level-screen" id="level-screen" aria-labelledby="level-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Elige tu reto</p>
+        <h1 id="level-title">¿Qué nivel quieres practicar hoy?</h1>
+        <p class="hero-text">
+          Escolha uma faixa de dificuldade e pratique vocabulário, gramática e uso da língua em um quiz com feedback imediato.
+        </p>
       </div>
 
+      <div class="level-grid" role="list" aria-label="Níveis de espanhol disponíveis">
+        <button class="level-card basic" type="button" data-level="basic" role="listitem">
+          <span class="level-topline">
+            <span class="level-icon" aria-hidden="true">¡Hola!</span>
+            <span class="cefr-tag">A1–A2</span>
+          </span>
+          <strong>Básico</strong>
+          <span>Vocabulário cotidiano, presente, estruturas essenciais e situações simples.</span>
+          <span class="level-cta">Empezar →</span>
+        </button>
+
+        <button class="level-card intermediate" type="button" data-level="intermediate" role="listitem">
+          <span class="level-topline">
+            <span class="level-icon" aria-hidden="true">¿Qué tal?</span>
+            <span class="cefr-tag">B1–B2</span>
+          </span>
+          <strong>Intermediário</strong>
+          <span>Tempos verbais, conectores, pronomes e situações de comunicação mais complexas.</span>
+          <span class="level-cta">Continuar →</span>
+        </button>
+
+        <button class="level-card advanced" type="button" data-level="advanced" role="listitem">
+          <span class="level-topline">
+            <span class="level-icon" aria-hidden="true">¡A por ello!</span>
+            <span class="cefr-tag">C1–C2</span>
+          </span>
+          <strong>Avançado</strong>
+          <span>Subjuntivo, nuances normativas, expressões idiomáticas e usos sofisticados.</span>
+          <span class="level-cta">Desafiarme →</span>
+        </button>
+      </div>
+
+      <aside class="note" aria-label="Observação sobre os níveis">
+        <span aria-hidden="true">✦</span>
+        <p>As faixas A1–C2 são usadas aqui como referência pedagógica de dificuldade. Este quiz não substitui um exame oficial de proficiência.</p>
+      </aside>
+    </section>
+
+    <section class="quiz-screen hidden" id="quiz-screen" aria-live="polite" aria-labelledby="question">
+      <div class="quiz-toolbar">
+        <button class="text-button" id="back-button" type="button">← Trocar nível</button>
+        <div class="quiz-status">
+          <span class="level-pill" id="level-pill">Básico · A1–A2</span>
+          <span id="score">0 pontos</span>
+        </div>
+      </div>
+
+      <div class="progress-meta">
+        <span id="progress">Pergunta 1 de 10</span>
+        <span id="best-score">Melhor: —</span>
+      </div>
       <div class="progress-track" aria-hidden="true">
         <div class="progress-bar" id="progress-bar"></div>
       </div>
 
-      <p class="category" id="category">Vocabulário</p>
-      <h2 id="question">Pergunta</h2>
+      <article class="question-card">
+        <div class="question-meta">
+          <span class="category" id="category">Gramática</span>
+          <span class="question-number" id="question-number">01</span>
+        </div>
+        <h2 id="question">Pergunta</h2>
+        <div class="answers" id="answers" role="group" aria-label="Alternativas da pergunta"></div>
 
-      <div class="answers" id="answers" role="group" aria-label="Alternativas da pergunta"></div>
+        <div class="feedback hidden" id="feedback" role="status">
+          <strong id="feedback-title"></strong>
+          <p id="feedback-text"></p>
+        </div>
 
-      <p class="feedback" id="feedback" aria-live="assertive"></p>
-      <button class="primary-button hidden" id="next-button" type="button">Próxima pergunta</button>
+        <div class="question-actions">
+          <button class="primary-button hidden" id="next-button" type="button">Próxima pergunta</button>
+        </div>
+      </article>
     </section>
 
-    <section class="card hidden" id="result-screen">
-      <p class="eyebrow">Resultado</p>
-      <h2>Quiz concluído</h2>
-      <p class="result-score" id="final-score"></p>
-      <p id="result-message"></p>
-      <button class="primary-button" id="restart-button" type="button">Refazer quiz</button>
+    <section class="result-screen hidden" id="result-screen" aria-labelledby="result-title">
+      <div class="result-card">
+        <p class="eyebrow">Resultado</p>
+        <span class="result-level" id="result-level">Intermediário · B1–B2</span>
+        <h2 id="result-title">¡Quiz completado!</h2>
+        <div class="score-ring" aria-hidden="true">
+          <span id="final-score">0/10</span>
+        </div>
+        <p class="result-message" id="result-message"></p>
+        <p class="result-detail" id="result-detail"></p>
+
+        <div class="result-actions">
+          <button class="primary-button" id="restart-button" type="button">Refazer este nível</button>
+          <button class="secondary-button" id="choose-level-button" type="button">Escolher outro nível</button>
+        </div>
+      </div>
     </section>
   </main>
 
   <footer>
     <p>
-      Projeto complementar ao
-      <a href="http://vamosaestudiarespanol.com.br/" target="_blank" rel="noreferrer">Vamos a Estudiar Español</a>
+      <strong>Vamos a Estudiar Español</strong> · Projeto de aprendizagem de espanhol
+      <span aria-hidden="true">•</span>
+      <a href="http://vamosaestudiarespanol.com.br/" target="_blank" rel="noreferrer">Visitar site principal</a>
     </p>
   </footer>
 
