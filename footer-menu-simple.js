@@ -64,6 +64,14 @@
     document.head.appendChild(script);
   }
 
+  function loadGrammarDropdown() {
+    if (document.getElementById("grammar-dropdown-nav-loader")) return;
+    const script = document.createElement("script");
+    script.id = "grammar-dropdown-nav-loader";
+    script.src = "nav-grammar-dropdown.js?v=20260822-2041";
+    document.head.appendChild(script);
+  }
+
   function loadHomeFalseFriends() {
     if (document.getElementById("home-false-friends-loader")) return;
     const script = document.createElement("script");
@@ -95,6 +103,7 @@
 
   function install() {
     adjustHomeTitle();
+    loadGrammarDropdown();
     if (!installMenu()) {
       setTimeout(install, 200);
       return;
