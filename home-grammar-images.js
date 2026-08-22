@@ -69,3 +69,12 @@
     setTimeout(install, 200);
   }
 })();
+
+/* Carrega a área Escucha en español. */
+(function loadListeningArea() {
+  if (document.getElementById("listening-area-loader")) return;
+  const script = document.createElement("script");
+  script.id = "listening-area-loader";
+  script.src = "listening.js?v=20260822-1816";
+  document.head.appendChild(script);
+})();
