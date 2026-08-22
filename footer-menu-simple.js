@@ -38,11 +38,24 @@
     document.head.appendChild(script);
   }
 
+  function loadHomeFalseFriends() {
+    if (document.getElementById("home-false-friends-loader")) return;
+    const script = document.createElement("script");
+    script.id = "home-false-friends-loader";
+    script.src = "home-falsos-amigos.js?v=20260822-2032";
+    document.head.appendChild(script);
+  }
+
   function loadFalseFriendsGame() {
-    if (document.getElementById("false-friends-game-loader")) return;
+    if (document.getElementById("false-friends-game-loader")) {
+      loadHomeFalseFriends();
+      return;
+    }
     const script = document.createElement("script");
     script.id = "false-friends-game-loader";
     script.src = "quiz-falsos-amigos.js?v=20260822-2028";
+    script.onload = loadHomeFalseFriends;
+    script.onerror = loadHomeFalseFriends;
     document.head.appendChild(script);
   }
 
