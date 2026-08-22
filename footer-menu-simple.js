@@ -72,11 +72,24 @@
     document.head.appendChild(script);
   }
 
+  function loadHomeGameOrder() {
+    if (document.getElementById("home-game-order-loader")) return;
+    const script = document.createElement("script");
+    script.id = "home-game-order-loader";
+    script.src = "home-game-before-grammar.js?v=20260822-2045";
+    document.head.appendChild(script);
+  }
+
   function loadHomeFalseFriends() {
-    if (document.getElementById("home-false-friends-loader")) return;
+    if (document.getElementById("home-false-friends-loader")) {
+      loadHomeGameOrder();
+      return;
+    }
     const script = document.createElement("script");
     script.id = "home-false-friends-loader";
     script.src = "home-falsos-amigos.js?v=20260822-2032";
+    script.onload = loadHomeGameOrder;
+    script.onerror = loadHomeGameOrder;
     document.head.appendChild(script);
   }
 
