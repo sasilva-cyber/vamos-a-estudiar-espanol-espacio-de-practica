@@ -68,7 +68,7 @@
     if (document.getElementById("grammar-dropdown-nav-loader")) return;
     const script = document.createElement("script");
     script.id = "grammar-dropdown-nav-loader";
-    script.src = "nav-grammar-dropdown.js?v=20260822-2041";
+    script.src = "nav-grammar-dropdown.js?v=20260822-2042";
     document.head.appendChild(script);
   }
 
