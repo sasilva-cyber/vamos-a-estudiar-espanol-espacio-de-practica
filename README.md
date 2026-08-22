@@ -1,25 +1,36 @@
 # Vamos a Estudiar Español — Quiz de Vocabulário
 
-Projeto pessoal desenvolvido como extensão da iniciativa **Vamos a Estudiar Español**, voltada ao ensino e à aprendizagem da língua espanhola.
+Quiz interativo de espanhol desenvolvido como projeto complementar à iniciativa **Vamos a Estudiar Español**, voltada ao ensino e à aprendizagem da língua espanhola.
 
-O objetivo deste projeto é transformar conteúdos de vocabulário em uma experiência interativa e acessível, permitindo que estudantes pratiquem espanhol por meio de perguntas de múltipla escolha e recebam feedback imediato sobre seu desempenho.
+## Demonstração online
+
+**Acesse o projeto:** https://sasilva-cyber.github.io/vamos-a-estudiar-espanol-quiz/
+
+**Site principal:** http://vamosaestudiarespanol.com.br/
+
+## Sobre o projeto
+
+O projeto transforma conteúdos de vocabulário em uma experiência de aprendizagem interativa. A aplicação apresenta perguntas de múltipla escolha, fornece feedback imediato e acompanha a pontuação do usuário ao longo da atividade.
+
+Além de explorar fundamentos de desenvolvimento web, o projeto conecta tecnologia e ensino de línguas em uma solução simples, funcional e acessível.
 
 ## Funcionalidades
 
-- Quiz com perguntas de vocabulário em espanhol;
+- quiz com perguntas de vocabulário em espanhol;
 - alternativas de múltipla escolha;
 - feedback visual para respostas corretas e incorretas;
 - pontuação atualizada durante a atividade;
+- indicador de progresso;
 - tela final com resultado;
-- possibilidade de reiniciar o quiz;
+- opção de reiniciar o quiz;
 - interface responsiva para computador e dispositivos móveis;
-- navegação por teclado e atributos de acessibilidade.
+- navegação por teclado e atributos básicos de acessibilidade.
 
 ## Tecnologias utilizadas
 
 - **HTML5** — estrutura semântica da aplicação;
-- **CSS3** — layout, responsividade e estados visuais;
-- **JavaScript** — lógica do quiz, validação das respostas e cálculo da pontuação.
+- **CSS3** — estilização, responsividade e estados visuais;
+- **JavaScript** — lógica do quiz, validação das respostas, controle de progresso e cálculo da pontuação.
 
 ## Estrutura do projeto
 
@@ -31,28 +42,41 @@ vamos-a-estudiar-espanol-quiz/
 └── README.md
 ```
 
-## Como executar
+## Como executar localmente
 
 1. Clone ou baixe este repositório.
 2. Abra o arquivo `index.html` em um navegador.
 3. Clique em **Começar quiz** e responda às perguntas.
 
-Não há dependências externas nem necessidade de instalação.
+O projeto não possui dependências externas e não exige instalação adicional.
 
-## Sobre o projeto
+## Aprendizados desenvolvidos
 
-O **Vamos a Estudiar Español — Quiz de Vocabulário** foi criado como um projeto de aprendizagem e portfólio, conectando ensino de línguas e desenvolvimento web. A proposta é evoluir a aplicação gradualmente, adicionando novas categorias, níveis de dificuldade e recursos de estudo.
+Durante a construção do projeto, foram trabalhados conceitos como:
 
-Site do projeto principal: [Vamos a Estudiar Español](http://vamosaestudiarespanol.com.br/)
+- estruturação semântica de páginas web;
+- manipulação do DOM com JavaScript;
+- eventos e atualização dinâmica da interface;
+- controle de estado da aplicação;
+- lógica condicional e cálculo de pontuação;
+- design responsivo;
+- organização de código e documentação de projeto.
 
-## Próximos passos
+## Próximas evoluções
 
 - adicionar categorias temáticas de vocabulário;
 - criar níveis de dificuldade;
-- registrar melhor pontuação no navegador;
 - ampliar o banco de perguntas;
-- disponibilizar uma versão publicada com GitHub Pages.
+- registrar a melhor pontuação no navegador;
+- incluir embaralhamento de perguntas e alternativas;
+- ampliar recursos de acessibilidade.
 
-## Autoria
+## Projeto relacionado
 
-Projeto de **Samantha Bezerra da Silva**.
+O **Vamos a Estudiar Español** é uma iniciativa dedicada ao ensino e à divulgação de conteúdos sobre língua espanhola.
+
+Site: http://vamosaestudiarespanol.com.br/
+
+## Responsável pelo projeto
+
+**Samantha Bezerra da Silva**
