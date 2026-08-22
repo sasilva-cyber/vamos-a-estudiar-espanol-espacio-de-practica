@@ -85,6 +85,14 @@
     document.head.appendChild(script);
   }
 
+  function loadHomeStats() {
+    if (document.getElementById("home-stats-auto-loader")) return;
+    const script = document.createElement("script");
+    script.id = "home-stats-auto-loader";
+    script.src = "home-stats-auto.js?v=20260822-2037";
+    document.head.appendChild(script);
+  }
+
   function install() {
     adjustHomeTitle();
     if (!installMenu()) {
@@ -93,6 +101,7 @@
     }
     loadRouteQuery();
     loadFalseFriendsGame();
+    loadHomeStats();
   }
 
   if (document.readyState === "loading") {
