@@ -30,8 +30,20 @@
     return true;
   }
 
+  function loadRouteQuery() {
+    if (document.getElementById("route-query-loader")) return;
+    const script = document.createElement("script");
+    script.id = "route-query-loader";
+    script.src = "route-query.js?v=20260822-1931";
+    document.head.appendChild(script);
+  }
+
   function install() {
-    if (!installMenu()) setTimeout(install, 200);
+    if (!installMenu()) {
+      setTimeout(install, 200);
+      return;
+    }
+    loadRouteQuery();
   }
 
   if (document.readyState === "loading") {
