@@ -70,7 +70,7 @@
   }
 })();
 
-/* Carrega a área Escucha en español e, depois dela, os filtros da biblioteca. */
+/* Carrega Escucha, filtros e a biblioteca ampliada com 18 áudios. */
 (function loadListeningArea() {
   if (document.getElementById("listening-area-loader")) return;
 
@@ -78,11 +78,26 @@
   script.id = "listening-area-loader";
   script.src = "listening.js?v=20260822-1816";
   script.onload = () => {
-    if (document.getElementById("listening-filters-loader")) return;
-    const filters = document.createElement("script");
-    filters.id = "listening-filters-loader";
-    filters.src = "listening-filters.js?v=20260822-1830";
-    document.head.appendChild(filters);
+    if (!document.getElementById("listening-filters-loader")) {
+      const filters = document.createElement("script");
+      filters.id = "listening-filters-loader";
+      filters.src = "listening-filters.js?v=20260822-1830";
+      document.head.appendChild(filters);
+    }
+
+    if (!document.getElementById("listening-expanded-loader")) {
+      const expanded = document.createElement("script");
+      expanded.id = "listening-expanded-loader";
+      expanded.src = "listening-expanded.js?v=20260822-1848";
+      expanded.onload = () => {
+        if (document.getElementById("listening-expanded-fixes-loader")) return;
+        const fixes = document.createElement("script");
+        fixes.id = "listening-expanded-fixes-loader";
+        fixes.src = "listening-expanded-fixes.js?v=20260822-1848";
+        document.head.appendChild(fixes);
+      };
+      document.head.appendChild(expanded);
+    }
   };
   document.head.appendChild(script);
 })();
