@@ -1,7 +1,7 @@
-/* Carrega as atividades de Quiz preservadas, pagina a Gramática e destaca as últimas aulas na página inicial. */
+/* Carrega as atividades de Quiz preservadas, pagina Gramática e Vocabulário e destaca as últimas aulas na página inicial. */
 (function () {
   const coreScript = document.createElement("script");
-  coreScript.src = "quiz-activities-core.js?v=20260822-1742";
+  coreScript.src = "quiz-activities-core.js?v=20260822-1745";
   coreScript.onload = initializeEnhancements;
   coreScript.onerror = initializeEnhancements;
   document.head.appendChild(coreScript);
@@ -9,6 +9,15 @@
   function initializeEnhancements() {
     installGrammarPagination();
     installHomeGrammarShowcase();
+    loadVocabularyPagination();
+  }
+
+  function loadVocabularyPagination() {
+    if (document.getElementById("vocabulary-pagination-loader")) return;
+    const script = document.createElement("script");
+    script.id = "vocabulary-pagination-loader";
+    script.src = "vocabulary-pagination.js?v=20260822-1745";
+    document.head.appendChild(script);
   }
 
   function installHomeGrammarShowcase() {
