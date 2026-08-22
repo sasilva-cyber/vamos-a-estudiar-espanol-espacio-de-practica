@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Entre em contato com o projeto Vamos a Estudiar Español pelos canais oficiais nas redes sociais." />
+  <meta name="description" content="Entre em contato com o projeto Vamos a Estudiar Español por formulário ou pelos canais oficiais nas redes sociais." />
   <meta name="theme-color" content="#8f1d2c" />
   <title>Contato | Vamos a Estudiar Español</title>
   <base href="/vamos-a-estudiar-espanol-espacio-de-practica/" />
-  <link rel="stylesheet" href="contato.css?v=20260822-2023" />
+  <link rel="stylesheet" href="contato.css?v=20260822-2032" />
 </head>
 <body>
   <header class="contact-header">
@@ -30,10 +30,10 @@
         <p class="eyebrow">Contato</p>
         <h1 id="contact-title">Vamos conversar?</h1>
         <p class="contact-lead">
-          Este espaço foi criado para aproximar o <strong>Vamos a Estudiar Español</strong> de quem estuda, acompanha e participa do projeto. Se você encontrou uma dúvida, quer sugerir um tema, indicar uma correção, compartilhar uma ideia ou conversar sobre uma possível parceria, será muito bem-vindo por um dos nossos canais oficiais.
+          Este espaço foi criado para aproximar o <strong>Vamos a Estudiar Español</strong> de quem estuda, acompanha e participa do projeto. Se você encontrou uma dúvida, quer sugerir um tema, indicar uma correção, compartilhar uma ideia ou conversar sobre uma possível parceria, será muito bem-vindo.
         </p>
         <p class="contact-lead">
-          Escolha a rede que for mais conveniente para você. Ao clicar, o canal será aberto em uma nova aba.
+          Você pode enviar sua mensagem pelo formulário abaixo ou escolher um dos canais oficiais do projeto.
         </p>
       </div>
 
@@ -50,11 +50,55 @@
       </aside>
     </section>
 
+    <section class="contact-form-section" aria-labelledby="form-title">
+      <div class="contact-section-heading">
+        <p class="eyebrow">Envie uma mensagem</p>
+        <h2 id="form-title">Fale diretamente com o projeto</h2>
+        <p>Preencha os campos abaixo. Todos são obrigatórios.</p>
+      </div>
+
+      <form class="contact-form" id="contact-form" action="https://formsubmit.co/contato.vamosaestudiarespanol@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="Nova mensagem pelo site Vamos a Estudiar Español" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_next" value="https://sasilva-cyber.github.io/vamos-a-estudiar-espanol-espacio-de-practica/contato/?enviado=1" />
+        <input type="hidden" name="_url" value="https://sasilva-cyber.github.io/vamos-a-estudiar-espanol-espacio-de-practica/contato/" />
+        <input class="contact-honeypot" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+        <div class="contact-form-grid">
+          <label class="contact-field">
+            <span>Nome <strong aria-hidden="true">*</strong></span>
+            <input type="text" name="nome" autocomplete="name" required maxlength="120" placeholder="Seu nome" />
+          </label>
+
+          <label class="contact-field">
+            <span>Assunto <strong aria-hidden="true">*</strong></span>
+            <input type="text" name="assunto" required maxlength="160" placeholder="Sobre o que você deseja falar?" />
+          </label>
+
+          <label class="contact-field contact-field-full">
+            <span>Email <strong aria-hidden="true">*</strong></span>
+            <input type="email" name="email" autocomplete="email" inputmode="email" required maxlength="180" placeholder="seuemail@exemplo.com" />
+          </label>
+
+          <label class="contact-field contact-field-full">
+            <span>Mensagem <strong aria-hidden="true">*</strong></span>
+            <textarea name="mensagem" required minlength="5" maxlength="5000" rows="8" placeholder="Escreva sua mensagem aqui..."></textarea>
+          </label>
+        </div>
+
+        <div class="contact-form-footer">
+          <p>Ao enviar, os dados deste formulário serão processados pelo serviço FormSubmit para encaminhar a mensagem ao email do projeto.</p>
+          <button class="contact-submit" type="submit">Enviar mensagem →</button>
+        </div>
+        <div class="contact-form-status" id="contact-form-status" role="status" aria-live="polite"></div>
+      </form>
+    </section>
+
     <section class="contact-channels" aria-labelledby="channels-title">
       <div class="contact-section-heading">
         <p class="eyebrow">Canais oficiais</p>
         <h2 id="channels-title">Encontre o Vamos a Estudiar Español</h2>
-        <p>As redes abaixo são os canais oficiais do projeto.</p>
+        <p>Se preferir, você também pode entrar em contato pelas redes sociais oficiais.</p>
       </div>
 
       <div class="contact-social-grid">
@@ -90,11 +134,6 @@
           <span class="contact-social-arrow" aria-hidden="true">→</span>
         </a>
       </div>
-
-      <div class="contact-transparency">
-        <strong>Contato direto pelas redes</strong>
-        <p>Esta página não envia dados para formulários externos. Para garantir que sua mensagem chegue ao projeto, utilize um dos canais oficiais acima.</p>
-      </div>
     </section>
   </main>
 
@@ -104,5 +143,18 @@
       <a href="./">Ir para a plataforma →</a>
     </div>
   </footer>
+
+  <script>
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const status = document.getElementById('contact-form-status');
+      if (params.get('enviado') === '1' && status) {
+        status.classList.add('is-success');
+        status.textContent = 'Mensagem enviada. Obrigada pelo contato!';
+        status.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        window.history.replaceState({}, '', window.location.pathname);
+      }
+    })();
+  </script>
 </body>
 </html>
