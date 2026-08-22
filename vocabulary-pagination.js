@@ -171,3 +171,12 @@
   injectVocabularyPaginationStyles();
   renderVocabularyCards();
 })();
+
+/* Carrega os testes de compreensão leitora depois das extensões do Quiz. */
+(function loadReadingTests() {
+  if (document.getElementById("reading-tests-loader")) return;
+  const script = document.createElement("script");
+  script.id = "reading-tests-loader";
+  script.src = "reading-tests.js?v=20260822-1750";
+  document.head.appendChild(script);
+})();
