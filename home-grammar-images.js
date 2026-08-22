@@ -135,6 +135,15 @@
   document.head.appendChild(script);
 })();
 
+/* Carrega o rodapé ampliado com categorias e redes sociais. */
+(function loadEnhancedFooter() {
+  if (document.getElementById("enhanced-footer-loader")) return;
+  const script = document.createElement("script");
+  script.id = "enhanced-footer-loader";
+  script.src = "footer-enhanced.js?v=20260822-1906";
+  document.head.appendChild(script);
+})();
+
 /* Carrega por último a camada responsiva global para celulares e tablets. */
 (function loadResponsiveStyles() {
   if (document.getElementById("responsive-styles")) return;
