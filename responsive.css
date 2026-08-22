@@ -1,0 +1,556 @@
+/* Responsividade global — celulares, tablets e dispositivos móveis */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+img,
+svg,
+video,
+canvas,
+audio {
+  max-width: 100%;
+}
+
+audio {
+  width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  max-width: 100%;
+}
+
+/* Evita estouro de textos longos em cards, títulos e feedbacks */
+.app,
+.app * {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* TABLETS E NOTEBOOKS COM TELA MENOR */
+@media (max-width: 1024px) {
+  .header-inner,
+  .app,
+  footer {
+    width: min(100% - 32px, 1120px) !important;
+  }
+
+  .app {
+    padding-top: 42px !important;
+  }
+
+  .home-hero,
+  .reader-layout,
+  .grammar-article-layout,
+  .vocabulary-reader-layout,
+  .writing-layout,
+  .listening-reader-layout {
+    grid-template-columns: 1fr !important;
+  }
+
+  .feature-grid,
+  .grammar-grid,
+  .vocabulary-grid,
+  .reading-grid,
+  .activity-grid,
+  .listening-grid,
+  .writing-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .reader-sidebar,
+  .grammar-sidebar,
+  .vocabulary-sidebar {
+    position: static !important;
+    top: auto !important;
+  }
+
+  .reader-sidebar,
+  .grammar-sidebar {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .home-grammar-items {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  .home-grammar-circle {
+    width: clamp(120px, 17vw, 158px) !important;
+  }
+
+  .writing-workspace textarea {
+    min-height: 280px !important;
+  }
+}
+
+/* TABLETS PEQUENOS E CELULARES GRANDES */
+@media (max-width: 820px) {
+  .site-header {
+    position: sticky !important;
+    top: 0;
+  }
+
+  .header-inner {
+    min-height: auto !important;
+    padding: 12px 0 10px !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+
+  .brand {
+    align-self: center;
+    justify-content: center !important;
+  }
+
+  /* Com muitas abas, rolagem horizontal é mais utilizável do que quebrar em várias linhas. */
+  .main-nav {
+    width: 100%;
+    display: flex !important;
+    justify-content: flex-start !important;
+    flex-wrap: nowrap !important;
+    gap: 6px !important;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 2px 2px 7px;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+  }
+
+  .main-nav .nav-link {
+    flex: 0 0 auto;
+    min-height: 44px;
+    padding: 9px 13px !important;
+    white-space: nowrap;
+    scroll-snap-align: start;
+  }
+
+  .home-copy {
+    padding-top: 2px !important;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 8.2vw, 3.35rem) !important;
+  }
+
+  h2 {
+    font-size: clamp(1.45rem, 5.6vw, 2.2rem) !important;
+  }
+
+  .hero-text {
+    font-size: 1rem !important;
+    line-height: 1.65 !important;
+  }
+
+  .hero-panel,
+  .feature-card,
+  .grammar-card,
+  .vocabulary-card,
+  .reading-card,
+  .activity-card,
+  .listening-card,
+  .writing-card {
+    border-radius: 20px !important;
+  }
+
+  .grammar-toolbar,
+  .vocabulary-toolbar,
+  .reading-toolbar,
+  .listening-toolbar,
+  .writing-toolbar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .grammar-toolbar > *,
+  .vocabulary-toolbar > *,
+  .reading-toolbar > *,
+  .listening-toolbar > *,
+  .writing-toolbar > * {
+    width: 100% !important;
+  }
+
+  .grammar-filter-group,
+  .vocabulary-filter-group,
+  .filter-group {
+    width: 100% !important;
+  }
+
+  .grammar-filter-select,
+  .vocabulary-filter-select,
+  .listening-level-filter,
+  .writing-filter select,
+  .vocabulary-search,
+  .listening-search {
+    width: 100% !important;
+  }
+
+  .question-card,
+  .activity-question-card,
+  .activity-result-card,
+  .result-card,
+  .story-paper,
+  .grammar-paper,
+  .vocabulary-paper,
+  .writing-guide,
+  .writing-workspace,
+  .listening-player-card,
+  .listening-question-card {
+    border-radius: 20px !important;
+  }
+
+  .answers,
+  .activity-options {
+    grid-template-columns: 1fr !important;
+  }
+
+  .quiz-toolbar,
+  .activity-toolbar,
+  .writing-editor-head,
+  .listening-reader-head {
+    align-items: flex-start !important;
+    flex-direction: column !important;
+  }
+
+  .quiz-status,
+  .activity-progress-meta,
+  .progress-meta {
+    width: 100%;
+  }
+
+  .home-grammar-head {
+    align-items: stretch !important;
+    flex-direction: column !important;
+  }
+
+  .home-grammar-browse {
+    min-width: 0 !important;
+    width: 100% !important;
+    justify-content: stretch !important;
+  }
+
+  .home-grammar-select-wrap {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+  }
+
+  .listening-speed-controls,
+  .listening-actions,
+  .writing-actions,
+  .activity-result-actions,
+  .result-actions,
+  .grammar-finish,
+  .vocabulary-finish,
+  .story-finish {
+    flex-wrap: wrap !important;
+  }
+}
+
+/* CELULARES */
+@media (max-width: 640px) {
+  .header-inner,
+  .app,
+  footer {
+    width: min(100% - 22px, 1120px) !important;
+  }
+
+  .app {
+    padding: 28px 0 28px !important;
+  }
+
+  .brand-mark {
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 12px !important;
+    font-size: 1.55rem !important;
+  }
+
+  .brand-copy strong {
+    font-size: 1.08rem !important;
+  }
+
+  .brand-copy small {
+    display: none !important;
+  }
+
+  .main-nav .nav-link {
+    font-size: .88rem !important;
+    padding-inline: 12px !important;
+  }
+
+  .heritage-stripe {
+    height: 5px !important;
+  }
+
+  .home-hero,
+  .feature-grid,
+  .level-grid,
+  .grammar-grid,
+  .vocabulary-grid,
+  .reading-grid,
+  .activity-grid,
+  .listening-grid,
+  .writing-grid,
+  .reader-sidebar,
+  .grammar-sidebar,
+  .home-grammar-items {
+    grid-template-columns: 1fr !important;
+  }
+
+  .hero-panel,
+  .feature-card,
+  .level-card,
+  .grammar-card,
+  .vocabulary-card,
+  .reading-card,
+  .activity-card,
+  .listening-card,
+  .writing-card {
+    padding: 20px !important;
+  }
+
+  .hero-actions {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 9px !important;
+  }
+
+  .hero-actions button {
+    width: 100% !important;
+    min-height: 48px !important;
+  }
+
+  .home-grammar-showcase {
+    padding: 22px 16px !important;
+    border-radius: 20px !important;
+  }
+
+  .home-grammar-browse {
+    align-items: stretch !important;
+    flex-direction: column !important;
+  }
+
+  .home-grammar-circle {
+    width: 148px !important;
+  }
+
+  .home-grammar-footer {
+    justify-content: center !important;
+  }
+
+  .grammar-paper,
+  .vocabulary-paper,
+  .story-paper,
+  .question-card,
+  .activity-question-card,
+  .activity-result-card,
+  .result-card,
+  .writing-guide,
+  .writing-workspace,
+  .listening-player-card,
+  .listening-question-card {
+    padding: 20px 16px !important;
+  }
+
+  .story-body {
+    font-size: 1.02rem !important;
+    line-height: 1.78 !important;
+  }
+
+  .vocabulary-term-head {
+    display: none !important;
+  }
+
+  .vocabulary-term-row {
+    grid-template-columns: 1fr !important;
+    gap: 4px !important;
+  }
+
+  .grammar-card-footer,
+  .vocabulary-card-footer,
+  .reading-card-footer,
+  .listening-card-footer,
+  .writing-card-footer {
+    align-items: stretch !important;
+    flex-direction: column !important;
+  }
+
+  .grammar-card-footer button,
+  .vocabulary-card-footer button,
+  .reading-card-footer button,
+  .listening-card-footer button,
+  .writing-card-footer button,
+  .activity-question-actions button,
+  .activity-result-actions button,
+  .result-actions button,
+  .writing-actions button,
+  .listening-actions button,
+  .grammar-finish button,
+  .vocabulary-finish button,
+  .story-finish button {
+    width: 100% !important;
+  }
+
+  .grammar-pagination,
+  .vocabulary-pagination {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 9px !important;
+  }
+
+  .grammar-pagination-status,
+  .vocabulary-pagination-status {
+    grid-column: 1 / -1 !important;
+    grid-row: 1 !important;
+    min-width: 0 !important;
+  }
+
+  .grammar-pagination-button,
+  .vocabulary-pagination-button {
+    width: 100% !important;
+    min-width: 0 !important;
+    padding-inline: 10px !important;
+    font-size: .84rem !important;
+  }
+
+  .activity-result-summary {
+    grid-template-columns: 1fr !important;
+    text-align: center;
+  }
+
+  .activity-score-circle {
+    margin-inline: auto;
+  }
+
+  .answer-review-head,
+  .listening-review-head,
+  .writing-issue-head {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+
+  .writing-workspace textarea {
+    min-height: 260px !important;
+  }
+
+  .writing-counter,
+  .listening-toolbar,
+  .writing-toolbar {
+    gap: 10px !important;
+  }
+
+  /* 16px evita zoom automático em campos de formulário no iPhone. */
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
+  button,
+  .nav-link,
+  input,
+  select {
+    min-height: 44px;
+  }
+
+  footer p {
+    display: block !important;
+    text-align: center !important;
+    line-height: 1.65;
+  }
+}
+
+/* CELULARES COM TELA ESTREITA */
+@media (max-width: 420px) {
+  .header-inner,
+  .app,
+  footer {
+    width: min(100% - 18px, 1120px) !important;
+  }
+
+  .app {
+    padding-top: 22px !important;
+  }
+
+  h1 {
+    font-size: clamp(1.85rem, 10vw, 2.55rem) !important;
+  }
+
+  h2 {
+    font-size: clamp(1.35rem, 7vw, 1.9rem) !important;
+  }
+
+  .hero-panel,
+  .feature-card,
+  .level-card,
+  .grammar-card,
+  .vocabulary-card,
+  .reading-card,
+  .activity-card,
+  .listening-card,
+  .writing-card {
+    padding: 17px !important;
+    border-radius: 17px !important;
+  }
+
+  .question-card,
+  .activity-question-card,
+  .activity-result-card,
+  .result-card,
+  .story-paper,
+  .grammar-paper,
+  .vocabulary-paper,
+  .writing-guide,
+  .writing-workspace {
+    padding: 18px 14px !important;
+  }
+
+  .answer-button,
+  .activity-option,
+  .listening-option {
+    padding: 12px !important;
+  }
+
+  .home-grammar-circle {
+    width: 136px !important;
+  }
+
+  .score-ring {
+    width: 124px !important;
+    height: 124px !important;
+  }
+
+  .activity-score-circle {
+    width: 100px !important;
+    height: 100px !important;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 520px) {
+  .site-header {
+    position: relative !important;
+  }
+
+  .app {
+    padding-top: 22px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
