@@ -145,7 +145,7 @@
     if (document.getElementById("footer-menu-simple-loader")) return;
     const menu = document.createElement("script");
     menu.id = "footer-menu-simple-loader";
-    menu.src = "footer-menu-simple.js?v=20260822-2041";
+    menu.src = "footer-menu-simple.js?v=20260822-2042";
     document.head.appendChild(menu);
   };
   document.head.appendChild(script);
