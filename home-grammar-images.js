@@ -95,3 +95,13 @@
   script.src = "writing.js?v=20260822-1842";
   document.head.appendChild(script);
 })();
+
+/* Carrega por último a camada responsiva global para celulares e tablets. */
+(function loadResponsiveStyles() {
+  if (document.getElementById("responsive-styles")) return;
+  const link = document.createElement("link");
+  link.id = "responsive-styles";
+  link.rel = "stylesheet";
+  link.href = "responsive.css?v=20260822-1840";
+  document.head.appendChild(link);
+})();
