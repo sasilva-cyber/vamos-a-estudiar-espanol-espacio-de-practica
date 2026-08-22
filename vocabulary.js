@@ -203,12 +203,61 @@ const vocabularyScreen = document.getElementById("vocabulary-screen");
 const vocabularyReaderScreen = document.getElementById("vocabulary-reader-screen");
 const vocabularyGrid = document.getElementById("vocabulary-grid");
 const vocabularySearch = document.getElementById("vocabulary-search");
+const vocabularyFilterGroup = document.querySelector(".vocabulary-filter-group");
 const vocabularyFilterButtons = [...document.querySelectorAll("[data-vocabulary-filter]")];
 let vocabularyFilter = "all";
 let currentVocabularyId = null;
 let currentPractice = [];
 let currentPracticeIndex = 0;
 let practiceScore = 0;
+
+function setupVocabularyDropdown() {
+  if (!vocabularyFilterGroup || !vocabularyFilterButtons.length) return;
+
+  const select = document.createElement("select");
+  select.id = "vocabulary-filter-select";
+  select.className = "vocabulary-filter-select";
+  select.setAttribute("aria-label", "Filtrar temas de vocabulário por categoria");
+
+  vocabularyFilterButtons.forEach((button) => {
+    const option = document.createElement("option");
+    option.value = button.dataset.vocabularyFilter;
+    option.textContent = button.textContent.trim();
+    select.appendChild(option);
+  });
+
+  vocabularyFilterGroup.replaceChildren(select);
+
+  const style = document.createElement("style");
+  style.textContent = `
+    .vocabulary-filter-group { flex: 0 1 250px; min-width: 220px; }
+    .vocabulary-filter-select {
+      width: 100%;
+      min-height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      color: var(--red-dark);
+      padding: 10px 42px 10px 13px;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .vocabulary-filter-select:focus {
+      outline: 2px solid rgba(143,29,44,.15);
+      border-color: rgba(143,29,44,.42);
+    }
+    @media (max-width: 560px) {
+      .vocabulary-filter-group { width: 100%; min-width: 100%; }
+    }
+  `;
+  document.head.appendChild(style);
+
+  select.addEventListener("change", () => {
+    vocabularyFilter = select.value;
+    renderVocabularyCards();
+  });
+}
 
 function vocabularyIsStudied(id) {
   try { return localStorage.getItem(`vae-vocabulary-${id}`) === "yes"; } catch { return false; }
@@ -371,13 +420,6 @@ function checkVocabularyPractice(button, item) {
 }
 
 vocabularySearch?.addEventListener("input", renderVocabularyCards);
-vocabularyFilterButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    vocabularyFilter = button.dataset.vocabularyFilter;
-    vocabularyFilterButtons.forEach((item) => item.classList.toggle("active", item === button));
-    renderVocabularyCards();
-  });
-});
 
 document.getElementById("vocabulary-reader-back")?.addEventListener("click", showVocabularyLibrary);
 document.getElementById("vocabulary-mark-button")?.addEventListener("click", () => {
@@ -395,4 +437,5 @@ document.getElementById("vocabulary-mark-button")?.addEventListener("click", () 
   if (button.dataset.route !== "vocabulary") button.addEventListener("click", hideVocabularyScreens);
 });
 
+setupVocabularyDropdown();
 renderVocabularyCards();
