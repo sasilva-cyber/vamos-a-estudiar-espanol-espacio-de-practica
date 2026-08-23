@@ -1,6 +1,6 @@
 # Área do Estudiante — autenticação com Supabase
 
-A infraestrutura já está conectada ao projeto Supabase `clfwoywzalttkvhstsgh`.
+A infraestrutura está conectada ao projeto Supabase `clfwoywzalttkvhstsgh`.
 
 ## Implementado
 
