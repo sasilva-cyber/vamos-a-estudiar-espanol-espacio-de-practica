@@ -12,7 +12,7 @@
     if (!document.getElementById("reading-classics-script")) {
       const script = document.createElement("script");
       script.id = "reading-classics-script";
-      script.src = `${rootPath}reading-classics.js?v=20260823-1`;
+      script.src = `${rootPath}reading-classics.js?v=20260823-2`;
       script.defer = true;
       document.head.appendChild(script);
     }
