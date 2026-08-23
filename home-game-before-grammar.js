@@ -1,21 +1,30 @@
-/* Mantém o jogo de Falsos Amigos imediatamente antes de "Últimas de Gramática". */
+/* Mantém a ordem da home: jogo visual → newsletter → Últimas de Gramática. */
 (function () {
+  if (window.__VAE_HOME_GAME_ORDER_INSTALLED__) return;
+  window.__VAE_HOME_GAME_ORDER_INSTALLED__ = true;
+
   let observer = null;
 
-  function placeGame() {
+  function placeSections() {
     const home = document.getElementById("home-screen");
     const game = document.getElementById("home-false-friends-showcase");
+    const newsletter = document.getElementById("home-newsletter");
     const grammar = document.getElementById("home-grammar-showcase");
     if (!home || !game || !grammar) return false;
 
-    if (game.nextElementSibling !== grammar) {
-      grammar.insertAdjacentElement("beforebegin", game);
-    }
+    if (game.parentElement !== home || grammar.parentElement !== home) return false;
+
+    const correctWithoutNewsletter = !newsletter && game.nextElementSibling === grammar;
+    const correctWithNewsletter = newsletter && newsletter.parentElement === home && game.nextElementSibling === newsletter && newsletter.nextElementSibling === grammar;
+    if (correctWithoutNewsletter || correctWithNewsletter) return true;
+
+    home.insertBefore(game, grammar);
+    if (newsletter?.parentElement === home) home.insertBefore(newsletter, grammar);
     return true;
   }
 
   function install() {
-    placeGame();
+    placeSections();
 
     const home = document.getElementById("home-screen");
     if (!home || observer) {
@@ -23,14 +32,14 @@
       return;
     }
 
-    observer = new MutationObserver(() => placeGame());
+    observer = new MutationObserver(() => placeSections());
     observer.observe(home, { childList: true, subtree: false });
 
     let attempts = 0;
     const timer = window.setInterval(() => {
-      placeGame();
+      placeSections();
       attempts += 1;
-      if (attempts >= 20) window.clearInterval(timer);
+      if (attempts >= 24) window.clearInterval(timer);
     }, 300);
   }
 
