@@ -80,13 +80,29 @@
     document.head.appendChild(script);
   }
 
-  function loadHomeGameRename() {
-    if (document.getElementById("home-jugando-loader")) return;
+  function loadHomeGameLayout() {
+    if (document.getElementById("home-jugando-layout-loader")) {
+      loadHomeGameOrder();
+      return;
+    }
     const script = document.createElement("script");
-    script.id = "home-jugando-loader";
-    script.src = "home-jugando-y-aprendiendo.js?v=20260822-2053";
+    script.id = "home-jugando-layout-loader";
+    script.src = "home-jugando-layout.js?v=20260822-2109";
     script.onload = loadHomeGameOrder;
     script.onerror = loadHomeGameOrder;
+    document.head.appendChild(script);
+  }
+
+  function loadHomeGameRename() {
+    if (document.getElementById("home-jugando-loader")) {
+      loadHomeGameLayout();
+      return;
+    }
+    const script = document.createElement("script");
+    script.id = "home-jugando-loader";
+    script.src = "home-jugando-y-aprendiendo.js?v=20260822-2109";
+    script.onload = loadHomeGameLayout;
+    script.onerror = loadHomeGameLayout;
     document.head.appendChild(script);
   }
 
@@ -97,7 +113,7 @@
     }
     const script = document.createElement("script");
     script.id = "home-false-friends-loader";
-    script.src = "home-falsos-amigos.js?v=20260822-2032";
+    script.src = "home-falsos-amigos.js?v=20260822-2109";
     script.onload = loadHomeGameRename;
     script.onerror = loadHomeGameRename;
     document.head.appendChild(script);
