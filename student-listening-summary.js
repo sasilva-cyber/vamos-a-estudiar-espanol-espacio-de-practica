@@ -1,38 +1,52 @@
 /* Hub de atividades exclusivas de escuta na Área do Estudiante. */
 (function () {
+  function rootPath() {
+    return window.VAEAuth?.ROOT_PATH || (location.hostname.toLowerCase().endsWith(".github.io") ? "/vamos-a-estudiar-espanol-espacio-de-practica/" : "/");
+  }
+
   function loadReadingClassicsAssets() {
-    const rootPath = window.VAEAuth?.ROOT_PATH || (location.hostname.toLowerCase().endsWith(".github.io") ? "/vamos-a-estudiar-espanol-espacio-de-practica/" : "/");
+    const root = rootPath();
     if (!document.getElementById("reading-classics-css")) {
       const link = document.createElement("link");
       link.id = "reading-classics-css";
       link.rel = "stylesheet";
-      link.href = `${rootPath}reading-classics.css?v=20260823-2`;
+      link.href = `${root}reading-classics.css?v=20260823-2`;
       document.head.appendChild(link);
     }
     if (!document.getElementById("reading-classics-script")) {
       const script = document.createElement("script");
       script.id = "reading-classics-script";
-      script.src = `${rootPath}reading-classics.js?v=20260823-2`;
+      script.src = `${root}reading-classics.js?v=20260823-2`;
       script.defer = true;
       document.head.appendChild(script);
     }
     if (!document.getElementById("reading-pagination-script")) {
       const pagination = document.createElement("script");
       pagination.id = "reading-pagination-script";
-      pagination.src = `${rootPath}reading-pagination.js?v=20260823-1`;
+      pagination.src = `${root}reading-pagination.js?v=20260823-1`;
       pagination.defer = true;
       document.head.appendChild(pagination);
     }
     if (!document.getElementById("reading-guided-redirect-script")) {
       const guided = document.createElement("script");
       guided.id = "reading-guided-redirect-script";
-      guided.src = `${rootPath}reading-guided-redirect.js?v=20260823-2`;
+      guided.src = `${root}reading-guided-redirect.js?v=20260823-2`;
       guided.defer = true;
       document.head.appendChild(guided);
     }
   }
 
+  function loadGrammarAssets() {
+    if (document.getElementById("student-grammar-summary-script")) return;
+    const script = document.createElement("script");
+    script.id = "student-grammar-summary-script";
+    script.src = `${rootPath()}student-grammar-summary.js?v=20260823-1`;
+    script.defer = true;
+    document.head.appendChild(script);
+  }
+
   loadReadingClassicsAssets();
+  loadGrammarAssets();
 
   const grid = document.getElementById("listening-level-grid");
   const status = document.getElementById("listening-hub-status");
@@ -43,8 +57,13 @@
   function placeVideoAcademyFirst() {
     const listening = document.querySelector(".listening-hub");
     const videoAcademy = document.getElementById("video-academy");
+    const grammarHub = document.getElementById("grammar-hub");
     if (!listening || !videoAcademy) return false;
-    if (videoAcademy.nextElementSibling !== listening) {
+
+    if (grammarHub) {
+      if (grammarHub.nextElementSibling !== listening) listening.insertAdjacentElement("beforebegin", grammarHub);
+      if (videoAcademy.nextElementSibling !== grammarHub) grammarHub.insertAdjacentElement("beforebegin", videoAcademy);
+    } else if (videoAcademy.nextElementSibling !== listening) {
       listening.insertAdjacentElement("beforebegin", videoAcademy);
     }
     return true;
