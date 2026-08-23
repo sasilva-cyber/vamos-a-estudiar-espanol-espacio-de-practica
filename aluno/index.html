@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PLD6NHQNEN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PLD6NHQNEN');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="robots" content="noindex,nofollow" />
+  <meta name="theme-color" content="#8f1d2c" />
+  <title>Área do Estudiante | Vamos a Estudiar Español</title>
+  <link rel="stylesheet" href="../auth.css?v=20260823-1" />
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="../auth-config.js?v=20260823-1"></script>
+  <script defer src="../auth-client.js?v=20260823-1"></script>
+  <script defer src="../aluno.js?v=20260823-1"></script>
+</head>
+<body>
+  <header class="auth-header">
+    <div class="auth-header-inner">
+      <a class="auth-brand" href="../" aria-label="Vamos a Estudiar Español — início">
+        <span class="auth-mark" aria-hidden="true">Ñ</span>
+        <span class="auth-brand-copy"><strong>Vamos a Estudiar Español</strong><small>Área do Estudiante</small></span>
+      </a>
+      <a class="auth-header-action" href="../">Ir para a plataforma</a>
+    </div>
+    <div class="heritage-stripe" aria-hidden="true"></div>
+  </header>
+
+  <main class="student-main" id="student-main" aria-busy="true">
+    <div class="auth-loading" id="student-loading">Verificando seu acesso…</div>
+
+    <div class="hidden" id="student-content">
+      <section class="student-hero" aria-labelledby="student-title">
+        <div class="student-hero-top">
+          <div class="student-hero-copy">
+            <p class="auth-eyebrow">Mi espacio de estudio</p>
+            <h1 id="student-title">Olá, <span id="student-name">estudiante</span>.</h1>
+            <p>Aqui você encontrará os materiais e conteúdos reservados para quem possui uma conta no Vamos a Estudiar Español.</p>
+          </div>
+          <div class="student-user-chip" title="Conta autenticada">
+            <span class="student-avatar" id="student-avatar" aria-hidden="true">Ñ</span>
+            <span id="student-email">—</span>
+          </div>
+        </div>
+        <div class="student-toolbar">
+          <div class="student-meta">
+            <span class="student-badge">✓ Conta autenticada</span>
+            <span class="student-badge" id="student-member-since">Membro da comunidade</span>
+          </div>
+          <button class="student-logout" id="student-logout" type="button">Sair da conta</button>
+        </div>
+      </section>
+
+      <section class="student-section" aria-labelledby="student-library-title">
+        <div class="student-section-head">
+          <div><h2 id="student-library-title">Biblioteca exclusiva</h2><p>Conteúdos que serão disponibilizados apenas para estudantes autenticados.</p></div>
+        </div>
+        <div class="student-grid">
+          <article class="student-card">
+            <span class="student-card-icon" aria-hidden="true">📚</span>
+            <p class="student-card-kicker">Materiais</p>
+            <h3>Materiais de estudo</h3>
+            <p>PDFs, guias de revisão, exercícios extras e materiais complementares organizados por tema e nível.</p>
+            <span class="student-card-action disabled" aria-disabled="true">Em preparação</span>
+          </article>
+          <article class="student-card">
+            <span class="student-card-icon" aria-hidden="true">▶</span>
+            <p class="student-card-kicker">Videoaulas</p>
+            <h3>Aulas exclusivas</h3>
+            <p>Videoaulas de gramática, vocabulário, compreensão e estratégias para avançar no espanhol.</p>
+            <span class="student-card-action disabled" aria-disabled="true">Em preparação</span>
+          </article>
+          <article class="student-card">
+            <span class="student-card-icon" aria-hidden="true">✦</span>
+            <p class="student-card-kicker">Conteúdo especial</p>
+            <h3>Atividades para membros</h3>
+            <p>Práticas adicionais, desafios e conteúdos que não ficam disponíveis na área pública do site.</p>
+            <span class="student-card-action disabled" aria-disabled="true">Em preparação</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="student-section" aria-labelledby="student-progress-title">
+        <div class="student-section-head"><div><h2 id="student-progress-title">Próximas etapas</h2><p>A Área do Estudiante crescerá junto com a plataforma.</p></div></div>
+        <div class="student-coming">A infraestrutura está preparada para receber uma biblioteca privada, links temporários de download, videoaulas e posteriormente histórico de progresso. Os arquivos exclusivos deverão permanecer em armazenamento privado com políticas de acesso vinculadas à conta autenticada.</div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="auth-footer">Vamos a Estudiar Español · Área do Estudiante</footer>
+</body>
+</html>
