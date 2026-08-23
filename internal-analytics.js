@@ -10,6 +10,7 @@
   const host = location.hostname.toLowerCase();
 
   if (host !== "pratica.vamosaestudiarespanol.com.br" && !host.endsWith(".github.io")) return;
+  if (/bot|crawler|spider|slurp|bingpreview|facebookexternalhit|headless/i.test(String(navigator.userAgent || ""))) return;
 
   function uuid() {
     if (window.crypto?.randomUUID) return window.crypto.randomUUID();
@@ -133,9 +134,9 @@
     const token = await authToken();
     const headers = {
       "apikey": PUBLISHABLE_KEY,
-      "Authorization": `Bearer ${token || PUBLISHABLE_KEY}`,
       "Content-Type": "application/json"
     };
+    if (token) headers.Authorization = `Bearer ${token}`;
 
     const body = {
       p_visitor_id: visitorId,
