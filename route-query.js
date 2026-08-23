@@ -1,6 +1,9 @@
-/* Roteamento por caminhos limpos para as áreas principais da plataforma. */
+/* Roteamento por caminhos limpos, compatível com GitHub Pages e domínio personalizado. */
 (function () {
-  const PROJECT_ROOT = "/vamos-a-estudiar-espanol-espacio-de-practica";
+  const REPOSITORY_PATH = "/vamos-a-estudiar-espanol-espacio-de-practica";
+  const IS_GITHUB_HOST = window.location.hostname.toLowerCase().endsWith(".github.io");
+  const PROJECT_ROOT = IS_GITHUB_HOST ? REPOSITORY_PATH : "";
+
   const ROUTES = {
     home: { slug: "", title: "Vamos a Estudiar Español | Quiz, Gramática, Vocabulario e Lecturas" },
     quiz: { slug: "quiz", title: "Quiz | Vamos a Estudiar Español" },
@@ -14,24 +17,34 @@
   let syncingRoute = false;
 
   function cleanPath(pathname) {
-    const withoutTrailingSlash = pathname.length > 1 ? pathname.replace(/\/+$/, "") : pathname;
+    const path = String(pathname || "/");
+    const withoutTrailingSlash = path.length > 1 ? path.replace(/\/+$/, "") : path;
     return withoutTrailingSlash || "/";
   }
 
   function routePath(route) {
     const item = ROUTES[route] || ROUTES.home;
+    if (!PROJECT_ROOT) return item.slug ? `/${item.slug}` : "/";
     return item.slug ? `${PROJECT_ROOT}/${item.slug}` : `${PROJECT_ROOT}/`;
   }
 
   function routeFromLocation() {
     const params = new URLSearchParams(window.location.search);
     if (params.has("gramatica")) return "grammar";
+    const legacyRoute = params.get("route");
+    if (legacyRoute && ROUTES[legacyRoute]) return legacyRoute;
 
     const current = cleanPath(window.location.pathname);
-    const root = cleanPath(PROJECT_ROOT);
+    const root = cleanPath(PROJECT_ROOT || "/");
     if (current === root) return "home";
 
-    const slug = current.startsWith(`${root}/`) ? current.slice(root.length + 1) : "";
+    let slug = "";
+    if (PROJECT_ROOT) {
+      slug = current.startsWith(`${root}/`) ? current.slice(root.length + 1) : "";
+    } else {
+      slug = current.replace(/^\/+/, "");
+    }
+
     const match = Object.entries(ROUTES).find(([, item]) => item.slug === slug);
     return match ? match[0] : "home";
   }
@@ -57,7 +70,7 @@
   function openRoute(route, attempt = 0) {
     const button = findRouteButton(route);
     if (!button) {
-      if (attempt < 60) setTimeout(() => openRoute(route, attempt + 1), 100);
+      if (attempt < 60) window.setTimeout(() => openRoute(route, attempt + 1), 100);
       return false;
     }
 
