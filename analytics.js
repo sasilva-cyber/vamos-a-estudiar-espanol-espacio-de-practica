@@ -1,20 +1,7 @@
-/* Google Analytics 4 + eventos de engajamento da plataforma. */
+/* Eventos de engajamento para a tag oficial do Google Analytics 4. */
 (function () {
   const id = String(window.VAE_GA4_ID || "").trim();
-  if (!/^G-[A-Z0-9]+$/i.test(id)) return;
-
-  window.dataLayer = window.dataLayer || [];
-  window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
-  window.gtag("js", new Date());
-  window.gtag("config", id, {
-    send_page_view: false,
-    anonymize_ip: true
-  });
-
-  const script = document.createElement("script");
-  script.async = true;
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(id)}`;
-  document.head.appendChild(script);
+  if (!/^G-[A-Z0-9]+$/i.test(id) || typeof window.gtag !== "function") return;
 
   const context = {
     quizLevel: null,
@@ -23,8 +10,8 @@
     songMode: null,
     songArtist: null
   };
-
   const sent = new Map();
+  let initialRouteEventSkipped = false;
 
   function track(eventName, params) {
     if (!eventName) return;
@@ -113,73 +100,66 @@
       track("quiz_start", { quiz_type: "level", level: context.quizLevel });
       return;
     }
-
     if (target.matches("[data-start-activity]")) {
       context.activityId = target.dataset.startActivity || "unknown";
       track("activity_start", { activity_id: context.activityId });
       return;
     }
-
     if (target.matches("[data-ff-level]")) {
       context.falseFriendsLevel = target.dataset.ffLevel || "unknown";
       track("false_friends_start", { level: context.falseFriendsLevel });
       return;
     }
-
     if (target.matches("[data-song-mode]")) {
       context.songMode = target.dataset.songMode || "mix";
       context.songArtist = null;
       track("song_quiz_start", { mode: context.songMode, artist: "all" });
       return;
     }
-
     if (target.matches("[data-song-artist]")) {
       context.songMode = "artist";
       context.songArtist = target.dataset.songArtist || "unknown";
       track("song_quiz_start", { mode: "artist", artist: context.songArtist });
       return;
     }
-
     if (target.matches("[data-song-again]")) {
       track("song_quiz_restart", { mode: context.songMode || "unknown", artist: context.songArtist || "all" });
       return;
     }
-
     if (target.id === "restart-button") {
       track("quiz_restart", { quiz_type: "level", level: context.quizLevel || "unknown" });
       return;
     }
-
     if (target.id === "activity-retry") {
       track("activity_restart", { activity_id: context.activityId || "unknown" });
       return;
     }
-
     if (target.id === "ff-retry") {
       track("false_friends_restart", { level: context.falseFriendsLevel || "unknown" });
       return;
     }
-
     if (target.id === "next-button") {
       afterAction(trackStandardQuizComplete);
       return;
     }
-
     if (target.id === "activity-next") {
       afterAction(trackActivityComplete);
       return;
     }
-
     if (target.id === "ff-next") {
       afterAction(trackFalseFriendsComplete);
       return;
     }
-
-    if (target.matches("[data-song-next]")) {
-      afterAction(trackSongComplete);
-    }
+    if (target.matches("[data-song-next]")) afterAction(trackSongComplete);
   }, true);
 
-  window.addEventListener("vae:routechange", (event) => pageView(event.detail));
-  pageView();
+  window.addEventListener("vae:routechange", (event) => {
+    // O gtag('config') da tag oficial já envia a visualização inicial.
+    // Ignoramos o primeiro routechange para evitar pageview duplicado na abertura.
+    if (!initialRouteEventSkipped) {
+      initialRouteEventSkipped = true;
+      return;
+    }
+    pageView(event.detail);
+  });
 })();
