@@ -1,11 +1,29 @@
 /* Harmoniza o destaque Jugando y aprendiendo com o bloco Últimas de Gramática. */
 (function () {
+  const root = window.__VAE_ROOT__ || (location.hostname.toLowerCase().endsWith('.github.io') ? '/vamos-a-estudiar-espanol-espacio-de-practica/' : '/');
+
+  function ensureScript(id, file) {
+    if (document.getElementById(id)) return;
+    const script = document.createElement('script');
+    script.id = id;
+    script.src = root + file;
+    script.defer = true;
+    document.head.appendChild(script);
+  }
+
+  function ensureNewsletter() {
+    ensureScript('home-newsletter-loader', 'home-newsletter.js?v=20260823-1042');
+    ensureScript('home-game-order-loader', 'home-game-before-grammar.js?v=20260823-1042');
+  }
+
   function apply() {
     const section = document.getElementById("home-false-friends-showcase");
     if (!section) {
       setTimeout(apply, 180);
       return;
     }
+
+    ensureNewsletter();
 
     const eyebrow = section.querySelector(".eyebrow");
     const title = section.querySelector("#home-ff-title");
