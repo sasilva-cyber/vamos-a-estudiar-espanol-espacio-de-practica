@@ -158,11 +158,19 @@
     document.head.appendChild(data);
   }
 
+  function loadSongQuiz() {
+    if (document.getElementById("complete-song-quiz-loader")) return;
+    const script = document.createElement("script");
+    script.id = "complete-song-quiz-loader";
+    script.src = "quiz-completa-cancion.js?v=20260822-2200";
+    document.head.appendChild(script);
+  }
+
   function loadHomeStats() {
     if (document.getElementById("home-stats-auto-loader")) return;
     const script = document.createElement("script");
     script.id = "home-stats-auto-loader";
-    script.src = "home-stats-auto.js?v=20260822-2037";
+    script.src = "home-stats-auto.js?v=20260822-2200";
     document.head.appendChild(script);
   }
 
@@ -176,6 +184,7 @@
     }
     loadRouteQuery();
     loadFalseFriendsGame();
+    loadSongQuiz();
     loadHomeStats();
   }
 
