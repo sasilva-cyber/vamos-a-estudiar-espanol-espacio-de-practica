@@ -170,7 +170,7 @@
     if (document.getElementById("home-newsletter-loader")) return;
     const script = document.createElement("script");
     script.id = "home-newsletter-loader";
-    script.src = "home-newsletter.js?v=20260822-2127";
+    script.src = "home-newsletter.js?v=20260822-2141";
     document.head.appendChild(script);
   }
 
