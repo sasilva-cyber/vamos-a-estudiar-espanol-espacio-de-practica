@@ -51,7 +51,7 @@
     const link = document.createElement("link");
     link.id = "home-typography-styles";
     link.rel = "stylesheet";
-    link.href = "home-typography.css?v=20260822-2112";
+    link.href = "home-typography.css?v=20260822-2122";
     document.head.appendChild(link);
   }
 
