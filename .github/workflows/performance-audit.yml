@@ -3,8 +3,6 @@ name: Performance Audit
 on:
   push:
     branches: [main]
-    paths:
-      - '.github/workflows/performance-audit.yml'
   workflow_dispatch:
 
 jobs:
