@@ -216,11 +216,17 @@
     observer.observe(target);
   }
 
+  function installHomeNewsletter() {
+    loadScript('home-newsletter-loader', 'home-newsletter.js?v=20260823-1042');
+    loadScript('home-game-order-loader', 'home-game-before-grammar.js?v=20260823-1042');
+  }
+
   function install() {
     ensureLightShell();
     watchNavForBlog();
     installRouteGate();
     injectImageStyles();
+    installHomeNewsletter();
     loadScript('grammar-dropdown-nav-loader', 'nav-grammar-dropdown.js?v=20260823-0225');
     openInitialLazyRoute();
     loadHomeShowcaseNearViewport();
