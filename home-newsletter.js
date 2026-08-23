@@ -1,7 +1,11 @@
-/* Newsletter compacta da página inicial. */
+/* Newsletter da página inicial, integrada entre o jogo visual e Últimas de Gramática. */
 (function () {
   const FORM_ACTION = "https://formsubmit.co/contato.vamosaestudiarespanol@gmail.com";
-  const RETURN_URL = "https://sasilva-cyber.github.io/vamos-a-estudiar-espanol-espacio-de-practica/#newsletter-enviado";
+  const ROOT_PATH = location.hostname.toLowerCase().endsWith(".github.io")
+    ? "/vamos-a-estudiar-espanol-espacio-de-practica/"
+    : "/";
+  const RETURN_URL = `${location.origin}${ROOT_PATH}#newsletter-enviado`;
+  let observer = null;
 
   function injectStyles() {
     if (document.getElementById("home-newsletter-styles")) return;
@@ -10,64 +14,95 @@
     style.id = "home-newsletter-styles";
     style.textContent = `
       .home-newsletter {
-        width: 100%;
-        margin-top: 24px;
-        padding: 20px 22px;
-        border: 1px solid rgba(143,29,44,.18);
-        border-radius: 20px;
-        background: rgba(255,255,255,.68);
-        box-shadow: 0 10px 28px rgba(93,50,34,.055);
+        width: auto;
+        max-width: none;
+        margin: 34px 0 0;
+        padding: 30px clamp(20px,4vw,34px) 26px;
+        box-sizing: border-box;
+        border: 1px solid var(--line);
+        border-radius: 26px;
+        background: rgba(255,255,255,.74);
+        box-shadow: 0 12px 36px rgba(70,40,20,.055);
       }
 
-      .home-newsletter-head {
-        display: flex;
-        align-items: flex-start;
-        gap: 14px;
-        margin-bottom: 14px;
-      }
-
-      .home-newsletter-icon {
-        flex: 0 0 auto;
-        width: 42px;
-        height: 42px;
+      .home-newsletter-inner {
         display: grid;
-        place-items: center;
-        border-radius: 50%;
-        background: #fff3ee;
-        color: var(--red-dark, #7d1422);
-        font-size: 1.2rem;
+        grid-template-columns: minmax(0,1.08fr) minmax(320px,.92fr);
+        gap: clamp(30px,5vw,58px);
+        align-items: center;
       }
 
-      .home-newsletter-kicker {
-        display: block;
-        margin-bottom: 4px;
-        color: var(--red, #981c2d);
-        font-size: .74rem;
-        font-weight: 900;
-        letter-spacing: .12em;
-        text-transform: uppercase;
+      .home-newsletter-copy {
+        min-width: 0;
+        text-align: left;
       }
 
-      .home-newsletter h2 {
-        margin: 0 0 5px;
-        color: var(--red-dark, #74111e);
-        font-family: Georgia, "Times New Roman", serif;
-        font-size: clamp(1.28rem, 2.1vw, 1.55rem);
+      .home-newsletter-copy .eyebrow {
+        justify-content: flex-start;
+      }
+
+      .home-newsletter-copy h2 {
+        margin: 4px 0 12px;
+        color: var(--red-dark);
+        font-family: Georgia,"Times New Roman",serif;
+        font-size: clamp(1.65rem,3.4vw,2.35rem);
         line-height: 1.12;
       }
 
-      .home-newsletter-copy p {
+      .home-newsletter-lead {
+        max-width: 650px;
         margin: 0;
-        color: var(--muted, #685d57);
-        font-size: .96rem;
-        line-height: 1.55;
+        color: var(--muted);
+        line-height: 1.7;
         text-align: left !important;
       }
 
+      .home-newsletter-promise {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin: 17px 0 0 !important;
+        padding: 8px 12px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255,255,255,.72);
+        color: #6d5442;
+        font-size: .8rem;
+        font-weight: 800;
+        line-height: 1.35;
+        text-align: left !important;
+      }
+
+      .home-newsletter-promise strong {
+        color: var(--red-dark);
+      }
+
+      .home-newsletter-signup {
+        min-width: 0;
+        display: grid;
+        grid-template-columns: 64px minmax(0,1fr);
+        gap: 16px;
+        align-items: center;
+      }
+
+      .home-newsletter-icon {
+        width: 64px;
+        height: 64px;
+        display: grid;
+        place-items: center;
+        border: 6px solid #fff;
+        border-radius: 50%;
+        background: linear-gradient(145deg,#fff8ec 0%,#f7e7dc 52%,#f1d7d7 100%);
+        box-shadow: 0 8px 24px rgba(88,45,24,.11);
+        color: var(--red-dark);
+        font-size: 1.7rem;
+      }
+
       .home-newsletter-form {
+        min-width: 0;
         display: grid;
         grid-template-columns: minmax(0,1fr) auto;
-        gap: 12px;
+        gap: 10px;
         align-items: end;
       }
 
@@ -79,67 +114,71 @@
 
       .home-newsletter-field label {
         margin: 0;
-        color: #342b27;
-        font-size: .86rem;
-        font-weight: 700;
+        color: var(--muted);
+        font-size: .7rem;
+        font-weight: 900;
+        letter-spacing: .08em;
         line-height: 1.25;
         text-align: left !important;
+        text-transform: uppercase;
       }
 
       .home-newsletter-form input[type="email"] {
         width: 100%;
         min-height: 48px;
         margin: 0;
-        padding: 12px 15px;
-        border: 1px solid rgba(143,29,44,.22);
-        border-radius: 13px;
+        padding: 11px 14px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
         background: #fff;
-        color: #2f2723;
+        color: var(--ink);
         font: inherit;
-        font-size: .95rem;
+        font-size: .94rem;
         outline: none;
         box-sizing: border-box;
         transition: border-color .16s ease, box-shadow .16s ease;
       }
 
       .home-newsletter-form input[type="email"]:focus {
-        border-color: var(--red, #981c2d);
-        box-shadow: 0 0 0 3px rgba(152,28,45,.09);
+        border-color: rgba(143,29,44,.42);
+        box-shadow: 0 0 0 3px rgba(143,29,44,.08);
       }
 
       .home-newsletter-form button {
-        min-width: 142px;
+        min-width: 132px;
         min-height: 48px;
         margin: 0;
-        padding: 12px 19px;
-        border: 1px solid var(--red, #981c2d);
+        padding: 11px 18px;
+        border: 1px solid var(--red);
         border-radius: 13px;
-        background: var(--red, #981c2d);
+        background: var(--red);
         color: #fff;
         font: inherit;
-        font-size: .92rem;
-        font-weight: 800;
+        font-size: .9rem;
+        font-weight: 900;
         cursor: pointer;
         white-space: nowrap;
-        transition: transform .16s ease, filter .16s ease;
+        transition: transform .16s ease, background .16s ease;
       }
 
       .home-newsletter-form button:hover,
       .home-newsletter-form button:focus-visible {
-        filter: brightness(.94);
+        background: var(--red-dark);
         transform: translateY(-1px);
+        outline: 3px solid rgba(143,29,44,.12);
       }
 
       .home-newsletter-note,
       .home-newsletter-success {
+        grid-column: 2;
         margin: 9px 0 0 !important;
-        font-size: .78rem !important;
+        font-size: .76rem !important;
         line-height: 1.45 !important;
         text-align: left !important;
       }
 
-      .home-newsletter-note { color: var(--muted, #766a63); }
-      .home-newsletter-success { color: #17663b; font-weight: 800; }
+      .home-newsletter-note { color: var(--muted); }
+      .home-newsletter-success { color: #17663b; font-weight: 900; }
 
       .home-newsletter-honey {
         position: absolute !important;
@@ -149,11 +188,57 @@
         overflow: hidden !important;
       }
 
+      @media (max-width: 820px) {
+        .home-newsletter-inner {
+          grid-template-columns: 1fr;
+          gap: 24px;
+        }
+        .home-newsletter-signup {
+          grid-template-columns: 56px minmax(0,1fr);
+        }
+        .home-newsletter-icon {
+          width: 56px;
+          height: 56px;
+        }
+      }
+
       @media (max-width: 640px) {
-        .home-newsletter { padding: 18px; margin-top: 20px; }
-        .home-newsletter-head { gap: 11px; }
-        .home-newsletter-form { grid-template-columns: 1fr; }
-        .home-newsletter-form button { width: 100%; min-width: 0; }
+        .home-newsletter {
+          padding: 24px 18px;
+        }
+        .home-newsletter-copy,
+        .home-newsletter-lead {
+          text-align: left !important;
+        }
+        .home-newsletter-copy .eyebrow {
+          justify-content: flex-start;
+        }
+        .home-newsletter-signup {
+          grid-template-columns: 1fr;
+        }
+        .home-newsletter-icon {
+          display: none;
+        }
+        .home-newsletter-form {
+          grid-template-columns: 1fr;
+        }
+        .home-newsletter-form button {
+          width: 100%;
+          min-width: 0;
+        }
+        .home-newsletter-note,
+        .home-newsletter-success {
+          grid-column: 1;
+        }
+      }
+
+      @media (max-width: 460px) {
+        .home-newsletter {
+          border-radius: 22px;
+        }
+        .home-newsletter-promise {
+          border-radius: 14px;
+        }
       }
     `;
     document.head.appendChild(style);
@@ -173,12 +258,44 @@
     }, 200);
   }
 
+  function placeCard(card) {
+    const home = document.getElementById("home-screen");
+    const game = document.getElementById("home-false-friends-showcase");
+    const grammar = document.getElementById("home-grammar-showcase");
+    if (!home || !card) return false;
+
+    if (game && grammar && game.parentElement === home && grammar.parentElement === home) {
+      if (game.nextElementSibling !== card || card.nextElementSibling !== grammar) {
+        home.insertBefore(game, grammar);
+        home.insertBefore(card, grammar);
+      }
+      return true;
+    }
+
+    if (grammar?.parentElement === home) {
+      if (card.nextElementSibling !== grammar) home.insertBefore(card, grammar);
+      return true;
+    }
+
+    if (game?.parentElement === home) {
+      if (game.nextElementSibling !== card) game.insertAdjacentElement("afterend", card);
+      return true;
+    }
+
+    const featureGrid = home.querySelector(".feature-grid");
+    if (featureGrid && featureGrid.nextElementSibling !== card) {
+      featureGrid.insertAdjacentElement("afterend", card);
+      return true;
+    }
+
+    return false;
+  }
+
   function install() {
     injectStyles();
 
-    const homeCopy = document.querySelector("#home-screen .home-copy");
-    const actions = homeCopy?.querySelector(".hero-actions");
-    if (!homeCopy || !actions) {
+    const home = document.getElementById("home-screen");
+    if (!home) {
       window.setTimeout(install, 220);
       return;
     }
@@ -190,35 +307,59 @@
       card.className = "home-newsletter";
       card.setAttribute("aria-labelledby", "home-newsletter-title");
       card.innerHTML = `
-        <div class="home-newsletter-head">
-          <span class="home-newsletter-icon" aria-hidden="true">✉</span>
+        <div class="home-newsletter-inner">
           <div class="home-newsletter-copy">
-            <span class="home-newsletter-kicker">Newsletter</span>
+            <p class="eyebrow">Newsletter · Novidades</p>
             <h2 id="home-newsletter-title">Assine nossa newsletter</h2>
-            <p>Receba novos conteúdos em seu e-mail. Prometo não enviar spam.</p>
+            <p class="home-newsletter-lead">Receba novos conteúdos, atividades e novidades do Vamos a Estudiar Español diretamente no seu e-mail.</p>
+            <p class="home-newsletter-promise"><span aria-hidden="true">✓</span><strong>Prometo não enviar spam.</strong><span>Somente conteúdo que vale a pena estudar.</span></p>
+          </div>
+
+          <div class="home-newsletter-signup">
+            <span class="home-newsletter-icon" aria-hidden="true">✉</span>
+            <div>
+              <form class="home-newsletter-form" action="${FORM_ACTION}" method="POST">
+                <div class="home-newsletter-field">
+                  <label for="home-newsletter-email">Seu melhor e-mail</label>
+                  <input id="home-newsletter-email" type="email" name="email" autocomplete="email" inputmode="email" placeholder="seuemail@exemplo.com" required />
+                </div>
+                <button type="submit">Assinar →</button>
+                <input type="hidden" name="_subject" value="Nova inscrição — Newsletter Vamos a Estudiar Español" />
+                <input type="hidden" name="_template" value="table" />
+                <input type="hidden" name="_captcha" value="false" />
+                <input type="hidden" name="_next" value="${RETURN_URL}" />
+                <input type="hidden" name="origem" value="Newsletter da página inicial" />
+                <label class="home-newsletter-honey" aria-hidden="true">Não preencher<input type="text" name="_honey" tabindex="-1" autocomplete="off" /></label>
+              </form>
+              <p class="home-newsletter-note">Você pode deixar de receber as novidades quando quiser.</p>
+              <p class="home-newsletter-success" role="status" hidden></p>
+            </div>
           </div>
         </div>
-
-        <form class="home-newsletter-form" action="${FORM_ACTION}" method="POST">
-          <div class="home-newsletter-field">
-            <label for="home-newsletter-email">Seu e-mail</label>
-            <input id="home-newsletter-email" type="email" name="email" autocomplete="email" inputmode="email" placeholder="seuemail@exemplo.com" required />
-          </div>
-          <button type="submit">Assinar →</button>
-          <input type="hidden" name="_subject" value="Nova inscrição — Newsletter Vamos a Estudiar Español" />
-          <input type="hidden" name="_template" value="table" />
-          <input type="hidden" name="_captcha" value="false" />
-          <input type="hidden" name="_next" value="${RETURN_URL}" />
-          <input type="hidden" name="origem" value="Newsletter da página inicial" />
-          <label class="home-newsletter-honey" aria-hidden="true">Não preencher<input type="text" name="_honey" tabindex="-1" autocomplete="off" /></label>
-        </form>
-        <p class="home-newsletter-note">Cadastre apenas o e-mail em que deseja receber as novidades.</p>
-        <p class="home-newsletter-success" role="status" hidden></p>
       `;
-      actions.insertAdjacentElement("afterend", card);
+      home.appendChild(card);
+
+      card.querySelector(".home-newsletter-form")?.addEventListener("submit", () => {
+        if (typeof window.vaeTrack === "function") {
+          window.vaeTrack("newsletter_signup", { placement: "home" });
+        }
+      });
     }
 
+    placeCard(card);
     showSuccess(card);
+
+    if (!observer) {
+      observer = new MutationObserver(() => placeCard(card));
+      observer.observe(home, { childList: true, subtree: false });
+    }
+
+    let attempts = 0;
+    const timer = window.setInterval(() => {
+      placeCard(card);
+      attempts += 1;
+      if (attempts >= 24) window.clearInterval(timer);
+    }, 300);
   }
 
   if (document.readyState === "loading") {
