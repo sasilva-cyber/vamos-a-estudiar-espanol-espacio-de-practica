@@ -9,6 +9,33 @@
   const progressBar = document.getElementById("practice-path-progress-bar");
   if (!section || !level || !title || !meta || !action || !progressText || !progressBar) return;
 
+  function installDashboardLayout() {
+    const placement = document.getElementById("placement-summary");
+    if (!placement) return;
+
+    const rootPath = window.VAEAuth?.ROOT_PATH || (location.hostname.toLowerCase().endsWith(".github.io")
+      ? "/vamos-a-estudiar-espanol-espacio-de-practica/"
+      : "/");
+
+    if (!document.getElementById("student-dashboard-layout-css")) {
+      const link = document.createElement("link");
+      link.id = "student-dashboard-layout-css";
+      link.rel = "stylesheet";
+      link.href = `${rootPath}student-dashboard-layout.css?v=20260823-1`;
+      document.head.appendChild(link);
+    }
+
+    if (placement.parentElement?.classList.contains("student-dashboard-pair")) return;
+
+    const pair = document.createElement("div");
+    pair.className = "student-dashboard-pair";
+    pair.setAttribute("aria-label", "Diagnóstico e prática de aprendizagem");
+    placement.insertAdjacentElement("beforebegin", pair);
+    pair.append(placement, section);
+  }
+
+  installDashboardLayout();
+
   async function boot() {
     try {
       const session = await window.VAEAuth?.getSession?.();
