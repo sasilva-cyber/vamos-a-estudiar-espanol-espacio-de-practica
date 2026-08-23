@@ -1,5 +1,25 @@
 /* Hub de atividades exclusivas de escuta na Área do Estudiante. */
 (function () {
+  function loadReadingClassicsAssets() {
+    const rootPath = window.VAEAuth?.ROOT_PATH || (location.hostname.toLowerCase().endsWith(".github.io") ? "/vamos-a-estudiar-espanol-espacio-de-practica/" : "/");
+    if (!document.getElementById("reading-classics-css")) {
+      const link = document.createElement("link");
+      link.id = "reading-classics-css";
+      link.rel = "stylesheet";
+      link.href = `${rootPath}reading-classics.css?v=20260823-1`;
+      document.head.appendChild(link);
+    }
+    if (!document.getElementById("reading-classics-script")) {
+      const script = document.createElement("script");
+      script.id = "reading-classics-script";
+      script.src = `${rootPath}reading-classics.js?v=20260823-1`;
+      script.defer = true;
+      document.head.appendChild(script);
+    }
+  }
+
+  loadReadingClassicsAssets();
+
   const grid = document.getElementById("listening-level-grid");
   const status = document.getElementById("listening-hub-status");
   if (!grid || !status) return;
