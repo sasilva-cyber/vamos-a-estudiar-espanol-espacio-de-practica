@@ -39,18 +39,9 @@
   line-height: 1.35;
 }
 
-/* Texto descritivo abaixo das estatísticas. */
+/* Oculta o parágrafo descritivo abaixo das estatísticas. */
 .home-screen .hero-panel > p:last-child {
-  display: block !important;
-  margin: 22px 0 0 !important;
-  padding-top: 16px;
-  border-top: 1px solid var(--line, #ead8cc);
-  color: var(--muted, #685d57);
-  font-size: .92rem;
-  line-height: 1.65;
-  text-align: justify !important;
-  text-justify: inter-word;
-  hyphens: auto;
+  display: none !important;
 }
 
 .home-screen .feature-card > p:not(.eyebrow),
@@ -124,9 +115,5 @@
   .home-screen .hero-text {
     font-size: 1rem !important;
     line-height: 1.65;
-  }
-
-  .home-screen .hero-panel > p:last-child {
-    font-size: .9rem;
   }
 }
