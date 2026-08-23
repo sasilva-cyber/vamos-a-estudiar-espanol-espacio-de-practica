@@ -24,7 +24,12 @@ window.VAE_AUTH_CONFIG = Object.freeze({
   const pathname=isGithub&&location.pathname.startsWith('/vamos-a-estudiar-espanol-espacio-de-practica')
     ? location.pathname.slice('/vamos-a-estudiar-espanol-espacio-de-practica'.length)||'/'
     : location.pathname;
+
   if(pathname==='/admin/'||pathname==='/admin'){
     load('vae-admin-internal-analytics','admin-analytics.js?v=20260823-2');
+  }
+
+  if(pathname==='/aluno/'||pathname==='/aluno'){
+    load('vae-student-experience','student-experience.js?v=20260823-1');
   }
 })();
