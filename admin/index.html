@@ -16,10 +16,12 @@
   <title>Administrar conteúdos | Vamos a Estudiar Español</title>
   <link rel="stylesheet" href="../auth.css?v=20260823-3" />
   <link rel="stylesheet" href="../admin.css?v=20260823-1" />
+  <link rel="stylesheet" href="../admin-subscriptions.css?v=20260823-1" />
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script defer src="../auth-config.js?v=20260823-2"></script>
   <script defer src="../auth-client.js?v=20260823-3"></script>
   <script defer src="../admin.js?v=20260823-1"></script>
+  <script defer src="../admin-subscriptions.js?v=20260823-1"></script>
 </head>
 <body>
   <header class="auth-header">
@@ -28,7 +30,7 @@
         <span class="auth-mark" aria-hidden="true">Ñ</span>
         <span class="auth-brand-copy">
           <strong>Vamos a Estudiar Español</strong>
-          <small>Administração de conteúdos</small>
+          <small>Administração da plataforma</small>
         </span>
       </a>
       <a class="auth-header-action" href="../aluno/">Área do Estudiante</a>
@@ -47,10 +49,86 @@
 
     <div class="hidden" id="admin-content">
       <section class="admin-hero">
-        <p class="auth-eyebrow">Gestão da biblioteca</p>
-        <h1>Conteúdos exclusivos</h1>
-        <p>Envie materiais para o Storage privado, mantenha rascunhos e publique somente quando estiver tudo pronto.</p>
+        <p class="auth-eyebrow">Painel administrativo</p>
+        <h1>Gestão da plataforma</h1>
+        <p>Acompanhe assinaturas Premium e administre os conteúdos exclusivos disponibilizados aos estudantes.</p>
         <p><strong>Conta administrativa:</strong> <span id="admin-user-email">—</span></p>
+      </section>
+
+      <section class="admin-panel admin-subscriptions-panel" id="admin-subscriptions-panel" aria-labelledby="admin-subscriptions-title">
+        <div class="admin-subscriptions-head">
+          <div>
+            <h2 id="admin-subscriptions-title">Assinaturas Premium</h2>
+            <p>Veja quantos estudantes possuem acesso Premium, quantas assinaturas estão renovando, pendentes ou canceladas e a receita recorrente mensal estimada.</p>
+          </div>
+          <button class="admin-subscriptions-refresh" id="admin-subscriptions-refresh" type="button">Atualizar dados</button>
+        </div>
+
+        <div class="admin-subscriptions-metrics" aria-label="Resumo das assinaturas">
+          <article class="admin-subscription-metric">
+            <span>Alunos cadastrados</span>
+            <strong id="admin-metric-students">—</strong>
+            <small>Contas de estudante na plataforma</small>
+          </article>
+          <article class="admin-subscription-metric">
+            <span>Premium com acesso</span>
+            <strong id="admin-metric-premium">—</strong>
+            <small>Assinantes que podem acessar o conteúdo agora</small>
+          </article>
+          <article class="admin-subscription-metric">
+            <span>Renovação ativa</span>
+            <strong id="admin-metric-renewing">—</strong>
+            <small>Assinaturas previstas para cobrar novamente</small>
+          </article>
+          <article class="admin-subscription-metric">
+            <span>Pendentes</span>
+            <strong id="admin-metric-pending">—</strong>
+            <small>Checkout iniciado e ainda não aprovado</small>
+          </article>
+          <article class="admin-subscription-metric">
+            <span>Canceladas</span>
+            <strong id="admin-metric-cancelled">—</strong>
+            <small>Assinaturas encerradas ou sem renovação</small>
+          </article>
+          <article class="admin-subscription-metric">
+            <span>MRR estimado</span>
+            <strong id="admin-metric-mrr">—</strong>
+            <small>Receita mensal das renovações ativas</small>
+          </article>
+        </div>
+
+        <div class="admin-subscriptions-toolbar">
+          <input class="admin-subscriptions-search" id="admin-subscriptions-search" type="search" placeholder="Buscar por nome ou e-mail" aria-label="Buscar assinaturas" />
+          <select class="admin-subscriptions-filter" id="admin-subscriptions-filter" aria-label="Filtrar assinaturas por status">
+            <option value="all">Todos os registros</option>
+            <option value="active">Premium com acesso</option>
+            <option value="renewing">Renovação ativa</option>
+            <option value="pending">Pendentes</option>
+            <option value="cancelled">Canceladas</option>
+            <option value="paused">Pausadas</option>
+          </select>
+          <span class="admin-subscriptions-result-count" id="admin-subscriptions-result-count">0 registros</span>
+        </div>
+
+        <p class="admin-subscriptions-status info" id="admin-subscriptions-status" role="status" aria-live="polite">Carregando dados das assinaturas…</p>
+
+        <div class="admin-subscriptions-table-wrap">
+          <table class="admin-subscriptions-table">
+            <thead>
+              <tr>
+                <th>Estudante</th>
+                <th>Status</th>
+                <th>Valor</th>
+                <th>Início</th>
+                <th>Próxima cobrança / acesso</th>
+                <th>Atualizado</th>
+              </tr>
+            </thead>
+            <tbody id="admin-subscriptions-body"></tbody>
+          </table>
+        </div>
+        <div class="admin-subscriptions-empty hidden" id="admin-subscriptions-empty"></div>
+        <p class="admin-subscriptions-note">O MRR é uma estimativa baseada somente nas assinaturas com renovação automática ativa. Assinaturas canceladas que ainda estejam dentro do período já pago continuam em “Premium com acesso”, mas não entram na próxima receita mensal.</p>
       </section>
 
       <div class="admin-grid">
