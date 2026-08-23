@@ -1,17 +1,48 @@
-/* Roteamento por caminhos limpos, compatível com GitHub Pages e domínio personalizado. */
+/* Roteamento por caminhos limpos, compatível com GitHub Pages e domínio personalizado, com SEO por rota. */
 (function () {
   const REPOSITORY_PATH = "/vamos-a-estudiar-espanol-espacio-de-practica";
   const IS_GITHUB_HOST = window.location.hostname.toLowerCase().endsWith(".github.io");
   const PROJECT_ROOT = IS_GITHUB_HOST ? REPOSITORY_PATH : "";
+  const PUBLIC_ORIGIN = IS_GITHUB_HOST
+    ? `${window.location.origin}${REPOSITORY_PATH}`
+    : "https://pratica.vamosaestudiarespanol.com.br";
 
   const ROUTES = {
-    home: { slug: "", title: "Vamos a Estudiar Español | Quiz, Gramática, Vocabulario e Lecturas" },
-    quiz: { slug: "quiz", title: "Quiz | Vamos a Estudiar Español" },
-    grammar: { slug: "gramatica", title: "Gramática | Vamos a Estudiar Español" },
-    vocabulary: { slug: "vocabulario", title: "Vocabulario | Vamos a Estudiar Español" },
-    readings: { slug: "lectura", title: "Lecturas | Vamos a Estudiar Español" },
-    listening: { slug: "escucha", title: "Escucha | Vamos a Estudiar Español" },
-    writing: { slug: "escritura", title: "Escritura | Vamos a Estudiar Español" }
+    home: {
+      slug: "",
+      title: "Vamos a Estudiar Español | Pratique espanhol online",
+      description: "Pratique espanhol gratuitamente com quizzes, gramática, vocabulário, compreensão auditiva, escrita, leituras e jogos educativos."
+    },
+    quiz: {
+      slug: "quiz",
+      title: "Quiz de Espanhol | Vamos a Estudiar Español",
+      description: "Teste seu espanhol do A1 ao C2 com quizzes, simulados, compreensão auditiva, falsos amigos e atividades interativas."
+    },
+    grammar: {
+      slug: "gramatica",
+      title: "Gramática de Espanhol | Vamos a Estudiar Español",
+      description: "Estude gramática espanhola com explicações em português, exemplos, filtros por nível e atividades de revisão."
+    },
+    vocabulary: {
+      slug: "vocabulario",
+      title: "Vocabulário de Espanhol | Vamos a Estudiar Español",
+      description: "Amplie seu vocabulário em espanhol por temas com exemplos, tradução para português e prática interativa."
+    },
+    readings: {
+      slug: "lectura",
+      title: "Leituras em Espanhol | Vamos a Estudiar Español",
+      description: "Leia textos em espanhol com glossário, nível indicado e perguntas de compreensão para desenvolver leitura e vocabulário."
+    },
+    listening: {
+      slug: "escucha",
+      title: "Compreensão Auditiva em Espanhol | Vamos a Estudiar Español",
+      description: "Treine compreensão auditiva em espanhol com áudios, perguntas, transcrições e atividades do A1 ao C2."
+    },
+    writing: {
+      slug: "escritura",
+      title: "Escrita em Espanhol | Vamos a Estudiar Español",
+      description: "Pratique escrita em espanhol com propostas guiadas, metas de palavras, conectores e ferramentas de revisão."
+    }
   };
 
   let syncingRoute = false;
@@ -26,6 +57,11 @@
     const item = ROUTES[route] || ROUTES.home;
     if (!PROJECT_ROOT) return item.slug ? `/${item.slug}` : "/";
     return item.slug ? `${PROJECT_ROOT}/${item.slug}` : `${PROJECT_ROOT}/`;
+  }
+
+  function publicUrl(route) {
+    const item = ROUTES[route] || ROUTES.home;
+    return item.slug ? `${PUBLIC_ORIGIN}/${item.slug}` : `${PUBLIC_ORIGIN}/`;
   }
 
   function routeFromLocation() {
@@ -49,17 +85,116 @@
     return match ? match[0] : "home";
   }
 
+  function ensureMeta(selector, attrs) {
+    let node = document.head.querySelector(selector);
+    if (!node) {
+      node = document.createElement("meta");
+      Object.entries(attrs).forEach(([key, value]) => node.setAttribute(key, value));
+      document.head.appendChild(node);
+    }
+    return node;
+  }
+
+  function ensureCanonical() {
+    let link = document.head.querySelector('link[rel="canonical"]');
+    if (!link) {
+      link = document.createElement("link");
+      link.rel = "canonical";
+      document.head.appendChild(link);
+    }
+    return link;
+  }
+
+  function ensureManifest() {
+    if (document.head.querySelector('link[rel="manifest"]')) return;
+    const link = document.createElement("link");
+    link.rel = "manifest";
+    link.href = `${PROJECT_ROOT || ""}/site.webmanifest` || "/site.webmanifest";
+    document.head.appendChild(link);
+  }
+
+  function updateStructuredData() {
+    let script = document.getElementById("vae-structured-data");
+    if (!script) {
+      script = document.createElement("script");
+      script.id = "vae-structured-data";
+      script.type = "application/ld+json";
+      document.head.appendChild(script);
+    }
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": `${PUBLIC_ORIGIN}/#website`,
+          "url": `${PUBLIC_ORIGIN}/`,
+          "name": "Vamos a Estudiar Español — Espaço de Prática",
+          "inLanguage": ["pt-BR", "es"]
+        },
+        {
+          "@type": "EducationalOrganization",
+          "@id": `${PUBLIC_ORIGIN}/#organization`,
+          "name": "Vamos a Estudiar Español",
+          "url": "https://www.vamosaestudiarespanol.com.br/",
+          "sameAs": [
+            "https://www.instagram.com/vamosaestudiarespanol",
+            "https://www.facebook.com/vamosaestudiarespanol",
+            "https://www.tiktok.com/@vamosaestudiarespanol",
+            "https://youtube.com/@vamosaestudiarespanol"
+          ]
+        }
+      ]
+    });
+  }
+
+  function updateSEO(route) {
+    const item = ROUTES[route] || ROUTES.home;
+    const url = publicUrl(route);
+    document.title = item.title;
+
+    const description = ensureMeta('meta[name="description"]', { name: "description" });
+    description.setAttribute("content", item.description);
+
+    const robots = ensureMeta('meta[name="robots"]', { name: "robots" });
+    robots.setAttribute("content", "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1");
+
+    const ogTitle = ensureMeta('meta[property="og:title"]', { property: "og:title" });
+    const ogDescription = ensureMeta('meta[property="og:description"]', { property: "og:description" });
+    const ogUrl = ensureMeta('meta[property="og:url"]', { property: "og:url" });
+    const ogType = ensureMeta('meta[property="og:type"]', { property: "og:type" });
+    const ogSite = ensureMeta('meta[property="og:site_name"]', { property: "og:site_name" });
+    const ogLocale = ensureMeta('meta[property="og:locale"]', { property: "og:locale" });
+    ogTitle.content = item.title;
+    ogDescription.content = item.description;
+    ogUrl.content = url;
+    ogType.content = "website";
+    ogSite.content = "Vamos a Estudiar Español";
+    ogLocale.content = "pt_BR";
+
+    const twitterCard = ensureMeta('meta[name="twitter:card"]', { name: "twitter:card" });
+    const twitterTitle = ensureMeta('meta[name="twitter:title"]', { name: "twitter:title" });
+    const twitterDescription = ensureMeta('meta[name="twitter:description"]', { name: "twitter:description" });
+    twitterCard.content = "summary";
+    twitterTitle.content = item.title;
+    twitterDescription.content = item.description;
+
+    ensureCanonical().href = url;
+    ensureManifest();
+    updateStructuredData();
+
+    window.dispatchEvent(new CustomEvent("vae:routechange", {
+      detail: { route, title: item.title, path: routePath(route), url }
+    }));
+  }
+
   function canonicalize(route, mode = "replace") {
     const target = routePath(route);
     const current = `${window.location.pathname}${window.location.search}`;
-    if (current === target) {
-      document.title = (ROUTES[route] || ROUTES.home).title;
-      return;
+    if (current !== target) {
+      const method = mode === "push" ? "pushState" : "replaceState";
+      window.history[method]({ route }, "", target);
     }
-
-    const method = mode === "push" ? "pushState" : "replaceState";
-    window.history[method]({ route }, "", target);
-    document.title = (ROUTES[route] || ROUTES.home).title;
+    updateSEO(route);
   }
 
   function findRouteButton(route) {
@@ -77,7 +212,7 @@
     syncingRoute = true;
     button.click();
     syncingRoute = false;
-    document.title = (ROUTES[route] || ROUTES.home).title;
+    updateSEO(route);
     return true;
   }
 
