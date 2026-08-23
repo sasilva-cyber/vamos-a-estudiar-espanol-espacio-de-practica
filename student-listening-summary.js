@@ -23,6 +23,13 @@
       pagination.defer = true;
       document.head.appendChild(pagination);
     }
+    if (!document.getElementById("reading-guided-redirect-script")) {
+      const guided = document.createElement("script");
+      guided.id = "reading-guided-redirect-script";
+      guided.src = `${rootPath}reading-guided-redirect.js?v=20260823-1`;
+      guided.defer = true;
+      document.head.appendChild(guided);
+    }
   }
 
   loadReadingClassicsAssets();
