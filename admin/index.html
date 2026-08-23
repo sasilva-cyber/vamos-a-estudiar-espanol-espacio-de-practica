@@ -13,7 +13,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="robots" content="noindex,nofollow" />
   <meta name="theme-color" content="#8f1d2c" />
-  <title>Administrar conteúdos | Vamos a Estudiar Español</title>
+  <title>Administrar plataforma | Vamos a Estudiar Español</title>
   <link rel="stylesheet" href="../auth.css?v=20260823-3" />
   <link rel="stylesheet" href="../admin.css?v=20260823-1" />
   <link rel="stylesheet" href="../admin-subscriptions.css?v=20260823-1" />
@@ -21,7 +21,7 @@
   <script defer src="../auth-config.js?v=20260823-2"></script>
   <script defer src="../auth-client.js?v=20260823-3"></script>
   <script defer src="../admin.js?v=20260823-1"></script>
-  <script defer src="../admin-subscriptions.js?v=20260823-1"></script>
+  <script defer src="../admin-subscriptions.js?v=20260823-2"></script>
 </head>
 <body>
   <header class="auth-header">
@@ -51,7 +51,7 @@
       <section class="admin-hero">
         <p class="auth-eyebrow">Painel administrativo</p>
         <h1>Gestão da plataforma</h1>
-        <p>Acompanhe assinaturas Premium e administre os conteúdos exclusivos disponibilizados aos estudantes.</p>
+        <p>Acompanhe assinaturas Premium, newsletter, e-mails automáticos e administre os conteúdos exclusivos disponibilizados aos estudantes.</p>
         <p><strong>Conta administrativa:</strong> <span id="admin-user-email">—</span></p>
       </section>
 
@@ -65,68 +65,24 @@
         </div>
 
         <div class="admin-subscriptions-metrics" aria-label="Resumo das assinaturas">
-          <article class="admin-subscription-metric">
-            <span>Alunos cadastrados</span>
-            <strong id="admin-metric-students">—</strong>
-            <small>Contas de estudante na plataforma</small>
-          </article>
-          <article class="admin-subscription-metric">
-            <span>Premium com acesso</span>
-            <strong id="admin-metric-premium">—</strong>
-            <small>Assinantes que podem acessar o conteúdo agora</small>
-          </article>
-          <article class="admin-subscription-metric">
-            <span>Renovação ativa</span>
-            <strong id="admin-metric-renewing">—</strong>
-            <small>Assinaturas previstas para cobrar novamente</small>
-          </article>
-          <article class="admin-subscription-metric">
-            <span>Pendentes</span>
-            <strong id="admin-metric-pending">—</strong>
-            <small>Checkout iniciado e ainda não aprovado</small>
-          </article>
-          <article class="admin-subscription-metric">
-            <span>Canceladas</span>
-            <strong id="admin-metric-cancelled">—</strong>
-            <small>Assinaturas encerradas ou sem renovação</small>
-          </article>
-          <article class="admin-subscription-metric">
-            <span>MRR estimado</span>
-            <strong id="admin-metric-mrr">—</strong>
-            <small>Receita mensal das renovações ativas</small>
-          </article>
+          <article class="admin-subscription-metric"><span>Alunos cadastrados</span><strong id="admin-metric-students">—</strong><small>Contas de estudante na plataforma</small></article>
+          <article class="admin-subscription-metric"><span>Premium com acesso</span><strong id="admin-metric-premium">—</strong><small>Assinantes que podem acessar o conteúdo agora</small></article>
+          <article class="admin-subscription-metric"><span>Renovação ativa</span><strong id="admin-metric-renewing">—</strong><small>Assinaturas previstas para cobrar novamente</small></article>
+          <article class="admin-subscription-metric"><span>Pendentes</span><strong id="admin-metric-pending">—</strong><small>Checkout iniciado e ainda não aprovado</small></article>
+          <article class="admin-subscription-metric"><span>Canceladas</span><strong id="admin-metric-cancelled">—</strong><small>Assinaturas encerradas ou sem renovação</small></article>
+          <article class="admin-subscription-metric"><span>MRR estimado</span><strong id="admin-metric-mrr">—</strong><small>Receita mensal das renovações ativas</small></article>
         </div>
 
         <div class="admin-subscriptions-toolbar">
           <input class="admin-subscriptions-search" id="admin-subscriptions-search" type="search" placeholder="Buscar por nome ou e-mail" aria-label="Buscar assinaturas" />
           <select class="admin-subscriptions-filter" id="admin-subscriptions-filter" aria-label="Filtrar assinaturas por status">
-            <option value="all">Todos os registros</option>
-            <option value="active">Premium com acesso</option>
-            <option value="renewing">Renovação ativa</option>
-            <option value="pending">Pendentes</option>
-            <option value="cancelled">Canceladas</option>
-            <option value="paused">Pausadas</option>
+            <option value="all">Todos os registros</option><option value="active">Premium com acesso</option><option value="renewing">Renovação ativa</option><option value="pending">Pendentes</option><option value="cancelled">Canceladas</option><option value="paused">Pausadas</option>
           </select>
           <span class="admin-subscriptions-result-count" id="admin-subscriptions-result-count">0 registros</span>
         </div>
 
         <p class="admin-subscriptions-status info" id="admin-subscriptions-status" role="status" aria-live="polite">Carregando dados das assinaturas…</p>
-
-        <div class="admin-subscriptions-table-wrap">
-          <table class="admin-subscriptions-table">
-            <thead>
-              <tr>
-                <th>Estudante</th>
-                <th>Status</th>
-                <th>Valor</th>
-                <th>Início</th>
-                <th>Próxima cobrança / acesso</th>
-                <th>Atualizado</th>
-              </tr>
-            </thead>
-            <tbody id="admin-subscriptions-body"></tbody>
-          </table>
-        </div>
+        <div class="admin-subscriptions-table-wrap"><table class="admin-subscriptions-table"><thead><tr><th>Estudante</th><th>Status</th><th>Valor</th><th>Início</th><th>Próxima cobrança / acesso</th><th>Atualizado</th></tr></thead><tbody id="admin-subscriptions-body"></tbody></table></div>
         <div class="admin-subscriptions-empty hidden" id="admin-subscriptions-empty"></div>
         <p class="admin-subscriptions-note">O MRR é uma estimativa baseada somente nas assinaturas com renovação automática ativa. Assinaturas canceladas que ainda estejam dentro do período já pago continuam em “Premium com acesso”, mas não entram na próxima receita mensal.</p>
       </section>
@@ -135,63 +91,21 @@
         <section class="admin-panel" aria-labelledby="admin-upload-title">
           <h2 id="admin-upload-title">Adicionar conteúdo</h2>
           <p class="admin-panel-intro">O arquivo não fica público. Ele só poderá ser aberto por usuários autenticados quando o conteúdo estiver publicado.</p>
-
           <form class="admin-form" id="admin-upload-form" novalidate>
-            <div class="admin-field">
-              <label for="admin-title">Título</label>
-              <input class="admin-input" id="admin-title" type="text" minlength="3" required placeholder="Ex.: Guia de verbos irregulares" />
-            </div>
-
-            <div class="admin-field">
-              <label for="admin-description">Descrição</label>
-              <textarea class="admin-textarea" id="admin-description" placeholder="Explique brevemente o que o estudante encontrará neste conteúdo."></textarea>
-            </div>
-
-            <div class="admin-row">
-              <div class="admin-field">
-                <label for="admin-type">Tipo</label>
-                <select class="admin-select" id="admin-type" required>
-                  <option value="material">Material</option>
-                  <option value="video">Videoaula</option>
-                  <option value="activity">Atividade</option>
-                </select>
-              </div>
-              <div class="admin-field">
-                <label for="admin-level">Nível</label>
-                <input class="admin-input" id="admin-level" type="text" placeholder="Ex.: A1–A2" />
-              </div>
-            </div>
-
-            <div class="admin-field">
-              <label for="admin-category">Categoria</label>
-              <input class="admin-input" id="admin-category" type="text" placeholder="Ex.: Gramática, Vocabulário, Escucha" />
-            </div>
-
-            <div class="admin-field">
-              <label for="admin-file">Arquivo</label>
-              <input class="admin-input" id="admin-file" type="file" required accept=".pdf,.mp4,.mp3,.m4a,.jpg,.jpeg,.png,.webp,application/pdf,video/mp4,audio/mpeg,audio/mp4,image/jpeg,image/png,image/webp" />
-            </div>
-
+            <div class="admin-field"><label for="admin-title">Título</label><input class="admin-input" id="admin-title" type="text" minlength="3" required placeholder="Ex.: Guia de verbos irregulares" /></div>
+            <div class="admin-field"><label for="admin-description">Descrição</label><textarea class="admin-textarea" id="admin-description" placeholder="Explique brevemente o que o estudante encontrará neste conteúdo."></textarea></div>
+            <div class="admin-row"><div class="admin-field"><label for="admin-type">Tipo</label><select class="admin-select" id="admin-type" required><option value="material">Material</option><option value="video">Videoaula</option><option value="activity">Atividade</option></select></div><div class="admin-field"><label for="admin-level">Nível</label><input class="admin-input" id="admin-level" type="text" placeholder="Ex.: A1–A2" /></div></div>
+            <div class="admin-field"><label for="admin-category">Categoria</label><input class="admin-input" id="admin-category" type="text" placeholder="Ex.: Gramática, Vocabulário, Escucha" /></div>
+            <div class="admin-field"><label for="admin-file">Arquivo</label><input class="admin-input" id="admin-file" type="file" required accept=".pdf,.mp4,.mp3,.m4a,.jpg,.jpeg,.png,.webp,application/pdf,video/mp4,audio/mpeg,audio/mp4,image/jpeg,image/png,image/webp" /></div>
             <div class="admin-note">Limite atual: 50 MB por arquivo. Formatos aceitos: PDF, MP4, MP3/M4A, JPG, PNG e WebP.</div>
-
-            <label class="admin-check">
-              <input id="admin-published" type="checkbox" />
-              <span>Publicar imediatamente. Se estiver desmarcado, o conteúdo ficará como rascunho e não será visível para estudantes.</span>
-            </label>
-
+            <label class="admin-check"><input id="admin-published" type="checkbox" /><span>Publicar imediatamente. Se estiver desmarcado, o conteúdo ficará como rascunho e não será visível para estudantes.</span></label>
             <p class="admin-status info" id="admin-status" role="status" aria-live="polite">Pronto para adicionar um conteúdo.</p>
             <button class="admin-submit" id="admin-submit" type="submit">Enviar conteúdo →</button>
           </form>
         </section>
 
         <section class="admin-panel" aria-labelledby="admin-list-title">
-          <div class="admin-item-top">
-            <div>
-              <h2 id="admin-list-title">Conteúdos cadastrados</h2>
-              <p class="admin-panel-intro">Visualize, publique, despublique ou exclua conteúdos.</p>
-            </div>
-            <span class="admin-state draft" id="admin-content-count">0 conteúdos</span>
-          </div>
+          <div class="admin-item-top"><div><h2 id="admin-list-title">Conteúdos cadastrados</h2><p class="admin-panel-intro">Visualize, publique, despublique ou exclua conteúdos.</p></div><span class="admin-state draft" id="admin-content-count">0 conteúdos</span></div>
           <div class="admin-list" id="admin-content-list" aria-live="polite"></div>
         </section>
       </div>

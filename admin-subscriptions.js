@@ -35,29 +35,20 @@
   }
 
   function formatMoney(cents, currency = "BRL") {
-    return new Intl.NumberFormat("pt-BR", {
-      style: "currency",
-      currency: currency || "BRL"
-    }).format(Number(cents || 0) / 100);
+    return new Intl.NumberFormat("pt-BR", { style: "currency", currency: currency || "BRL" }).format(Number(cents || 0) / 100);
   }
 
   function formatDate(value, includeTime = false) {
     const date = new Date(value || "");
     if (Number.isNaN(date.getTime())) return "—";
-    const options = includeTime
-      ? { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" }
-      : { day: "2-digit", month: "2-digit", year: "numeric" };
+    const options = includeTime ? { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" } : { day: "2-digit", month: "2-digit", year: "numeric" };
     return new Intl.DateTimeFormat("pt-BR", options).format(date);
   }
 
   function statusMeta(item) {
     const status = String(item.status || "inactive");
-    if (item.premium_access && status === "cancelled") {
-      return { label: "Cancelada · acesso vigente", className: "cancelled-access" };
-    }
-    if (["authorized", "active", "trialing"].includes(status)) {
-      return { label: item.renewing ? "Ativa" : "Ativa · sem renovação", className: "active" };
-    }
+    if (item.premium_access && status === "cancelled") return { label: "Cancelada · acesso vigente", className: "cancelled-access" };
+    if (["authorized", "active", "trialing"].includes(status)) return { label: item.renewing ? "Ativa" : "Ativa · sem renovação", className: "active" };
     if (status === "pending") return { label: "Pendente", className: "pending" };
     if (status === "cancelled") return { label: "Cancelada", className: "cancelled" };
     if (status === "paused") return { label: "Pausada", className: "paused" };
@@ -71,11 +62,9 @@
     if (filter === "pending" && item.status !== "pending") return false;
     if (filter === "cancelled" && item.status !== "cancelled") return false;
     if (filter === "paused" && item.status !== "paused") return false;
-
     const query = String(searchInput?.value || "").trim().toLowerCase();
     if (!query) return true;
-    return [item.full_name, item.email, item.status]
-      .some((value) => String(value || "").toLowerCase().includes(query));
+    return [item.full_name, item.email, item.status].some((value) => String(value || "").toLowerCase().includes(query));
   }
 
   function createCell(text, className = "") {
@@ -87,34 +76,14 @@
 
   function buildRow(item) {
     const tr = document.createElement("tr");
-
-    const student = document.createElement("td");
-    student.className = "admin-subscriber-person";
-    const name = document.createElement("strong");
-    name.textContent = item.full_name || "Estudante";
-    const email = document.createElement("span");
-    email.textContent = item.email || "E-mail não disponível";
+    const student = document.createElement("td"); student.className = "admin-subscriber-person";
+    const name = document.createElement("strong"); name.textContent = item.full_name || "Estudante";
+    const email = document.createElement("span"); email.textContent = item.email || "E-mail não disponível";
     student.append(name, email);
-
     const stateCell = document.createElement("td");
-    const meta = statusMeta(item);
-    const badge = document.createElement("span");
-    badge.className = `admin-subscription-badge ${meta.className}`;
-    badge.textContent = meta.label;
-    stateCell.appendChild(badge);
-
-    const periodText = item.current_period_end
-      ? (item.status === "cancelled" ? `Até ${formatDate(item.current_period_end)}` : formatDate(item.current_period_end))
-      : "—";
-
-    tr.append(
-      student,
-      stateCell,
-      createCell(formatMoney(item.amount_cents, item.currency), "admin-subscriber-money"),
-      createCell(formatDate(item.started_at)),
-      createCell(periodText),
-      createCell(formatDate(item.updated_at, true), "admin-subscriber-updated")
-    );
+    const meta = statusMeta(item); const badge = document.createElement("span"); badge.className = `admin-subscription-badge ${meta.className}`; badge.textContent = meta.label; stateCell.appendChild(badge);
+    const periodText = item.current_period_end ? (item.status === "cancelled" ? `Até ${formatDate(item.current_period_end)}` : formatDate(item.current_period_end)) : "—";
+    tr.append(student, stateCell, createCell(formatMoney(item.amount_cents, item.currency), "admin-subscriber-money"), createCell(formatDate(item.started_at)), createCell(periodText), createCell(formatDate(item.updated_at, true), "admin-subscriber-updated"));
     return tr;
   }
 
@@ -123,15 +92,10 @@
     const items = subscribers.filter(subscriberMatches);
     tableBody.replaceChildren();
     items.forEach((item) => tableBody.appendChild(buildRow(item)));
-
-    if (resultCount) {
-      resultCount.textContent = items.length === 1 ? "1 registro" : `${items.length} registros`;
-    }
+    if (resultCount) resultCount.textContent = items.length === 1 ? "1 registro" : `${items.length} registros`;
     if (emptyNode) {
       emptyNode.classList.toggle("hidden", items.length > 0);
-      emptyNode.textContent = subscribers.length
-        ? "Nenhuma assinatura corresponde aos filtros selecionados."
-        : "Ainda não há assinaturas registradas na plataforma.";
+      emptyNode.textContent = subscribers.length ? "Nenhuma assinatura corresponde aos filtros selecionados." : "Ainda não há assinaturas registradas na plataforma.";
     }
   }
 
@@ -147,57 +111,44 @@
 
   async function loadDashboard() {
     if (!window.VAEAuth?.getClient) return;
-    if (refreshButton) {
-      refreshButton.disabled = true;
-      refreshButton.textContent = "Atualizando…";
-    }
+    if (refreshButton) { refreshButton.disabled = true; refreshButton.textContent = "Atualizando…"; }
     setStatus("Atualizando dados de assinaturas…", "info");
-
     try {
       const supabase = window.VAEAuth.getClient();
       const { data, error } = await supabase.functions.invoke("admin-subscriptions", { body: {} });
       if (error) throw error;
       if (!data?.metrics || !Array.isArray(data?.subscribers)) throw new Error("DASHBOARD_DATA_INVALID");
-
-      subscribers = data.subscribers;
-      renderMetrics(data.metrics);
-      renderTable();
+      subscribers = data.subscribers; renderMetrics(data.metrics); renderTable();
       const generatedAt = formatDate(data.generated_at, true);
       setStatus(`Dados atualizados em ${generatedAt}.`, "success");
-      track("admin_subscriptions_view", {
-        premium_access: data.metrics.premium_access || 0,
-        renewing: data.metrics.renewing || 0,
-        pending: data.metrics.pending || 0
-      });
+      track("admin_subscriptions_view", { premium_access: data.metrics.premium_access || 0, renewing: data.metrics.renewing || 0, pending: data.metrics.pending || 0 });
     } catch (error) {
       console.error("Falha ao carregar painel de assinaturas", error);
       setStatus("Não foi possível carregar as assinaturas agora. Confirme sua sessão administrativa e tente novamente.", "error");
-      subscribers = [];
-      renderMetrics(lastMetrics || {});
-      renderTable();
+      subscribers = []; renderMetrics(lastMetrics || {}); renderTable();
     } finally {
-      if (refreshButton) {
-        refreshButton.disabled = false;
-        refreshButton.textContent = "Atualizar dados";
-      }
+      if (refreshButton) { refreshButton.disabled = false; refreshButton.textContent = "Atualizar dados"; }
     }
   }
 
-  refreshButton?.addEventListener("click", () => {
-    track("admin_subscriptions_refresh");
-    loadDashboard();
-  });
+  refreshButton?.addEventListener("click", () => { track("admin_subscriptions_refresh"); loadDashboard(); });
   searchInput?.addEventListener("input", renderTable);
   filterSelect?.addEventListener("change", renderTable);
 
   async function boot() {
-    try {
-      const session = await window.VAEAuth?.getSession?.();
-      if (!session) return;
-      await loadDashboard();
-    } catch (_) {}
+    try { const session = await window.VAEAuth?.getSession?.(); if (!session) return; await loadDashboard(); } catch (_) {}
   }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot, { once: true }); else boot();
+})();
 
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot, { once: true });
-  else boot();
+/* Painel complementar: newsletter e e-mails automáticos. */
+(function () {
+  if (document.getElementById("vae-admin-communications")) return;
+  const script = document.createElement("script");
+  script.id = "vae-admin-communications";
+  const isGithub = window.location.hostname.toLowerCase().endsWith(".github.io");
+  const root = isGithub ? "/vamos-a-estudiar-espanol-espacio-de-practica/" : "/";
+  script.src = `${root}admin-communications.js?v=20260823-1502`;
+  script.defer = true;
+  document.head.appendChild(script);
 })();

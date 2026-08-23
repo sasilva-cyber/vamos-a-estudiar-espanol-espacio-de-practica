@@ -11,6 +11,7 @@
   const confirmInput = document.getElementById("signup-password-confirm");
   const consentInput = document.getElementById("signup-consent");
   const newsletterInput = document.getElementById("signup-newsletter");
+  const NEWSLETTER_ENDPOINT = "https://clfwoywzalttkvhstsgh.supabase.co/functions/v1/newsletter-subscribe";
 
   function setStatus(message, type = "info") {
     status.textContent = message;
@@ -32,6 +33,26 @@
         button.textContent = show ? "Ocultar" : "Mostrar";
       });
     });
+  }
+
+  async function subscribeNewsletter(name, email) {
+    try {
+      const response = await fetch(NEWSLETTER_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, full_name: name, source: "student_signup" })
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || !data?.ok) throw new Error(data?.error || "NEWSLETTER_SUBSCRIBE_FAILED");
+      try {
+        if (typeof window.vaeTrack === "function") window.vaeTrack("newsletter_signup", { source: "student_signup", welcome_email_sent: Boolean(data?.welcome_email_sent) });
+        else if (typeof window.gtag === "function") window.gtag("event", "newsletter_signup", { source: "student_signup", welcome_email_sent: Boolean(data?.welcome_email_sent) });
+      } catch (_) {}
+      return data;
+    } catch (error) {
+      console.warn("Conta criada, mas o cadastro da newsletter não pôde ser concluído agora.", error);
+      return null;
+    }
   }
 
   async function checkExistingSession() {
@@ -56,6 +77,7 @@
     const email = emailInput.value.trim();
     const password = passwordInput.value;
     const passwordConfirm = confirmInput.value;
+    const newsletterOptIn = Boolean(newsletterInput.checked);
 
     if (name.length < 2) {
       setStatus("Informe seu nome para continuar.", "error");
@@ -90,17 +112,19 @@
         name,
         email,
         password,
-        newsletter: newsletterInput.checked
+        newsletter: newsletterOptIn
       });
 
+      if (newsletterOptIn) await subscribeNewsletter(name, email);
+
       if (data?.session) {
-        setStatus("Conta criada. Abrindo sua Área do Estudiante…", "success");
+        setStatus(newsletterOptIn ? "Conta criada. Sua newsletter também foi confirmada. Abrindo sua Área do Estudiante…" : "Conta criada. Abrindo sua Área do Estudiante…", "success");
         window.setTimeout(() => location.replace(`${window.VAEAuth.ROOT_PATH}aluno/`), 700);
         return;
       }
 
       form.reset();
-      setStatus("Conta criada! Confira seu e-mail e clique no link de confirmação.", "success");
+      setStatus(newsletterOptIn ? "Conta criada! Confira seu e-mail para confirmar a conta. Sua inscrição na newsletter também foi registrada." : "Conta criada! Confira seu e-mail e clique no link de confirmação.", "success");
     } catch (error) {
       setStatus(window.VAEAuth.friendlyError(error), "error");
     } finally {

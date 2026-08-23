@@ -15,14 +15,24 @@
   window.gtag('js', new Date());
   window.gtag('config', id);
 
+  const isGithub = window.location.hostname.toLowerCase().endsWith(".github.io");
+  const root = isGithub ? "/vamos-a-estudiar-espanol-espacio-de-practica/" : "/";
+
   /* Carrega os acessos públicos de Login/Cadastro sem duplicar o script. */
   if (!document.getElementById("vae-student-nav")) {
-    const isGithub = window.location.hostname.toLowerCase().endsWith(".github.io");
-    const root = isGithub ? "/vamos-a-estudiar-espanol-espacio-de-practica/" : "/";
     const studentNav = document.createElement("script");
     studentNav.id = "vae-student-nav";
     studentNav.src = `${root}student-nav.js?v=20260823-1145`;
     studentNav.defer = true;
     document.head.appendChild(studentNav);
+  }
+
+  /* Conecta o formulário público da newsletter ao Supabase. */
+  if (!document.getElementById("vae-newsletter-runtime")) {
+    const newsletter = document.createElement("script");
+    newsletter.id = "vae-newsletter-runtime";
+    newsletter.src = `${root}newsletter-runtime.js?v=20260823-1455`;
+    newsletter.defer = true;
+    document.head.appendChild(newsletter);
   }
 })();
