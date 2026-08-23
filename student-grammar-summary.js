@@ -9,11 +9,22 @@
     document.head.appendChild(link);
   }
 
+  function addPremiumBenefit(){
+    const list=document.querySelector('.premium-benefits');
+    if(!list||list.querySelector('[data-grammar-benefit]'))return;
+    const item=document.createElement('li');
+    item.dataset.grammarBenefit='true';
+    item.textContent='Aulas de gramática aprofundadas com exercícios';
+    const anchor=list.children[1];
+    if(anchor)anchor.insertAdjacentElement('afterend',item);else list.appendChild(item);
+  }
+
   function build(){
     if(document.getElementById('grammar-hub'))return true;
     const listening=document.querySelector('.listening-hub');
     if(!listening)return false;
     loadStyles();
+    addPremiumBenefit();
     const section=document.createElement('section');
     section.className='student-section grammar-hub';
     section.id='grammar-hub';
@@ -54,6 +65,7 @@
   }
 
   function boot(){
+    addPremiumBenefit();
     if(!build()){
       const observer=new MutationObserver(()=>{if(build()){normalizeOrder();observer.disconnect();}});
       observer.observe(document.getElementById('student-content')||document.body,{childList:true,subtree:true});
