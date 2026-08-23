@@ -8,46 +8,71 @@ on:
 jobs:
   lighthouse-mobile:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 12
     steps:
       - name: Aguardar GitHub Pages publicar
-        run: sleep 90
+        run: sleep 120
 
-      - name: Definir URL de teste
+      - name: Verificar HTTPS e definir URL de teste
         shell: bash
         run: |
-          CUSTOM="http://pratica.vamosaestudiarespanol.com.br/"
+          HTTPS_URL="https://pratica.vamosaestudiarespanol.com.br/"
+          HTTP_URL="http://pratica.vamosaestudiarespanol.com.br/"
           FALLBACK="https://sasilva-cyber.github.io/vamos-a-estudiar-espanol-espacio-de-practica/"
-          if curl -L --fail --silent --show-error --max-time 20 -o /dev/null "$CUSTOM"; then
-            echo "TARGET_URL=$CUSTOM" >> "$GITHUB_ENV"
+
+          if curl -L --fail --silent --show-error --max-time 25 -o /dev/null "$HTTPS_URL"; then
+            echo "HTTPS_STATUS=ready" >> "$GITHUB_ENV"
+            echo "TARGET_URL=$HTTPS_URL" >> "$GITHUB_ENV"
+          elif curl -L --fail --silent --show-error --max-time 25 -o /dev/null "$HTTP_URL"; then
+            echo "HTTPS_STATUS=pending" >> "$GITHUB_ENV"
+            echo "TARGET_URL=$HTTP_URL" >> "$GITHUB_ENV"
           else
+            echo "HTTPS_STATUS=unavailable" >> "$GITHUB_ENV"
             echo "TARGET_URL=$FALLBACK" >> "$GITHUB_ENV"
           fi
 
       - name: Executar Lighthouse mobile
         run: |
           npx --yes lighthouse@12.8.2 "$TARGET_URL" \
-            --only-categories=performance \
+            --only-categories=performance,accessibility,best-practices,seo \
             --form-factor=mobile \
             --screen-emulation.mobile=true \
             --throttling-method=simulate \
             --output=json \
-            --output-path=./lighthouse.json \
+            --output=html \
+            --output-path=./lighthouse-mobile \
             --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
             --quiet
 
-      - name: Resumo do desempenho
+      - name: Resumo do desempenho e SEO
         run: |
           node - <<'NODE'
-          const r = require('./lighthouse.json');
+          const fs = require('fs');
+          const candidates = ['./lighthouse-mobile.report.json','./lighthouse-mobile.json'];
+          const path = candidates.find(fs.existsSync);
+          if (!path) throw new Error('Relatório JSON do Lighthouse não encontrado.');
+          const r = JSON.parse(fs.readFileSync(path, 'utf8'));
           const a = r.audits;
-          const score = Math.round((r.categories.performance.score || 0) * 100);
-          const get = id => a[id] && a[id].displayValue ? a[id].displayValue : '—';
-          console.log(`URL: ${r.finalDisplayedUrl}`);
-          console.log(`Performance: ${score}/100`);
+          const score = key => Math.round((r.categories[key]?.score || 0) * 100);
+          const get = id => a[id]?.displayValue || '—';
+          console.log(`URL final: ${r.finalDisplayedUrl}`);
+          console.log(`HTTPS: ${process.env.HTTPS_STATUS}`);
+          console.log(`Performance: ${score('performance')}/100`);
+          console.log(`Acessibilidade: ${score('accessibility')}/100`);
+          console.log(`Boas práticas: ${score('best-practices')}/100`);
+          console.log(`SEO: ${score('seo')}/100`);
           console.log(`FCP: ${get('first-contentful-paint')}`);
           console.log(`LCP: ${get('largest-contentful-paint')}`);
           console.log(`Speed Index: ${get('speed-index')}`);
           console.log(`TBT: ${get('total-blocking-time')}`);
           console.log(`CLS: ${get('cumulative-layout-shift')}`);
           NODE
+
+      - name: Publicar relatório Lighthouse
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-mobile
+          path: |
+            lighthouse-mobile.report.json
+            lighthouse-mobile.report.html
+          if-no-files-found: warn
