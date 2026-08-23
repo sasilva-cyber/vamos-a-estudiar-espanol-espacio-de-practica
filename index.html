@@ -10,72 +10,48 @@
     html,body{margin:0;min-height:100%;background:#fff8ea;color:#74111e;font-family:Arial,sans-serif}
     .boot{min-height:100vh;display:grid;place-items:center;padding:24px;box-sizing:border-box;text-align:center}
     .boot-mark{width:54px;height:54px;border-radius:16px;background:#981c2d;color:#fff;display:grid;place-items:center;margin:0 auto 14px;font:700 30px Georgia,serif}
-    .boot strong{display:block;font:700 22px Georgia,serif}.boot span{display:block;margin-top:8px;color:#6b625d;font-size:14px}
+    .boot strong{display:block;font:700 22px Georgia,serif}
+    .boot span{display:block;margin-top:8px;color:#6b625d;font-size:14px}
+    .boot button{margin-top:16px;border:0;border-radius:12px;background:#981c2d;color:#fff;padding:12px 18px;font-weight:800;font-size:16px}
   </style>
+</head>
+<body>
+  <div class="boot" id="boot"><div><div class="boot-mark">Ñ</div><strong>Vamos a Estudiar Español</strong><span>Carregando seu espaço de prática…</span></div></div>
   <script>
     (() => {
       const project = "/vamos-a-estudiar-espanol-espacio-de-practica";
       const onGithub = location.hostname.toLowerCase().endsWith(".github.io");
       const root = onGithub ? `${project}/` : "/";
       window.__VAE_ROOT__ = root;
-      ["responsive.css?v=20260823-0138","responsive-hotfix.css?v=20260823-0138"].forEach((file) => {
-        const preload = document.createElement("link");
-        preload.rel = "preload";
-        preload.as = "style";
-        preload.href = root + file;
-        document.head.appendChild(preload);
-      });
-    })();
-  </script>
-</head>
-<body>
-  <div class="boot" id="boot"><div><div class="boot-mark">Ñ</div><strong>Vamos a Estudiar Español</strong><span>Carregando seu espaço de prática…</span></div></div>
-  <script>
-    (() => {
-      const root = window.__VAE_ROOT__ || "/";
-      const shellUrl = `${root}app-shell.html?v=20260823-0138`;
-      fetch(shellUrl, { cache: "force-cache" })
+      const shellUrl = `${root}app-shell.html?v=20260823-0150`;
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 8000);
+
+      fetch(shellUrl, { cache: "no-store", signal: controller.signal })
         .then((response) => {
           if (!response.ok) throw new Error(`HTTP ${response.status}`);
           return response.text();
         })
         .then((html) => {
-          const base = `<base href="${root}" />`;
-          html = html.replace(/<base\s+href=["']\/vamos-a-estudiar-espanol-espacio-de-practica\/["']\s*\/?\s*>/i, base);
+          clearTimeout(timeout);
+          html = html.replace(/<base\s+href=["']\/vamos-a-estudiar-espanol-espacio-de-practica\/["']\s*\/?\s*>/i, `<base href="${root}" />`);
 
-          // Atualiza scripts essenciais para evitar versões antigas no cache.
-          html = html.replace(/(script|readings|grammar|vocabulary|quiz-activities|route-query)\.js\?v=[^\"']+/g, '$1.js?v=20260823-0138');
+          // O CSS responsivo entra antes da renderização do conteúdo.
+          html = html.replace('</head>', `<link rel="stylesheet" href="${root}responsive.css?v=20260823-0150" /><link rel="stylesheet" href="${root}responsive-hotfix.css?v=20260823-0150" /></head>`);
 
-          // Gramática, Vocabulário, Lecturas e testes extensos deixam de bloquear a home.
-          // core-lazy.js baixa cada módulo no primeiro toque/hover ou quando o navegador fica ocioso.
-          html = html.replace(/\s*<script src="(?:readings|grammar|vocabulary|quiz-activities)\.js[^\"]*"><\/script>/g, '');
-          html = html.replace(/<script src="route-query\.js[^\"]*"><\/script>/,
-            `<script src="${root}core-lazy.js?v=20260823-0138"></script><script src="route-query.js?v=20260823-0138"></script>`);
-
-          // CSS das telas internas baixa sem bloquear o primeiro paint.
-          html = html.replace(/<link rel="stylesheet" href="(readings|grammar|vocabulary|quiz-activities)\.css([^\"]*)"\s*\/>/g,
-            '<link rel="stylesheet" href="$1.css$2" media="print" onload="this.media=\'all\'" />');
-
-          // Responsividade é crítica e entra no primeiro render.
-          if (!html.includes('id="responsive-styles"')) {
-            html = html.replace('</head>', `<link id="responsive-styles" rel="stylesheet" href="${root}responsive.css?v=20260823-0138" /><link id="responsive-hotfix-styles" rel="stylesheet" href="${root}responsive-hotfix.css?v=20260823-0138" /></head>`);
-          }
-
-          // Runtime leve de navegação para Escucha/Escritura e menu responsivo.
-          if (!html.includes('id="home-grammar-images-loader"')) {
-            html = html.replace('</body>', `<script defer id="home-grammar-images-loader" src="${root}home-grammar-images.js?v=20260823-0138"></script></body>`);
-          }
-
-          // Os poucos scripts críticos restantes baixam em paralelo.
-          html = html.replace(/<script\s+src=/g, '<script defer src=');
+          // Mantém a versão funcional dos módulos e adiciona apenas os recursos complementares após a página existir.
+          html = html.replace(/route-query\.js\?v=[^\"']+/g, 'route-query.js?v=20260823-0150');
+          html = html.replace('</body>', `<script src="${root}home-grammar-images.js?v=20260823-0150"></script></body>`);
 
           document.open();
           document.write(html);
           document.close();
         })
         .catch(() => {
+          clearTimeout(timeout);
           const boot = document.getElementById("boot");
-          if (boot) boot.innerHTML = '<div><div class="boot-mark">Ñ</div><strong>Não foi possível carregar a plataforma.</strong><span>Atualize a página em alguns instantes.</span></div>';
+          if (!boot) return;
+          boot.innerHTML = `<div><div class="boot-mark">Ñ</div><strong>O carregamento demorou mais do que o esperado.</strong><span>Toque abaixo para tentar novamente.</span><button type="button" onclick="location.reload()">Tentar novamente</button></div>`;
         });
     })();
   </script>
