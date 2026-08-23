@@ -1,0 +1,7 @@
+Configurar no Supabase > Authentication > URL Configuration:
+- Site URL: https://pratica.vamosaestudiarespanol.com.br
+- Redirect: https://pratica.vamosaestudiarespanol.com.br/login/**
+- Redirect: https://pratica.vamosaestudiarespanol.com.br/aluno/**
+- Homologação: https://sasilva-cyber.github.io/vamos-a-estudiar-espanol-espacio-de-practica/**
+
+Manter confirmação de e-mail habilitada.
