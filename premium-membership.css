@@ -1,0 +1,76 @@
+/* Assinatura Premium da Área do Estudiante. */
+[data-premium-section] { display: none; }
+body.premium-access [data-premium-section] { display: block; }
+body.premium-access .premium-offer { display: none; }
+
+.premium-offer {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(143, 29, 44, .18);
+  background: linear-gradient(145deg, #fffaf0 0%, #fff 55%, #f9efe7 100%);
+}
+.premium-offer::after {
+  content: "Ñ";
+  position: absolute;
+  right: -18px;
+  top: -36px;
+  font: 700 150px/1 Georgia, serif;
+  color: rgba(143, 29, 44, .055);
+  pointer-events: none;
+}
+.premium-offer-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(250px, .65fr);
+  gap: 28px;
+  align-items: center;
+}
+.premium-offer h2 { margin: 4px 0 10px; color: #6e1521; font-size: clamp(1.55rem, 3vw, 2.25rem); }
+.premium-offer-lead { max-width: 760px; margin: 0; line-height: 1.65; color: #4c4541; }
+.premium-benefits {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 16px;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.premium-benefits li { display: flex; gap: 9px; align-items: flex-start; color: #3e3834; font-weight: 650; }
+.premium-benefits li::before { content: "✓"; color: #8f1d2c; font-weight: 900; }
+.premium-price-card {
+  border-radius: 20px;
+  padding: 24px;
+  background: #8f1d2c;
+  color: #fff;
+  box-shadow: 0 16px 34px rgba(110, 21, 33, .16);
+}
+.premium-price-label { display: block; font-size: .78rem; text-transform: uppercase; letter-spacing: .09em; opacity: .82; font-weight: 800; }
+.premium-price { display: flex; align-items: flex-end; gap: 7px; margin: 8px 0 4px; }
+.premium-price strong { font-size: 2.35rem; line-height: 1; }
+.premium-price span { padding-bottom: 5px; opacity: .85; }
+.premium-price-note { margin: 0 0 18px; font-size: .9rem; line-height: 1.45; opacity: .88; }
+.premium-subscribe-button {
+  width: 100%;
+  border: 0;
+  border-radius: 12px;
+  padding: 13px 16px;
+  background: #f0b33a;
+  color: #4f1a13;
+  font: inherit;
+  font-weight: 900;
+  cursor: pointer;
+}
+.premium-subscribe-button:hover { filter: brightness(.98); transform: translateY(-1px); }
+.premium-subscribe-button:disabled { cursor: wait; opacity: .68; transform: none; }
+.premium-status { margin: 12px 0 0; font-size: .84rem; line-height: 1.45; opacity: .92; }
+.premium-status.error { color: #ffe0e0; }
+.premium-status.success { color: #fff5c8; }
+.student-badge.premium-badge { background: #fff1c7; border-color: #e8bf55; color: #6b4810; }
+.student-badge.free-badge { background: #f4f1ed; color: #655d57; }
+
+@media (max-width: 760px) {
+  .premium-offer-grid { grid-template-columns: 1fr; }
+  .premium-benefits { grid-template-columns: 1fr; }
+  .premium-price-card { padding: 20px; }
+}
