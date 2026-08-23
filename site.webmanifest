@@ -1,0 +1,11 @@
+{
+  "name": "Vamos a Estudiar Español — Espaço de Prática",
+  "short_name": "Vamos a Estudiar",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#fff8ea",
+  "theme_color": "#8f1d2c",
+  "lang": "pt-BR",
+  "description": "Plataforma gratuita de prática de espanhol com quizzes, gramática, vocabulário, escucha, escritura e leituras."
+}
