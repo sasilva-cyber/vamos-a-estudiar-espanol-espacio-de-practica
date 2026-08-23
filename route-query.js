@@ -150,7 +150,6 @@
     syncingRoute = true;
     button.click();
     syncingRoute = false;
-    updateSEO(route);
     return true;
   }
 
@@ -165,11 +164,11 @@
     const root = IS_GITHUB_HOST ? `${REPOSITORY_PATH}/` : "/";
     const config = document.createElement("script");
     config.id = "vae-analytics-config";
-    config.src = `${root}analytics-config.js?v=20260823-0950`;
+    config.src = `${root}analytics-config.js?v=20260823-1014`;
     config.onload = () => {
       const analytics = document.createElement("script");
       analytics.id = "vae-analytics-runtime";
-      analytics.src = `${root}analytics.js?v=20260823-0950`;
+      analytics.src = `${root}analytics.js?v=20260823-1014`;
       analytics.defer = true;
       document.head.appendChild(analytics);
     };
@@ -187,6 +186,7 @@
 
   window.addEventListener("popstate", () => {
     const route = routeFromLocation();
+    updateSEO(route);
     openRoute(route);
   });
 
