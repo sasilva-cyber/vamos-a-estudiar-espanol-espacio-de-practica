@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PLD6NHQNEN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PLD6NHQNEN');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="robots" content="noindex,nofollow" />
+  <meta name="theme-color" content="#8f1d2c" />
+  <title>Administrar conteúdos | Vamos a Estudiar Español</title>
+  <link rel="stylesheet" href="../auth.css?v=20260823-3" />
+  <link rel="stylesheet" href="../admin.css?v=20260823-1" />
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="../auth-config.js?v=20260823-2"></script>
+  <script defer src="../auth-client.js?v=20260823-3"></script>
+  <script defer src="../admin.js?v=20260823-1"></script>
+</head>
+<body>
+  <header class="auth-header">
+    <div class="auth-header-inner">
+      <a class="auth-brand" href="../" aria-label="Vamos a Estudiar Español — início">
+        <span class="auth-mark" aria-hidden="true">Ñ</span>
+        <span class="auth-brand-copy">
+          <strong>Vamos a Estudiar Español</strong>
+          <small>Administração de conteúdos</small>
+        </span>
+      </a>
+      <a class="auth-header-action" href="../aluno/">Área do Estudiante</a>
+    </div>
+    <div class="heritage-stripe" aria-hidden="true"></div>
+  </header>
+
+  <main class="admin-main">
+    <div class="auth-loading" id="admin-loading">Verificando permissão administrativa…</div>
+
+    <section class="admin-denied hidden" id="admin-denied">
+      <h1>Acesso restrito</h1>
+      <p>Esta página é exclusiva para a administração da plataforma.</p>
+      <a href="../aluno/">Voltar para a Área do Estudiante</a>
+    </section>
+
+    <div class="hidden" id="admin-content">
+      <section class="admin-hero">
+        <p class="auth-eyebrow">Gestão da biblioteca</p>
+        <h1>Conteúdos exclusivos</h1>
+        <p>Envie materiais para o Storage privado, mantenha rascunhos e publique somente quando estiver tudo pronto.</p>
+        <p><strong>Conta administrativa:</strong> <span id="admin-user-email">—</span></p>
+      </section>
+
+      <div class="admin-grid">
+        <section class="admin-panel" aria-labelledby="admin-upload-title">
+          <h2 id="admin-upload-title">Adicionar conteúdo</h2>
+          <p class="admin-panel-intro">O arquivo não fica público. Ele só poderá ser aberto por usuários autenticados quando o conteúdo estiver publicado.</p>
+
+          <form class="admin-form" id="admin-upload-form" novalidate>
+            <div class="admin-field">
+              <label for="admin-title">Título</label>
+              <input class="admin-input" id="admin-title" type="text" minlength="3" required placeholder="Ex.: Guia de verbos irregulares" />
+            </div>
+
+            <div class="admin-field">
+              <label for="admin-description">Descrição</label>
+              <textarea class="admin-textarea" id="admin-description" placeholder="Explique brevemente o que o estudante encontrará neste conteúdo."></textarea>
+            </div>
+
+            <div class="admin-row">
+              <div class="admin-field">
+                <label for="admin-type">Tipo</label>
+                <select class="admin-select" id="admin-type" required>
+                  <option value="material">Material</option>
+                  <option value="video">Videoaula</option>
+                  <option value="activity">Atividade</option>
+                </select>
+              </div>
+              <div class="admin-field">
+                <label for="admin-level">Nível</label>
+                <input class="admin-input" id="admin-level" type="text" placeholder="Ex.: A1–A2" />
+              </div>
+            </div>
+
+            <div class="admin-field">
+              <label for="admin-category">Categoria</label>
+              <input class="admin-input" id="admin-category" type="text" placeholder="Ex.: Gramática, Vocabulário, Escucha" />
+            </div>
+
+            <div class="admin-field">
+              <label for="admin-file">Arquivo</label>
+              <input class="admin-input" id="admin-file" type="file" required accept=".pdf,.mp4,.mp3,.m4a,.jpg,.jpeg,.png,.webp,application/pdf,video/mp4,audio/mpeg,audio/mp4,image/jpeg,image/png,image/webp" />
+            </div>
+
+            <div class="admin-note">Limite atual: 50 MB por arquivo. Formatos aceitos: PDF, MP4, MP3/M4A, JPG, PNG e WebP.</div>
+
+            <label class="admin-check">
+              <input id="admin-published" type="checkbox" />
+              <span>Publicar imediatamente. Se estiver desmarcado, o conteúdo ficará como rascunho e não será visível para estudantes.</span>
+            </label>
+
+            <p class="admin-status info" id="admin-status" role="status" aria-live="polite">Pronto para adicionar um conteúdo.</p>
+            <button class="admin-submit" id="admin-submit" type="submit">Enviar conteúdo →</button>
+          </form>
+        </section>
+
+        <section class="admin-panel" aria-labelledby="admin-list-title">
+          <div class="admin-item-top">
+            <div>
+              <h2 id="admin-list-title">Conteúdos cadastrados</h2>
+              <p class="admin-panel-intro">Visualize, publique, despublique ou exclua conteúdos.</p>
+            </div>
+            <span class="admin-state draft" id="admin-content-count">0 conteúdos</span>
+          </div>
+          <div class="admin-list" id="admin-content-list" aria-live="polite"></div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="auth-footer">Vamos a Estudiar Español · Administração</footer>
+</body>
+</html>
