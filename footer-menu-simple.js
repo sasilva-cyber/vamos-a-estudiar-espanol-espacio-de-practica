@@ -162,7 +162,7 @@
     if (document.getElementById("complete-song-quiz-loader")) return;
     const script = document.createElement("script");
     script.id = "complete-song-quiz-loader";
-    script.src = "quiz-completa-cancion.js?v=20260822-2200";
+    script.src = "quiz-completa-cancion.js?v=20260822-2322";
     document.head.appendChild(script);
   }
 
