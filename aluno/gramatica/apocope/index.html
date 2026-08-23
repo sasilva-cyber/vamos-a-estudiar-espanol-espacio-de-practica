@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="robots" content="noindex,nofollow" />
+  <meta name="theme-color" content="#8f1d2c" />
+  <meta name="description" content="Aula Premium sobre a apócope em espanhol, com explicação aprofundada e atividade interativa." />
+  <title>La apócope en español | Área do Estudiante</title>
+  <link rel="stylesheet" href="../../../auth.css?v=20260823-3" />
+  <link rel="stylesheet" href="../../../grammar-apocope.css?v=20260823-1" />
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="../../../auth-config.js?v=20260823-2"></script>
+  <script defer src="../../../auth-client.js?v=20260823-4"></script>
+  <script defer src="../../../grammar-apocope.js?v=20260823-1"></script>
+</head>
+<body>
+  <header class="auth-header">
+    <div class="auth-header-inner">
+      <a class="auth-brand" href="../../" aria-label="Voltar para a Área do Estudiante">
+        <span class="auth-mark" aria-hidden="true">Ñ</span>
+        <span class="auth-brand-copy"><strong>Vamos a Estudiar Español</strong><small>Gramática Premium</small></span>
+      </a>
+      <a class="auth-header-action" href="../../">← Área do Estudiante</a>
+    </div>
+    <div class="heritage-stripe" aria-hidden="true"></div>
+  </header>
+
+  <main class="ga-main" id="grammar-main" aria-busy="true">
+    <div class="auth-loading" id="grammar-loading">Verificando seu acesso Premium…</div>
+
+    <section class="ga-access-denied hidden" id="grammar-denied">
+      <p class="ga-eyebrow">Conteúdo Premium</p>
+      <h1>Esta aula requer uma assinatura ativa.</h1>
+      <p>Volte para a Área do Estudiante para verificar seu plano ou assinar o Premium.</p>
+      <a href="../../">Voltar para minha área</a>
+    </section>
+
+    <article class="ga-content hidden" id="grammar-content">
+      <section class="ga-hero">
+        <div class="ga-hero-copy">
+          <p class="ga-eyebrow">Gramática · Aula 01 · A1–B1</p>
+          <h1>La apócope en español</h1>
+          <p class="ga-lead">Por que dizemos <strong>buen viaje</strong>, <strong>primer día</strong>, <strong>ningún problema</strong>, <strong>cien años</strong> e <strong>veintiún días</strong>? Nesta aula você vai entender a lógica da apócope, reconhecer quando ela é obrigatória e saber quando a forma completa deve ser mantida.</p>
+          <div class="ga-tags"><span>Morfossintaxe</span><span>Comparação com o português</span><span>Exemplos contextualizados</span><span>12 questões</span></div>
+        </div>
+        <aside class="ga-progress-card" aria-label="Seu progresso nesta aula">
+          <span>Seu progresso</span>
+          <strong id="grammar-progress-score">—</strong>
+          <small id="grammar-progress-text">Carregando seu melhor resultado…</small>
+        </aside>
+      </section>
+
+      <nav class="ga-outline" aria-label="Sumário da aula">
+        <a href="#conceito">1. O que é apócope?</a>
+        <a href="#comparacao">2. Ponte com o português</a>
+        <a href="#regras">3. Regras em espanhol</a>
+        <a href="#erros">4. Erros frequentes</a>
+        <a href="#pratica">5. Prática</a>
+      </nav>
+
+      <section class="ga-section" id="conceito">
+        <p class="ga-kicker">Conceito essencial</p>
+        <h2>O que é uma apócope?</h2>
+        <p><strong>Apócope</strong> é o nome dado à perda de um ou mais sons ou letras no final de uma palavra. Em termos gerais, trata-se de uma redução da forma plena. No espanhol, porém, é importante não imaginar que qualquer palavra possa ser “encurtada” livremente: a apócope ocorre em palavras específicas e em contextos gramaticais bem definidos.</p>
+        <p>Observe o contraste: <em>bueno</em> é a forma plena, mas diante de um substantivo masculino singular usamos <em>buen</em>: <strong>un buen libro</strong>. Já quando o adjetivo aparece depois do substantivo, a forma plena retorna: <strong>un libro bueno</strong>. Portanto, não estamos diante de uma simples preferência de pronúncia, e sim de uma alternância condicionada pela posição e pelo tipo de palavra que vem depois.</p>
+        <div class="ga-callout important"><strong>Regra de ouro</strong><span>Para reconhecer a apócope em espanhol, observe três coisas: <b>qual palavra está sendo reduzida</b>, <b>qual palavra vem depois</b> e <b>se há concordância de gênero e número</b>.</span></div>
+      </section>
+
+      <section class="ga-section" id="comparacao">
+        <p class="ga-kicker">Ponte linguística</p>
+        <h2>Apócope como fenômeno linguístico: do português ao espanhol</h2>
+        <p>O material-base desta aula chama atenção para um uso amplo do termo <em>apócope</em>: o apagamento de segmentos no final da palavra. No português brasileiro, um exemplo frequente na oralidade é a queda do <strong>/r/ final dos infinitivos verbais</strong>, como em pronúncias aproximadas de <em>falar</em> → <em>falá</em>, <em>comer</em> → <em>comê</em> e <em>partir</em> → <em>parti</em>.</p>
+        <p>Os estudos citados no material fornecido — Callou, Leite e Moraes (1998), Lopes e Callou (2004) e Schwindt e Chaves (2019) — são apresentados como referência para a forte presença desse apagamento na oralidade brasileira. O material também relaciona o fenômeno a registros históricos e à representação escrita da fala em textos antigos, mostrando como uma característica da modalidade falada pode, em determinados contextos, ser levada para a escrita.</p>
+        <p>Essa discussão ajuda a perceber um princípio importante da Linguística Histórica: as línguas são sistemas vivos, heterogêneos e mutáveis. Como lembrado no material-base a partir de Costa (1996), Faraco (2006) e Mattos e Silva (2008), mudanças podem ocorrer em diferentes níveis da língua ao longo do tempo.</p>
+        <div class="ga-callout contrast"><strong>Mas atenção à diferença</strong><span>No português, o exemplo do /r/ final está ligado sobretudo à <b>variação fonética/fonológica na fala</b>. Nesta aula de espanhol, estudamos principalmente <b>formas apocopadas consagradas pela gramática</b>, como <em>buen, primer, algún, ningún, gran</em> e <em>cualquier</em>. Os dois casos ilustram perda no final da palavra, mas não funcionam do mesmo modo.</span></div>
+      </section>
+
+      <section class="ga-section" id="regras">
+        <p class="ga-kicker">Regras de uso</p>
+        <h2>As principais apócopes do espanhol</h2>
+        <p>Vamos organizar as formas por contexto. Em vez de decorar uma lista solta, procure identificar o padrão sintático: algumas formas se reduzem antes de <strong>substantivos masculinos singulares</strong>; outras se reduzem diante de <strong>substantivos de qualquer gênero</strong>; e os numerais exigem atenção especial à concordância.</p>
+
+        <div class="ga-rule-block">
+          <div class="ga-rule-number">1</div>
+          <div>
+            <h3>Antes de substantivo masculino singular</h3>
+            <p>As formas abaixo sofrem apócope quando aparecem imediatamente antes de um substantivo masculino no singular.</p>
+            <div class="ga-table-wrap"><table><thead><tr><th>Forma plena</th><th>Forma apocopada</th><th>Exemplo correto</th></tr></thead><tbody>
+              <tr><td>bueno</td><td><strong>buen</strong></td><td>Espero que tengas <strong>un buen viaje</strong>.</td></tr>
+              <tr><td>malo</td><td><strong>mal</strong></td><td>Hace <strong>mal tiempo</strong> hoy.</td></tr>
+              <tr><td>alguno</td><td><strong>algún</strong></td><td>¿Tienes <strong>algún problema</strong>?</td></tr>
+              <tr><td>ninguno</td><td><strong>ningún</strong></td><td>No hay <strong>ningún bolígrafo</strong> aquí.</td></tr>
+              <tr><td>uno</td><td><strong>un</strong></td><td>Tengo <strong>un sueño</strong>.</td></tr>
+              <tr><td>primero</td><td><strong>primer</strong></td><td>Fue <strong>el primer día</strong> del curso.</td></tr>
+              <tr><td>tercero</td><td><strong>tercer</strong></td><td>Vive en <strong>el tercer piso</strong>.</td></tr>
+            </tbody></table></div>
+            <p class="ga-teacher-note"><strong>Observe a posição:</strong> dizemos <em>un buen libro</em>, mas <em>un libro bueno</em>; <em>el primer capítulo</em>, mas <em>el capítulo primero</em>. A redução está ligada ao fato de a palavra aparecer antes do substantivo masculino singular.</p>
+          </div>
+        </div>
+
+        <div class="ga-rule-block">
+          <div class="ga-rule-number">2</div>
+          <div>
+            <h3><em>Grande</em> → <em>gran</em>: masculino ou feminino singular</h3>
+            <p><strong>Grande</strong> se transforma em <strong>gran</strong> antes de substantivos singulares, tanto masculinos quanto femininos: <em>un gran escritor</em>, <em>una gran oportunidad</em>, <em>un gran problema</em>.</p>
+            <p>Há ainda uma diferença de sentido que vale observar. Em muitos contextos, <strong>gran</strong> tem valor apreciativo, equivalente a “excelente”, “importante” ou “admirável”, enquanto <strong>grande</strong> depois do substantivo tende a conservar o sentido de tamanho.</p>
+            <div class="ga-pair"><span><b>Es un gran hombre.</b><small>É um homem admirável/importante.</small></span><span><b>Es un hombre grande.</b><small>É um homem de grande tamanho/porte.</small></span></div>
+          </div>
+        </div>
+
+        <div class="ga-rule-block">
+          <div class="ga-rule-number">3</div>
+          <div>
+            <h3><em>Cualquiera</em> → <em>cualquier</em></h3>
+            <p><strong>Cualquiera</strong> perde a vogal final e se torna <strong>cualquier</strong> quando vem antes de um substantivo singular, masculino ou feminino: <em>cualquier libro</em>, <em>cualquier persona</em>, <em>cualquier respuesta</em>.</p>
+            <p>Quando aparece depois do substantivo ou de maneira independente, usamos a forma completa: <em>una persona cualquiera</em>; <em>puede hacerlo cualquiera</em>.</p>
+          </div>
+        </div>
+
+        <div class="ga-rule-block">
+          <div class="ga-rule-number">4</div>
+          <div>
+            <h3><em>Ciento</em> → <em>cien</em></h3>
+            <p>Usamos <strong>cien</strong> diante de substantivos: <em>cien años</em>, <em>cien personas</em>, <em>cien libros</em>. Também aparece em <em>cien mil</em> e <em>cien millones</em>.</p>
+            <p>Mas, quando o número continua com outras unidades, usamos <strong>ciento</strong>: <em>ciento uno</em>, <em>ciento veinte</em>, <em>ciento veinticinco estudiantes</em>.</p>
+            <div class="ga-callout example"><strong>Compare</strong><span><em>Hace <b>cien años</b>.</em> ✓ &nbsp;&nbsp; <em>Hay <b>ciento veinte</b> participantes.</em> ✓</span></div>
+          </div>
+        </div>
+
+        <div class="ga-rule-block">
+          <div class="ga-rule-number">5</div>
+          <div>
+            <h3><em>Veintiuno</em> e outros números terminados em <em>-uno</em></h3>
+            <p>Diante de um substantivo masculino, <strong>veintiuno</strong> se transforma em <strong>veintiún</strong>: <em>veintiún años</em>, <em>veintiún libros</em>. O acento gráfico permanece porque a forma apocopada termina em <em>-ún</em>.</p>
+            <p>Diante de substantivo feminino, não usamos <em>veintiún</em>. Fazemos a concordância: <strong>veintiuna personas</strong>, <strong>veintiuna páginas</strong>. O mesmo princípio aparece em números maiores: <em>treinta y un estudiantes</em>, mas <em>treinta y una alumnas</em>.</p>
+            <div class="ga-callout warning"><strong>Erro frequente</strong><span><s>veintiún personas</s> → <b>veintiuna personas</b>. A apócope em <em>-ún</em> é usada diante de substantivo masculino.</span></div>
+          </div>
+        </div>
+
+        <div class="ga-rule-block">
+          <div class="ga-rule-number">6</div>
+          <div>
+            <h3><em>Santo</em> → <em>San</em> diante de nomes próprios masculinos</h3>
+            <p>Antes da maioria dos nomes próprios masculinos de santos, <strong>santo</strong> se reduz a <strong>san</strong>: <em>San Pedro</em>, <em>San Juan</em>, <em>San Francisco</em>. Há exceções tradicionais, entre elas <strong>Santo Tomás</strong>, <strong>Santo Tomé</strong>, <strong>Santo Toribio</strong> e <strong>Santo Domingo</strong>.</p>
+          </div>
+        </div>
+
+        <div class="ga-summary-box">
+          <h3>Mapa mental rápido</h3>
+          <div class="ga-summary-grid">
+            <span><b>Masculino singular</b><small>buen, mal, algún, ningún, un, primer, tercer</small></span>
+            <span><b>Singular, masc. ou fem.</b><small>gran, cualquier</small></span>
+            <span><b>Número exato 100</b><small>cien</small></span>
+            <span><b>-uno + masc.</b><small>veintiún, treinta y un…</small></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="ga-section" id="erros">
+        <p class="ga-kicker">Olhar de professor</p>
+        <h2>Erros que um falante de português costuma cometer</h2>
+        <div class="ga-error-grid">
+          <article><strong>✗ un bueno viaje</strong><span>Antes de substantivo masculino singular: <b>un buen viaje</b>.</span></article>
+          <article><strong>✗ ninguna problema</strong><span><em>Problema</em> é masculino em espanhol: <b>ningún problema</b>.</span></article>
+          <article><strong>✗ la primer clase</strong><span>No padrão geral ensinado aqui: <b>la primera clase</b>.</span></article>
+          <article><strong>✗ veintiún personas</strong><span>Com feminino: <b>veintiuna personas</b>.</span></article>
+          <article><strong>✗ ciento años</strong><span>Para 100 exato antes de substantivo: <b>cien años</b>.</span></article>
+          <article><strong>✗ cualquiera libro</strong><span>Antes de substantivo singular: <b>cualquier libro</b>.</span></article>
+        </div>
+        <div class="ga-callout teacher"><strong>Como decidir rapidamente?</strong><span>Não tente “ouvir” apenas o que parece natural. Primeiro identifique gênero, número e posição. A apócope é muito mais fácil quando você transforma a frase em uma pequena análise gramatical.</span></div>
+      </section>
+
+      <section class="ga-section ga-practice" id="pratica">
+        <p class="ga-kicker">Prática com correção automática</p>
+        <h2>Você compreendeu a apócope?</h2>
+        <p>Responda às 12 questões. Algumas verificam a regra; outras exigem que você observe gênero, número, posição e significado. Para concluir a aula, alcance pelo menos <strong>70%</strong>.</p>
+        <form id="grammar-quiz" novalidate>
+          <div class="ga-question-list" id="grammar-question-list"></div>
+          <p class="ga-quiz-status" id="grammar-quiz-status" role="status" aria-live="polite">Responda todas as questões antes de corrigir.</p>
+          <div class="ga-quiz-actions"><button type="submit" id="grammar-submit">Corrigir atividade →</button><button type="button" id="grammar-retry" class="secondary hidden">Refazer atividade</button></div>
+        </form>
+        <div class="ga-result hidden" id="grammar-result" aria-live="polite"><span id="grammar-result-badge">Resultado</span><strong id="grammar-result-score">—</strong><p id="grammar-result-text"></p></div>
+      </section>
+
+      <section class="ga-section ga-production">
+        <p class="ga-kicker">Produção guiada</p>
+        <h2>Leve a regra para o uso real</h2>
+        <p>Depois da correção, tente produzir oralmente ou por escrito quatro frases: uma com <strong>buen</strong>, uma com <strong>algún/ningún</strong>, uma contrastando <strong>gran/grande</strong> e uma usando corretamente <strong>veintiún</strong> ou <strong>veintiuna</strong>. O objetivo é sair da identificação passiva e usar a estrutura de maneira consciente.</p>
+        <details><summary>Ver modelos possíveis</summary><p><em>Fue un buen día para estudiar. No tengo ningún problema con esta actividad. Es una gran profesora y trabaja en una escuela grande. Hay veintiuna alumnas y veintiún alumnos en el curso.</em></p></details>
+      </section>
+
+      <footer class="ga-lesson-footer"><a href="../../">← Voltar para a Área do Estudiante</a><span>Aula 01 · La apócope en español</span></footer>
+    </article>
+  </main>
+</body>
+</html>
