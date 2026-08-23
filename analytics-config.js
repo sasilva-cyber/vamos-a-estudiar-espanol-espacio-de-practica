@@ -1,5 +1,2 @@
-/*
-  Cole aqui o ID de medição do Google Analytics 4 quando a propriedade estiver criada.
-  Exemplo: window.VAE_GA4_ID = "G-XXXXXXXXXX";
-*/
-window.VAE_GA4_ID = "";
+/* Google Analytics 4 — Vamos a Estudiar Español */
+window.VAE_GA4_ID = "G-PLD6NHQNEN";
