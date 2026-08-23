@@ -1,0 +1,32 @@
+/* Hotfix responsivo e de interação para a versão otimizada. */
+.vae-route-loading{opacity:.62!important;pointer-events:none!important;cursor:wait!important}
+@media (max-width:820px){
+  .site-header{position:sticky!important;top:0!important;z-index:1200!important;background:rgba(255,255,255,.98)!important}
+  .header-inner{width:min(100% - 20px,1120px)!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:8px!important;padding:9px 0!important}
+  .brand{align-self:flex-start!important;max-width:100%!important}
+  .brand-copy{min-width:0!important}.brand-copy strong{white-space:normal!important;line-height:1.15!important}
+  .main-nav{width:100%!important;max-width:100%!important;display:flex!important;flex-wrap:nowrap!important;justify-content:flex-start!important;overflow-x:auto!important;overflow-y:visible!important;gap:4px!important;padding:2px 0 7px!important;-webkit-overflow-scrolling:touch!important;scrollbar-width:none!important}
+  .main-nav::-webkit-scrollbar{display:none!important}
+  .main-nav>.nav-link,.main-nav>.grammar-nav-group{flex:0 0 auto!important}
+  .main-nav .nav-link{min-height:44px!important;white-space:nowrap!important}
+  .home-hero{display:grid!important;grid-template-columns:1fr!important;gap:22px!important}
+  .home-copy,.hero-panel{width:100%!important;max-width:none!important}
+  #home-title{font-size:clamp(2.15rem,9vw,3.5rem)!important;line-height:1.02!important;text-align:left!important;hyphens:none!important}
+  .hero-text{font-size:1rem!important;line-height:1.65!important;text-align:left!important}
+  .feature-grid{grid-template-columns:1fr!important}
+  .home-ff-inner{grid-template-columns:1fr!important}
+}
+@media (max-width:640px){
+  body{overflow-x:hidden!important}
+  .app{width:min(100% - 20px,1120px)!important;padding-top:24px!important}
+  .hero-actions{grid-template-columns:1fr!important}
+  .hero-actions button{width:100%!important}
+  .hero-panel{padding:22px 18px!important}
+  .hero-stat{display:flex!important;align-items:baseline!important;gap:10px!important}
+  .hero-stat strong{flex:0 0 auto!important}
+  .home-grammar-items,.grammar-grid,.vocabulary-grid,.reading-grid,.listening-grid,.writing-grid,.activity-grid,.level-grid{grid-template-columns:1fr!important}
+  .song-artist-grid,.song-options,.song-scoreboard{grid-template-columns:1fr!important}
+  .song-quiz-card,.song-quiz-feature{max-width:100%!important;overflow:hidden!important}
+  input,select,textarea,button{font-size:16px!important}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}

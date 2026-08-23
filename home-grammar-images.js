@@ -1,142 +1,193 @@
-/* Imagens da home e carregamento progressivo das áreas secundárias. */
+/* Home leve: imagens, menu e módulos secundários sob demanda. */
 (function () {
   const images = [
     "assets/grammar-home/contrastes-portugues-espanol.webp",
     "assets/grammar-home/pontuacao-interrogacao.webp",
     "assets/grammar-home/acentuacao-ortografica.webp"
   ];
-  let routeLazyInstalled = false;
+  const root = window.__VAE_ROOT__ || (location.hostname.toLowerCase().endsWith('.github.io') ? '/vamos-a-estudiar-espanol-espacio-de-practica/' : '/');
+  const promises = new Map();
+  let replaying = false;
 
-  function loadScript(id, src, onload) {
+  function loadScript(id, file) {
+    if (promises.has(id)) return promises.get(id);
     const existing = document.getElementById(id);
-    if (existing) {
-      if (onload) {
-        if (existing.dataset.loaded === "true") onload();
-        else existing.addEventListener("load", onload, { once: true });
+    if (existing?.dataset.loaded === 'true') return Promise.resolve(existing);
+    const p = new Promise((resolve) => {
+      const script = existing || document.createElement('script');
+      const done = () => { script.dataset.loaded = 'true'; resolve(script); };
+      if (!existing) {
+        script.id = id;
+        script.src = root + file;
+        script.defer = true;
+        document.head.appendChild(script);
       }
-      return existing;
-    }
-    const script = document.createElement("script");
-    script.id = id;
-    script.src = src;
-    script.defer = true;
-    script.onload = () => {
-      script.dataset.loaded = "true";
-      if (onload) onload();
-    };
-    document.head.appendChild(script);
-    return script;
+      if (script.dataset.loaded === 'true') return done();
+      script.addEventListener('load', done, { once:true });
+      script.addEventListener('error', done, { once:true });
+    });
+    promises.set(id, p);
+    return p;
   }
 
-  function applyImages() {
-    const container = document.getElementById("home-grammar-items");
+  function ensureNavButton(route, label, beforeRoute) {
+    const nav = document.querySelector('.main-nav');
+    if (!nav || nav.querySelector(`[data-route="${route}"]`)) return;
+    const button = document.createElement('button');
+    button.className = 'nav-link';
+    button.type = 'button';
+    button.dataset.route = route;
+    button.textContent = label;
+    nav.insertBefore(button, beforeRoute ? nav.querySelector(`[data-route="${beforeRoute}"]`) : null);
+  }
+
+  function ensureHeroButton(route, label, beforeRoute) {
+    const actions = document.querySelector('#home-screen .hero-actions');
+    if (!actions || actions.querySelector(`[data-route="${route}"]`)) return;
+    const button = document.createElement('button');
+    button.className = 'secondary-button';
+    button.type = 'button';
+    button.dataset.route = route;
+    button.textContent = label;
+    actions.insertBefore(button, beforeRoute ? actions.querySelector(`[data-route="${beforeRoute}"]`) : null);
+  }
+
+  function ensureLightShell() {
+    ensureNavButton('listening', 'Escucha', 'readings');
+    ensureNavButton('writing', 'Escritura', 'readings');
+    ensureHeroButton('listening', 'Practicar escucha', 'readings');
+    ensureHeroButton('writing', 'Practicar escritura', 'readings');
+  }
+
+  function applyGrammarImages() {
+    const container = document.getElementById('home-grammar-items');
     if (!container) return false;
-    [...container.querySelectorAll(".home-grammar-item")].slice(0, 3).forEach((card, index) => {
-      const circle = card.querySelector(".home-grammar-circle");
-      if (!circle || circle.querySelector("img")) return;
-      circle.classList.add("home-grammar-circle-image");
-      circle.innerHTML = "";
-      const img = document.createElement("img");
-      img.className = "home-grammar-circle-img";
+    [...container.querySelectorAll('.home-grammar-item')].slice(0,3).forEach((card,index) => {
+      const circle = card.querySelector('.home-grammar-circle');
+      if (!circle || circle.querySelector('img')) return;
+      circle.classList.add('home-grammar-circle-image');
+      circle.textContent = '';
+      const img = document.createElement('img');
+      img.className = 'home-grammar-circle-img';
       img.src = images[index] || images[0];
-      img.alt = card.querySelector(".home-grammar-item-copy > strong")?.textContent?.trim() || "Gramática do espanhol";
-      img.loading = "lazy";
-      img.decoding = "async";
+      img.alt = card.querySelector('.home-grammar-item-copy > strong')?.textContent?.trim() || 'Gramática do espanhol';
+      img.loading = 'lazy';
+      img.decoding = 'async';
       circle.appendChild(img);
     });
     return true;
   }
 
-  function injectStyles() {
-    if (document.getElementById("home-grammar-images-styles")) return;
-    const style = document.createElement("style");
-    style.id = "home-grammar-images-styles";
-    style.textContent = `.home-grammar-circle-image{overflow:hidden!important;padding:0!important;background:#fff9ed!important}.home-grammar-circle-img{width:100%;height:100%;display:block;object-fit:cover;border-radius:50%}`;
+  function injectImageStyles() {
+    if (document.getElementById('home-grammar-images-styles')) return;
+    const style = document.createElement('style');
+    style.id = 'home-grammar-images-styles';
+    style.textContent = '.home-grammar-circle-image{overflow:hidden!important;padding:0!important;background:#fff9ed!important}.home-grammar-circle-img{width:100%;height:100%;display:block;object-fit:cover;border-radius:50%}';
     document.head.appendChild(style);
   }
 
-  function installImages(attempt = 0) {
-    injectStyles();
-    if (!applyImages() && attempt < 30) {
-      window.setTimeout(() => installImages(attempt + 1), 180);
-      return;
-    }
-    const container = document.getElementById("home-grammar-items");
-    if (container && !container.dataset.imageObserver) {
-      container.dataset.imageObserver = "true";
-      new MutationObserver(applyImages).observe(container, { childList: true });
-    }
+  async function loadListening() {
+    await loadScript('listening-area-loader', 'listening.js?v=20260823-0125');
+    loadScript('listening-filters-loader', 'listening-filters.js?v=20260822-1830');
+    await loadScript('listening-expanded-loader', 'listening-expanded.js?v=20260822-1848');
+    loadScript('listening-expanded-fixes-loader', 'listening-expanded-fixes.js?v=20260822-1848');
   }
 
-  function loadListeningCore(onload) {
-    loadScript("listening-area-loader", "listening.js?v=20260822-1816", onload);
+  async function loadWriting() {
+    await loadScript('writing-area-loader', 'writing.js?v=20260823-0125');
+    loadScript('writing-search-loader', 'writing-search.js?v=20260822-1859');
+    loadScript('home-writing-card-loader', 'home-writing-card.js?v=20260822-1903');
   }
 
-  function loadWritingCore(onload) {
-    loadScript("writing-area-loader", "writing.js?v=20260822-1842", onload);
+  async function loadReadingExpansion() {
+    await loadScript('readings-casa-loader', 'readings-cuentos-casa.js?v=20260822-1856');
   }
 
-  function loadListeningExtras() {
-    loadListeningCore(() => {
-      loadScript("listening-filters-loader", "listening-filters.js?v=20260822-1830");
-      loadScript("listening-expanded-loader", "listening-expanded.js?v=20260822-1848", () => {
-        loadScript("listening-expanded-fixes-loader", "listening-expanded-fixes.js?v=20260822-1848");
-      });
-    });
+  async function loadRoute(route) {
+    if (route === 'listening') return loadListening();
+    if (route === 'writing') return loadWriting();
+    if (route === 'readings') return loadReadingExpansion();
   }
 
-  function loadWritingExtras() {
-    loadWritingCore(() => loadScript("writing-search-loader", "writing-search.js?v=20260822-1859"));
+  function routeReady(route) {
+    if (route === 'listening') return !!document.getElementById('listening-screen');
+    if (route === 'writing') return !!document.getElementById('writing-screen') || !!document.querySelector('.writing-screen');
+    return true;
   }
 
-  function loadReadingExtras() {
-    loadScript("readings-casa-loader", "readings-cuentos-casa.js?v=20260822-1856");
-  }
-
-  function installRouteLazyLoading() {
-    if (routeLazyInstalled) return;
-    routeLazyInstalled = true;
-    const maybeLoad = (event) => {
-      const target = event.target?.closest?.("[data-route]");
+  function installRouteGate() {
+    document.addEventListener('click', async (event) => {
+      if (replaying) return;
+      const target = event.target.closest?.('[data-route]');
       const route = target?.dataset?.route;
-      if (route === "listening") loadListeningExtras();
-      else if (route === "writing") loadWritingExtras();
-      else if (route === "readings") loadReadingExtras();
-    };
-    document.addEventListener("pointerover", maybeLoad, { passive: true });
-    document.addEventListener("focusin", maybeLoad);
-    document.addEventListener("click", maybeLoad, true);
+      if (!['listening','writing','readings'].includes(route)) return;
+      if (routeReady(route)) {
+        if (route === 'readings') loadReadingExpansion();
+        return;
+      }
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      target.classList.add('vae-route-loading');
+      target.setAttribute('aria-busy','true');
+      await loadRoute(route);
+      target.classList.remove('vae-route-loading');
+      target.removeAttribute('aria-busy');
+      replaying = true;
+      target.click();
+      replaying = false;
+    }, true);
 
-    const path = window.location.pathname.replace(/\/+$/, "");
-    if (path.endsWith("/escucha")) loadListeningExtras();
-    else if (path.endsWith("/escritura")) loadWritingExtras();
-    else if (path.endsWith("/lectura")) loadReadingExtras();
+    const prefetch = (event) => {
+      const target = event.target.closest?.('[data-route]');
+      const route = target?.dataset?.route;
+      if (['listening','writing','readings'].includes(route)) loadRoute(route);
+    };
+    document.addEventListener('pointerover', prefetch, { passive:true });
+    document.addEventListener('focusin', prefetch);
   }
 
-  function loadEnhancedFooter() {
-    loadScript("enhanced-footer-loader", "footer-enhanced.js?v=20260822-1906", () => {
-      loadScript("footer-menu-simple-loader", "footer-menu-simple.js?v=20260823-0018");
+  function openInitialLazyRoute() {
+    const params = new URLSearchParams(location.search);
+    let route = params.get('route');
+    const path = location.pathname.replace(/\/+$/, '');
+    if (!route && path.endsWith('/escucha')) route = 'listening';
+    if (!route && path.endsWith('/escritura')) route = 'writing';
+    if (!route && path.endsWith('/lectura')) route = 'readings';
+    if (!['listening','writing','readings'].includes(route)) return;
+    loadRoute(route).then(() => {
+      const button = document.querySelector(`.main-nav [data-route="${route}"]`) || document.querySelector(`[data-route="${route}"]`);
+      if (!button) return;
+      replaying = true;
+      button.click();
+      replaying = false;
     });
   }
 
-  function loadResponsiveStyles() {
-    if (document.getElementById("responsive-styles")) return;
-    const link = document.createElement("link");
-    link.id = "responsive-styles";
-    link.rel = "stylesheet";
-    link.href = "responsive.css?v=20260822-1840";
-    document.head.appendChild(link);
+  function installImages(attempt=0) {
+    injectImageStyles();
+    if (!applyGrammarImages() && attempt < 18) return setTimeout(() => installImages(attempt+1), 180);
+    const container = document.getElementById('home-grammar-items');
+    if (container && !container.dataset.vaeImageObserver) {
+      container.dataset.vaeImageObserver = '1';
+      new MutationObserver(applyGrammarImages).observe(container,{childList:true});
+    }
   }
 
   function install() {
+    ensureLightShell();
+    installRouteGate();
     installImages();
-    loadResponsiveStyles();
-    loadListeningCore();
-    loadWritingCore(() => loadScript("home-writing-card-loader", "home-writing-card.js?v=20260822-1903"));
-    loadEnhancedFooter();
-    installRouteLazyLoading();
+    loadScript('grammar-dropdown-nav-loader', 'nav-grammar-dropdown.js?v=20260823-0125');
+    openInitialLazyRoute();
+
+    const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 900));
+    idle(() => {
+      loadScript('enhanced-footer-loader', 'footer-enhanced.js?v=20260822-1906').then(() => loadScript('footer-menu-simple-loader', 'footer-menu-simple.js?v=20260823-0125'));
+      loadListening();
+      loadWriting();
+    }, { timeout: 2800 });
   }
 
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", install, { once: true });
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', install, { once:true });
   else install();
 })();
