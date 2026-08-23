@@ -186,6 +186,6 @@
   if (document.getElementById("home-grammar-images-loader")) return;
   const script = document.createElement("script");
   script.id = "home-grammar-images-loader";
-  script.src = "home-grammar-images.js?v=20260822-1848";
+  script.src = "home-grammar-images.js?v=20260822-2052";
   document.head.appendChild(script);
 })();
