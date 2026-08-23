@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PLD6NHQNEN"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-PLD6NHQNEN');</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="robots" content="noindex,nofollow" />
+  <meta name="theme-color" content="#8f1d2c" />
+  <title>Práctica de lectura | Área do Estudiante</title>
+  <link rel="stylesheet" href="../../auth.css?v=20260823-3" />
+  <link rel="stylesheet" href="../../reading-guided.css?v=20260823-1" />
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="../../auth-config.js?v=20260823-2"></script>
+  <script defer src="../../auth-client.js?v=20260823-3"></script>
+  <script defer src="../../reading-guided.js?v=20260823-1"></script>
+</head>
+<body>
+  <header class="auth-header">
+    <div class="auth-header-inner">
+      <a class="auth-brand" href="../" aria-label="Área do Estudiante">
+        <span class="auth-mark" aria-hidden="true">Ñ</span>
+        <span class="auth-brand-copy"><strong>Vamos a Estudiar Español</strong><small>Lectura exclusiva</small></span>
+      </a>
+      <a class="auth-header-action" href="../">Voltar à área</a>
+    </div>
+    <div class="heritage-stripe" aria-hidden="true"></div>
+  </header>
+
+  <main class="reading-guide-main" id="reading-guide-main" aria-busy="true">
+    <a class="reading-guide-back" href="../">← Voltar para Práctica de lectura</a>
+    <div class="auth-loading" id="reading-guide-loading">Preparando sua leitura guiada…</div>
+
+    <section class="reading-guide-shell hidden" id="reading-guide-content">
+      <header class="reading-guide-hero">
+        <div class="reading-guide-hero-copy">
+          <p class="reading-guide-eyebrow" id="reading-guide-eyebrow">Lectura guiada</p>
+          <h1 id="reading-guide-title">Práctica de lectura</h1>
+          <p id="reading-guide-intro"></p>
+          <div class="reading-guide-meta" id="reading-guide-meta"></div>
+        </div>
+        <div class="reading-guide-level" id="reading-guide-level">A1</div>
+      </header>
+
+      <nav class="reading-guide-steps" aria-label="Etapas da leitura">
+        <div class="reading-guide-step active" id="reading-step-read"><span>1</span><div><strong>Leitura guiada</strong><small>Leia com apoio de vocabulário e pistas.</small></div></div>
+        <div class="reading-guide-step" id="reading-step-activity"><span>2</span><div><strong>Atividade</strong><small>Libera depois que você concluir a leitura.</small></div></div>
+      </nav>
+
+      <section class="reading-guide-panel" aria-labelledby="guided-reading-heading">
+        <div class="reading-guide-panel-head">
+          <div><p class="reading-guide-kicker">ETAPA 1 · LEITURA</p><h2 id="guided-reading-heading">Leia no seu ritmo</h2></div>
+          <span class="reading-guide-status" id="reading-guide-status">Em leitura</span>
+        </div>
+
+        <div class="reading-guide-focus" id="reading-guide-focus"></div>
+        <article class="reading-guide-text" id="reading-guide-text"></article>
+
+        <aside class="reading-guide-vocabulary" aria-labelledby="reading-vocabulary-title">
+          <div class="reading-guide-section-title"><span>✦</span><div><strong id="reading-vocabulary-title">Glossário de apoio</strong><small>Consulte somente quando precisar.</small></div></div>
+          <div class="reading-guide-vocabulary-grid" id="reading-guide-vocabulary-grid"></div>
+        </aside>
+
+        <div class="reading-guide-confirm">
+          <label class="reading-guide-check"><input type="checkbox" id="reading-guide-check" /><span>Li o texto adaptado com atenção e estou pronta(o) para fazer a atividade.</span></label>
+          <button class="reading-guide-complete" id="reading-guide-complete" type="button" disabled>Concluí a leitura · liberar atividade →</button>
+          <p class="reading-guide-confirm-help" id="reading-guide-confirm-help">A atividade fica disponível somente depois desta confirmação.</p>
+        </div>
+      </section>
+
+      <section class="reading-guide-panel reading-activity-panel locked" id="reading-activity-panel" aria-labelledby="reading-activity-heading">
+        <div class="reading-guide-panel-head">
+          <div><p class="reading-guide-kicker">ETAPA 2 · ATIVIDADE</p><h2 id="reading-activity-heading">Comprove sua compreensão</h2></div>
+          <span class="reading-guide-status" id="reading-activity-status">Bloqueada</span>
+        </div>
+        <div class="reading-activity-lock" id="reading-activity-lock"><span>🔒</span><strong>Conclua a leitura para continuar</strong><p>Quando você marcar que terminou o texto, esta atividade será liberada automaticamente.</p></div>
+        <form class="reading-activity-form hidden" id="reading-activity-form">
+          <div id="reading-activity-questions"></div>
+          <div class="reading-activity-actions"><div class="reading-activity-result" id="reading-activity-result" role="status" aria-live="polite">Responda às questões e confira seu resultado.</div><button class="reading-activity-submit" type="submit">Corrigir atividade →</button></div>
+        </form>
+      </section>
+
+      <div class="reading-guide-finish hidden" id="reading-guide-finish">
+        <div><strong>Leitura concluída ✓</strong><span>Seu progresso foi salvo na sua conta.</span></div>
+        <a href="../">Voltar para Práctica de lectura →</a>
+      </div>
+    </section>
+
+    <section class="reading-guide-error hidden" id="reading-guide-error"></section>
+  </main>
+  <footer class="auth-footer">Vamos a Estudiar Español · Práctica de lectura</footer>
+</body>
+</html>
