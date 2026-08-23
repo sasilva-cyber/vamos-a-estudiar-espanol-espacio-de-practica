@@ -17,16 +17,16 @@
     } catch (_) {}
   }
 
-  function escapeText(value) { return String(value || ""); }
   function minutes(seconds) {
     const value = Number(seconds || 0);
     if (!value) return "";
-    const min = Math.max(1, Math.round(value / 60));
-    return `${min} min`;
+    return `${Math.max(1, Math.round(value / 60))} min`;
   }
+
   function lessonNumber(item, index) {
     return String(item.episode_number || index + 1).padStart(2, "0");
   }
+
   function percentFor(item) {
     const progress = progressMap.get(String(item.id));
     if (!progress) return 0;
@@ -35,8 +35,55 @@
     return duration > 0 ? Math.min(99, Math.round((Number(progress.watched_seconds || 0) / duration) * 100)) : 0;
   }
 
+  function buildRoot() {
+    if (document.getElementById("video-academy")) return document.getElementById("video-academy");
+    const libraryTitle = document.getElementById("student-library-title");
+    const librarySection = libraryTitle?.closest("section");
+    const listeningSection = document.querySelector(".listening-hub");
+    const anchor = listeningSection || librarySection;
+    if (!anchor) return null;
+
+    const section = document.createElement("section");
+    section.className = "student-section video-academy";
+    section.id = "video-academy";
+    section.setAttribute("data-premium-section", "");
+    section.setAttribute("aria-labelledby", "video-academy-title");
+    section.innerHTML = `
+      <div class="video-academy-head">
+        <div class="video-academy-copy">
+          <p class="student-section-kicker">Videoaulas exclusivas · Série 01</p>
+          <h2 id="video-academy-title">Español desde Cero</h2>
+          <p>Uma série guiada para construir sua base no espanhol desde os primeiros contatos com o idioma. As aulas ficam organizadas em sequência, e seu progresso é salvo automaticamente para você continuar de onde parou.</p>
+          <div class="video-academy-meta" aria-label="Características da série">
+            <span class="video-academy-chip"><strong>A1</strong> ponto de partida</span>
+            <span class="video-academy-chip">▶ Videoaulas em sequência</span>
+            <span class="video-academy-chip">✓ Progresso individual salvo</span>
+            <span class="video-academy-chip">🔒 Conteúdo Premium</span>
+          </div>
+        </div>
+        <aside class="video-series-cover" aria-label="Capa da série Español desde Cero">
+          <p class="video-series-label">Vamos a Estudiar Español · Original</p>
+          <h3>Español<br>desde Cero</h3>
+          <p>Construa uma base segura, aula por aula, e avance com clareza desde o nível inicial.</p>
+          <div class="video-series-progress">
+            <div class="video-series-progress-top"><span id="video-series-progress-text">Carregando progresso…</span><span>Seu percurso</span></div>
+            <div class="video-series-progress-track"><div class="video-series-progress-bar" id="video-series-progress-bar"></div></div>
+          </div>
+        </aside>
+      </div>
+      <div class="video-academy-toolbar">
+        <h3>Aulas da série</h3>
+        <span class="video-academy-count" id="video-academy-count">Carregando…</span>
+      </div>
+      <div class="video-lesson-list" id="video-lesson-list" aria-live="polite"></div>`;
+
+    if (librarySection) librarySection.insertAdjacentElement("beforebegin", section);
+    else anchor.insertAdjacentElement("afterend", section);
+    return section;
+  }
+
   function ensureRoot() {
-    root = document.getElementById("video-academy");
+    root = document.getElementById("video-academy") || buildRoot();
     return root;
   }
 
@@ -72,14 +119,16 @@
   }
 
   async function loadProgress() {
-    if (!window.VAEAuth?.getClient || !lessons.length) return;
+    if (!window.VAEAuth?.getClient || !lessons.length) {
+      progressMap = new Map();
+      return;
+    }
     try {
       const supabase = window.VAEAuth.getClient();
-      const ids = lessons.map((item) => item.id);
       const { data, error } = await supabase
         .from("video_watch_progress")
         .select("content_id,watched_seconds,duration_seconds,completed,last_watched_at")
-        .in("content_id", ids);
+        .in("content_id", lessons.map((item) => item.id));
       if (error) throw error;
       progressMap = new Map((data || []).map((row) => [String(row.content_id), row]));
     } catch (error) {
@@ -91,8 +140,7 @@
   function seriesStats() {
     const total = lessons.length;
     const completed = lessons.filter((item) => progressMap.get(String(item.id))?.completed).length;
-    const overall = total ? Math.round((completed / total) * 100) : 0;
-    return { total, completed, overall };
+    return { total, completed, overall: total ? Math.round((completed / total) * 100) : 0 };
   }
 
   function buildLesson(item, index) {
@@ -119,13 +167,15 @@
     top.append(kicker, state);
 
     const title = document.createElement("h4");
-    title.textContent = escapeText(item.title);
+    title.textContent = String(item.title || "Videoaula");
     const description = document.createElement("p");
-    description.textContent = escapeText(item.description || "Videoaula exclusiva da série Español desde Cero.");
+    description.textContent = String(item.description || "Videoaula exclusiva da série Español desde Cero.");
     const meta = document.createElement("div");
     meta.className = "video-lesson-meta";
     [item.level, minutes(item.duration_seconds), item.category].filter(Boolean).forEach((value) => {
-      const span = document.createElement("span"); span.textContent = value; meta.appendChild(span);
+      const span = document.createElement("span");
+      span.textContent = String(value);
+      meta.appendChild(span);
     });
     const trackNode = document.createElement("div");
     trackNode.className = "video-lesson-progress-track";
@@ -193,9 +243,11 @@
       const title = modal.querySelector("#video-player-title");
       const desc = modal.querySelector("#video-player-description");
       const status = modal.querySelector("#video-player-status");
+      const progressLabel = modal.querySelector("#video-player-progress");
       if (title) title.textContent = item.title;
       if (desc) desc.textContent = item.description || `${SERIES_TITLE} · Aula ${item.episode_number || ""}`;
       if (status) status.textContent = "Acesso protegido por link temporário.";
+      if (progressLabel) progressLabel.textContent = percentFor(item) ? `Continuando do seu progresso · ${percentFor(item)}%` : "Progresso salvo automaticamente";
       activeVideo.src = signedUrl;
       modal.classList.add("open");
       document.body.style.overflow = "hidden";
@@ -261,7 +313,11 @@
     if (!modal?.classList.contains("open")) return;
     clearTimeout(saveTimer);
     await saveProgress(false);
-    if (activeVideo) { activeVideo.pause(); activeVideo.removeAttribute("src"); activeVideo.load(); }
+    if (activeVideo) {
+      activeVideo.pause();
+      activeVideo.removeAttribute("src");
+      activeVideo.load();
+    }
     modal.classList.remove("open");
     document.body.style.overflow = "";
     activeLesson = null;
@@ -276,7 +332,36 @@
     render();
   }
 
-  window.VAEVideoAcademy = Object.freeze({ setContents, render });
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", () => { ensureRoot(); render(); }, { once: true });
-  else { ensureRoot(); render(); }
+  async function loadFromDatabase() {
+    if (!window.VAEAuth?.getClient) return;
+    try {
+      const session = await window.VAEAuth.getSession();
+      if (!session) return;
+      const supabase = window.VAEAuth.getClient();
+      const { data, error } = await supabase
+        .from("exclusive_contents")
+        .select("id,title,description,content_type,storage_path,file_name,level,category,sort_order,published_at,series_slug,series_title,module_title,episode_number,duration_seconds")
+        .eq("published", true)
+        .eq("content_type", "video")
+        .eq("series_slug", SERIES_SLUG)
+        .order("episode_number", { ascending: true, nullsFirst: false })
+        .order("sort_order", { ascending: true });
+      if (error) throw error;
+      await setContents(data || []);
+    } catch (error) {
+      console.warn("Não foi possível carregar a série de videoaulas", error);
+      lessons = [];
+      render();
+    }
+  }
+
+  window.VAEVideoAcademy = Object.freeze({ setContents, render, refresh: loadFromDatabase });
+
+  function boot() {
+    ensureRoot();
+    render();
+    loadFromDatabase();
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot, { once: true });
+  else boot();
 })();
