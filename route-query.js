@@ -164,11 +164,11 @@
     const root = IS_GITHUB_HOST ? `${REPOSITORY_PATH}/` : "/";
     const config = document.createElement("script");
     config.id = "vae-analytics-config";
-    config.src = `${root}analytics-config.js?v=20260823-1014`;
+    config.src = `${root}analytics-config.js?v=20260823-1017`;
     config.onload = () => {
       const analytics = document.createElement("script");
       analytics.id = "vae-analytics-runtime";
-      analytics.src = `${root}analytics.js?v=20260823-1014`;
+      analytics.src = `${root}analytics.js?v=20260823-1017`;
       analytics.defer = true;
       document.head.appendChild(analytics);
     };
