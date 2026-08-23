@@ -6,7 +6,27 @@
 
   const LEVEL_ORDER = ["A1","A2","B1","B2","C1"];
 
+  function placeVideoAcademyFirst() {
+    const listening = document.querySelector(".listening-hub");
+    const videoAcademy = document.getElementById("video-academy");
+    if (!listening || !videoAcademy) return false;
+    if (videoAcademy.nextElementSibling !== listening) {
+      listening.insertAdjacentElement("beforebegin", videoAcademy);
+    }
+    return true;
+  }
+
+  function watchVideoAcademyOrder() {
+    if (placeVideoAcademyFirst()) return;
+    const studentContent = document.getElementById("student-content") || document.body;
+    const observer = new MutationObserver(() => {
+      if (placeVideoAcademyFirst()) observer.disconnect();
+    });
+    observer.observe(studentContent, { childList: true, subtree: true });
+  }
+
   async function boot() {
+    watchVideoAcademyOrder();
     try {
       const session = await window.VAEAuth?.getSession?.();
       if (!session) return;
