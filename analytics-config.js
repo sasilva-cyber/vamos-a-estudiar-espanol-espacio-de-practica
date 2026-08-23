@@ -35,4 +35,13 @@
     newsletter.defer = true;
     document.head.appendChild(newsletter);
   }
+
+  /* Exibe os vídeos públicos mais recentes do canal abaixo das últimas aulas de gramática. */
+  if (!document.getElementById("vae-home-youtube")) {
+    const youtube = document.createElement("script");
+    youtube.id = "vae-home-youtube";
+    youtube.src = `${root}home-youtube.js?v=20260823-1612`;
+    youtube.defer = true;
+    document.head.appendChild(youtube);
+  }
 })();
