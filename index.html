@@ -18,7 +18,7 @@
       const onGithub = location.hostname.toLowerCase().endsWith(".github.io");
       const root = onGithub ? `${project}/` : "/";
       window.__VAE_ROOT__ = root;
-      ["responsive.css?v=20260823-0125","responsive-hotfix.css?v=20260823-0125"].forEach((file) => {
+      ["responsive.css?v=20260823-0138","responsive-hotfix.css?v=20260823-0138"].forEach((file) => {
         const preload = document.createElement("link");
         preload.rel = "preload";
         preload.as = "style";
@@ -33,7 +33,7 @@
   <script>
     (() => {
       const root = window.__VAE_ROOT__ || "/";
-      const shellUrl = `${root}app-shell.html?v=20260823-0125`;
+      const shellUrl = `${root}app-shell.html?v=20260823-0138`;
       fetch(shellUrl, { cache: "force-cache" })
         .then((response) => {
           if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -43,27 +43,30 @@
           const base = `<base href="${root}" />`;
           html = html.replace(/<base\s+href=["']\/vamos-a-estudiar-espanol-espacio-de-practica\/["']\s*\/?\s*>/i, base);
 
-          // Quebra caches antigos dos scripts principais, especialmente o roteamento
-          // que precisa distinguir github.io do domínio personalizado.
-          html = html.replace(/(script|readings|grammar|vocabulary|quiz-activities|route-query)\.js\?v=[^\"']+/g, '$1.js?v=20260823-0125');
+          // Atualiza scripts essenciais para evitar versões antigas no cache.
+          html = html.replace(/(script|readings|grammar|vocabulary|quiz-activities|route-query)\.js\?v=[^\"']+/g, '$1.js?v=20260823-0138');
 
-          // Só a folha estrutural bloqueia o primeiro paint. CSS de telas internas baixa
-          // em paralelo e é aplicado assim que chega.
+          // Gramática, Vocabulário, Lecturas e testes extensos deixam de bloquear a home.
+          // core-lazy.js baixa cada módulo no primeiro toque/hover ou quando o navegador fica ocioso.
+          html = html.replace(/\s*<script src="(?:readings|grammar|vocabulary|quiz-activities)\.js[^\"]*"><\/script>/g, '');
+          html = html.replace(/<script src="route-query\.js[^\"]*"><\/script>/,
+            `<script src="${root}core-lazy.js?v=20260823-0138"></script><script src="route-query.js?v=20260823-0138"></script>`);
+
+          // CSS das telas internas baixa sem bloquear o primeiro paint.
           html = html.replace(/<link rel="stylesheet" href="(readings|grammar|vocabulary|quiz-activities)\.css([^\"]*)"\s*\/>/g,
             '<link rel="stylesheet" href="$1.css$2" media="print" onload="this.media=\'all\'" />');
 
-          // Responsividade entra no primeiro render para eliminar o layout desktop no celular.
+          // Responsividade é crítica e entra no primeiro render.
           if (!html.includes('id="responsive-styles"')) {
-            html = html.replace('</head>', `<link id="responsive-styles" rel="stylesheet" href="${root}responsive.css?v=20260823-0125" /><link id="responsive-hotfix-styles" rel="stylesheet" href="${root}responsive-hotfix.css?v=20260823-0125" /></head>`);
+            html = html.replace('</head>', `<link id="responsive-styles" rel="stylesheet" href="${root}responsive.css?v=20260823-0138" /><link id="responsive-hotfix-styles" rel="stylesheet" href="${root}responsive-hotfix.css?v=20260823-0138" /></head>`);
           }
 
-          // Carrega o runtime leve de navegação diretamente; isso impede a cadeia antiga
-          // de atrasar Escucha/Escritura e garante que um toque abra a aba na primeira vez.
+          // Runtime leve de navegação para Escucha/Escritura e menu responsivo.
           if (!html.includes('id="home-grammar-images-loader"')) {
-            html = html.replace('</body>', `<script defer id="home-grammar-images-loader" src="${root}home-grammar-images.js?v=20260823-0125"></script></body>`);
+            html = html.replace('</body>', `<script defer id="home-grammar-images-loader" src="${root}home-grammar-images.js?v=20260823-0138"></script></body>`);
           }
 
-          // Scripts externos baixam em paralelo e mantêm a ordem de execução após o parse.
+          // Os poucos scripts críticos restantes baixam em paralelo.
           html = html.replace(/<script\s+src=/g, '<script defer src=');
 
           document.open();
