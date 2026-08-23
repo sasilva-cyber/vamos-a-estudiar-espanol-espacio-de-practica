@@ -1,5 +1,82 @@
 /* Assinatura Premium, checkout e cancelamento Mercado Pago. */
 (function () {
+  function ensureManagementUi() {
+    const offer = document.getElementById("premium-offer");
+    if (!offer) return;
+
+    if (!document.getElementById("premium-management-styles")) {
+      const style = document.createElement("style");
+      style.id = "premium-management-styles";
+      style.textContent = `
+        .premium-management.hidden{display:none!important}
+        .premium-management-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(260px,.6fr);gap:24px;align-items:stretch}
+        .premium-management h2{margin:4px 0 10px;color:#6e1521;font-size:clamp(1.45rem,2.7vw,2rem)}
+        .premium-management-copy{margin:0;color:#514842;line-height:1.65}
+        .premium-management-card{border:1px solid rgba(143,29,44,.16);border-radius:18px;padding:22px;background:#fffaf3;display:flex;flex-direction:column;gap:12px}
+        .premium-management-state{display:inline-flex;width:max-content;border-radius:999px;padding:6px 10px;font-size:.78rem;font-weight:850}
+        .premium-management-state.active{background:#e8f6ed;color:#216239}.premium-management-state.cancelled{background:#f3eee9;color:#6c5a4d}
+        .premium-management-date-label{font-size:.78rem;text-transform:uppercase;letter-spacing:.07em;color:#7a6b62;font-weight:800}
+        .premium-management-date{font-size:1.08rem;color:#3f3732}
+        .premium-cancel-button{margin-top:auto;border:1px solid #b65b66;border-radius:11px;padding:11px 14px;background:#fff;color:#8f1d2c;font:inherit;font-weight:850;cursor:pointer}
+        .premium-cancel-button:hover{background:#fff4f5}.premium-cancel-button.hidden{display:none!important}
+        .premium-management-feedback{margin:14px 0 0;padding:11px 13px;border-radius:11px;background:#f6f1ea;color:#5d514a;font-size:.9rem;line-height:1.5}
+        .premium-management-feedback.success{background:#edf8f0;color:#285e39}.premium-management-feedback.error{background:#fff0f0;color:#8a2631}
+        .premium-cancel-dialog{width:min(520px,calc(100vw - 32px));border:0;border-radius:20px;padding:0;box-shadow:0 24px 70px rgba(43,28,22,.28)}
+        .premium-cancel-dialog::backdrop{background:rgba(35,25,22,.5)}
+        .premium-cancel-dialog-inner{padding:26px}.premium-cancel-dialog h2{margin:0 0 10px;color:#6e1521}.premium-cancel-dialog p{margin:0;color:#554b45;line-height:1.6}
+        .premium-cancel-dialog-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:22px;flex-wrap:wrap}
+        .premium-dialog-keep,.premium-dialog-confirm{border-radius:11px;padding:11px 14px;font:inherit;font-weight:850;cursor:pointer}
+        .premium-dialog-keep{border:1px solid #d9cfc7;background:#fff;color:#4c433e}.premium-dialog-confirm{border:1px solid #8f1d2c;background:#8f1d2c;color:#fff}
+        .premium-dialog-confirm:disabled,.premium-dialog-keep:disabled{opacity:.6;cursor:wait}
+        @media(max-width:760px){.premium-management-grid{grid-template-columns:1fr}.premium-cancel-dialog-actions{flex-direction:column-reverse}.premium-dialog-keep,.premium-dialog-confirm{width:100%}}
+      `;
+      document.head.appendChild(style);
+    }
+
+    if (!document.getElementById("premium-management")) {
+      const section = document.createElement("section");
+      section.className = "student-section premium-management hidden";
+      section.id = "premium-management";
+      section.setAttribute("data-premium-section", "");
+      section.setAttribute("aria-labelledby", "premium-management-title");
+      section.innerHTML = `
+        <div class="premium-management-grid">
+          <div>
+            <p class="student-section-kicker">Minha assinatura</p>
+            <h2 id="premium-management-title">Sua assinatura Premium</h2>
+            <p class="premium-management-copy" id="premium-management-text">Gerencie sua assinatura mensal.</p>
+            <p class="premium-management-feedback" id="premium-management-feedback" role="status" aria-live="polite"></p>
+          </div>
+          <aside class="premium-management-card" aria-label="Detalhes da assinatura">
+            <span class="premium-management-state active" id="premium-management-status">Ativa</span>
+            <span class="premium-management-date-label" id="premium-management-date-label">Próxima renovação</span>
+            <strong class="premium-management-date" id="premium-management-date">—</strong>
+            <button class="premium-cancel-button" id="premium-cancel-button" type="button">Cancelar renovação automática</button>
+          </aside>
+        </div>`;
+      offer.insertAdjacentElement("afterend", section);
+    }
+
+    if (!document.getElementById("premium-cancel-dialog")) {
+      const dialog = document.createElement("dialog");
+      dialog.className = "premium-cancel-dialog";
+      dialog.id = "premium-cancel-dialog";
+      dialog.innerHTML = `
+        <div class="premium-cancel-dialog-inner">
+          <p class="student-section-kicker">Gerenciar assinatura</p>
+          <h2>Cancelar renovação automática?</h2>
+          <p id="premium-cancel-dialog-text">Ao confirmar, não haverá nova cobrança.</p>
+          <div class="premium-cancel-dialog-actions">
+            <button class="premium-dialog-keep" id="premium-cancel-keep" type="button">Manter assinatura</button>
+            <button class="premium-dialog-confirm" id="premium-cancel-confirm" type="button">Confirmar cancelamento</button>
+          </div>
+        </div>`;
+      document.body.appendChild(dialog);
+    }
+  }
+
+  ensureManagementUi();
+
   const offer = document.getElementById("premium-offer");
   const button = document.getElementById("premium-subscribe-button");
   const statusNode = document.getElementById("premium-status");
@@ -41,11 +118,7 @@
   function formatDate(value) {
     const date = new Date(value || "");
     if (Number.isNaN(date.getTime())) return "—";
-    return new Intl.DateTimeFormat("pt-BR", {
-      day: "2-digit",
-      month: "long",
-      year: "numeric"
-    }).format(date);
+    return new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "long", year: "numeric" }).format(date);
   }
 
   function renderManagement(current, isAdmin = false) {
@@ -179,7 +252,7 @@
   }
 
   async function cancelSubscription() {
-    if (!cancelConfirm) return;
+    if (!cancelConfirm || !cancelKeep) return;
     cancelConfirm.disabled = true;
     cancelKeep.disabled = true;
     cancelConfirm.textContent = "Cancelando…";
