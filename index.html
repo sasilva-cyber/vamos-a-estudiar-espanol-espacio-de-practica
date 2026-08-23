@@ -18,11 +18,13 @@
       const onGithub = location.hostname.toLowerCase().endsWith(".github.io");
       const root = onGithub ? `${project}/` : "/";
       window.__VAE_ROOT__ = root;
-      const responsive = document.createElement("link");
-      responsive.rel = "preload";
-      responsive.as = "style";
-      responsive.href = `${root}responsive.css?v=20260823-0118`;
-      document.head.appendChild(responsive);
+      ["responsive.css?v=20260823-0125","responsive-hotfix.css?v=20260823-0125"].forEach((file) => {
+        const preload = document.createElement("link");
+        preload.rel = "preload";
+        preload.as = "style";
+        preload.href = root + file;
+        document.head.appendChild(preload);
+      });
     })();
   </script>
 </head>
@@ -31,7 +33,7 @@
   <script>
     (() => {
       const root = window.__VAE_ROOT__ || "/";
-      const shellUrl = `${root}app-shell.html?v=20260823-0118`;
+      const shellUrl = `${root}app-shell.html?v=20260823-0125`;
       fetch(shellUrl, { cache: "force-cache" })
         .then((response) => {
           if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -41,17 +43,27 @@
           const base = `<base href="${root}" />`;
           html = html.replace(/<base\s+href=["']\/vamos-a-estudiar-espanol-espacio-de-practica\/["']\s*\/?\s*>/i, base);
 
-          // Somente o CSS estrutural bloqueia o primeiro paint. As folhas específicas
-          // de áreas internas carregam em segundo plano e ficam prontas para a navegação.
+          // Quebra caches antigos dos scripts principais, especialmente o roteamento
+          // que precisa distinguir github.io do domínio personalizado.
+          html = html.replace(/(script|readings|grammar|vocabulary|quiz-activities|route-query)\.js\?v=[^\"']+/g, '$1.js?v=20260823-0125');
+
+          // Só a folha estrutural bloqueia o primeiro paint. CSS de telas internas baixa
+          // em paralelo e é aplicado assim que chega.
           html = html.replace(/<link rel="stylesheet" href="(readings|grammar|vocabulary|quiz-activities)\.css([^\"]*)"\s*\/>/g,
             '<link rel="stylesheet" href="$1.css$2" media="print" onload="this.media=\'all\'" />');
 
-          // O responsivo entra no primeiro render, evitando layout desktop no celular.
+          // Responsividade entra no primeiro render para eliminar o layout desktop no celular.
           if (!html.includes('id="responsive-styles"')) {
-            html = html.replace('</head>', `<link id="responsive-styles" rel="stylesheet" href="${root}responsive.css?v=20260823-0118" /></head>`);
+            html = html.replace('</head>', `<link id="responsive-styles" rel="stylesheet" href="${root}responsive.css?v=20260823-0125" /><link id="responsive-hotfix-styles" rel="stylesheet" href="${root}responsive-hotfix.css?v=20260823-0125" /></head>`);
           }
 
-          // Scripts externos passam a baixar em paralelo e executam em ordem após o parse.
+          // Carrega o runtime leve de navegação diretamente; isso impede a cadeia antiga
+          // de atrasar Escucha/Escritura e garante que um toque abra a aba na primeira vez.
+          if (!html.includes('id="home-grammar-images-loader"')) {
+            html = html.replace('</body>', `<script defer id="home-grammar-images-loader" src="${root}home-grammar-images.js?v=20260823-0125"></script></body>`);
+          }
+
+          // Scripts externos baixam em paralelo e mantêm a ordem de execução após o parse.
           html = html.replace(/<script\s+src=/g, '<script defer src=');
 
           document.open();
