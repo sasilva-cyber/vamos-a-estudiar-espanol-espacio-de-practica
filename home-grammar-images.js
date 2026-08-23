@@ -19,7 +19,7 @@
       if (!existing) {
         script.id = id;
         script.src = root + file;
-        script.defer = true;
+        script.async = true;
         document.head.appendChild(script);
       }
       if (script.dataset.loaded === 'true') return done();
@@ -87,20 +87,20 @@
   }
 
   async function loadListening() {
-    await loadScript('listening-area-loader', 'listening.js?v=20260823-0125');
-    loadScript('listening-filters-loader', 'listening-filters.js?v=20260822-1830');
-    await loadScript('listening-expanded-loader', 'listening-expanded.js?v=20260822-1848');
-    loadScript('listening-expanded-fixes-loader', 'listening-expanded-fixes.js?v=20260822-1848');
+    await loadScript('listening-area-loader', 'listening.js?v=20260823-0138');
+    loadScript('listening-filters-loader', 'listening-filters.js?v=20260823-0138');
+    await loadScript('listening-expanded-loader', 'listening-expanded.js?v=20260823-0138');
+    loadScript('listening-expanded-fixes-loader', 'listening-expanded-fixes.js?v=20260823-0138');
   }
 
   async function loadWriting() {
-    await loadScript('writing-area-loader', 'writing.js?v=20260823-0125');
-    loadScript('writing-search-loader', 'writing-search.js?v=20260822-1859');
-    loadScript('home-writing-card-loader', 'home-writing-card.js?v=20260822-1903');
+    await loadScript('writing-area-loader', 'writing.js?v=20260823-0138');
+    loadScript('writing-search-loader', 'writing-search.js?v=20260823-0138');
+    loadScript('home-writing-card-loader', 'home-writing-card.js?v=20260823-0138');
   }
 
   async function loadReadingExpansion() {
-    await loadScript('readings-casa-loader', 'readings-cuentos-casa.js?v=20260822-1856');
+    await loadScript('readings-casa-loader', 'readings-cuentos-casa.js?v=20260823-0138');
   }
 
   async function loadRoute(route) {
@@ -177,15 +177,16 @@
     ensureLightShell();
     installRouteGate();
     installImages();
-    loadScript('grammar-dropdown-nav-loader', 'nav-grammar-dropdown.js?v=20260823-0125');
+    loadScript('grammar-dropdown-nav-loader', 'nav-grammar-dropdown.js?v=20260823-0138');
     openInitialLazyRoute();
 
-    const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 900));
+    // O rodapé é visualmente abaixo da dobra e pode ser preparado quando o navegador fica ocioso.
+    // Escucha e Escritura NÃO são mais pré-carregadas: entram somente no primeiro hover/toque.
+    const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 1400));
     idle(() => {
-      loadScript('enhanced-footer-loader', 'footer-enhanced.js?v=20260822-1906').then(() => loadScript('footer-menu-simple-loader', 'footer-menu-simple.js?v=20260823-0125'));
-      loadListening();
-      loadWriting();
-    }, { timeout: 2800 });
+      loadScript('enhanced-footer-loader', 'footer-enhanced.js?v=20260823-0138')
+        .then(() => loadScript('footer-menu-simple-loader', 'footer-menu-simple.js?v=20260823-0138'));
+    }, { timeout: 3500 });
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', install, { once:true });
