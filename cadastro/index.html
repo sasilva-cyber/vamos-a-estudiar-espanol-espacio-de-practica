@@ -15,11 +15,11 @@
   <meta name="theme-color" content="#8f1d2c" />
   <meta name="description" content="Crie sua conta gratuita no Vamos a Estudiar Español para acessar materiais, videoaulas e conteúdos exclusivos." />
   <title>Criar conta | Vamos a Estudiar Español</title>
-  <link rel="stylesheet" href="../auth.css?v=20260823-1" />
+  <link rel="stylesheet" href="../auth.css?v=20260823-2" />
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script defer src="../auth-config.js?v=20260823-1"></script>
-  <script defer src="../auth-client.js?v=20260823-1"></script>
-  <script defer src="../cadastro.js?v=20260823-1"></script>
+  <script defer src="../auth-config.js?v=20260823-2"></script>
+  <script defer src="../auth-client.js?v=20260823-2"></script>
+  <script defer src="../cadastro.js?v=20260823-2"></script>
 </head>
 <body>
   <header class="auth-header">
@@ -56,33 +56,14 @@
         </div>
 
         <form class="auth-form" id="signup-form" novalidate>
-          <div class="auth-field">
-            <label for="signup-name">Seu nome</label>
-            <input class="auth-input" id="signup-name" name="name" type="text" autocomplete="name" placeholder="Como podemos chamar você?" minlength="2" required />
-          </div>
-          <div class="auth-field">
-            <label for="signup-email">E-mail</label>
-            <input class="auth-input" id="signup-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="seuemail@exemplo.com" required />
-          </div>
+          <div class="auth-field"><label for="signup-name">Seu nome</label><input class="auth-input" id="signup-name" name="name" type="text" autocomplete="name" placeholder="Como podemos chamar você?" minlength="2" required /></div>
+          <div class="auth-field"><label for="signup-email">E-mail</label><input class="auth-input" id="signup-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="seuemail@exemplo.com" required /></div>
           <div class="auth-field-row">
-            <div class="auth-field">
-              <label for="signup-password">Senha</label>
-              <div class="auth-input-wrap">
-                <input class="auth-input auth-password-input" id="signup-password" name="password" type="password" autocomplete="new-password" minlength="8" placeholder="Mínimo de 8 caracteres" required />
-                <button class="auth-password-toggle" type="button" data-toggle-password="signup-password" aria-label="Mostrar ou ocultar senha">Mostrar</button>
-              </div>
-            </div>
-            <div class="auth-field">
-              <label for="signup-password-confirm">Confirmar senha</label>
-              <div class="auth-input-wrap">
-                <input class="auth-input auth-password-input" id="signup-password-confirm" name="passwordConfirm" type="password" autocomplete="new-password" minlength="8" placeholder="Repita sua senha" required />
-                <button class="auth-password-toggle" type="button" data-toggle-password="signup-password-confirm" aria-label="Mostrar ou ocultar confirmação da senha">Mostrar</button>
-              </div>
-            </div>
+            <div class="auth-field"><label for="signup-password">Senha</label><div class="auth-input-wrap"><input class="auth-input auth-password-input" id="signup-password" name="password" type="password" autocomplete="new-password" minlength="8" placeholder="Mínimo de 8 caracteres" required /><button class="auth-password-toggle" type="button" data-toggle-password="signup-password">Mostrar</button></div></div>
+            <div class="auth-field"><label for="signup-password-confirm">Confirmar senha</label><div class="auth-input-wrap"><input class="auth-input auth-password-input" id="signup-password-confirm" name="passwordConfirm" type="password" autocomplete="new-password" minlength="8" placeholder="Repita sua senha" required /><button class="auth-password-toggle" type="button" data-toggle-password="signup-password-confirm">Mostrar</button></div></div>
           </div>
           <label class="auth-check"><input id="signup-consent" type="checkbox" required /><span>Concordo em criar uma conta e com o uso dos meus dados exclusivamente para gerenciar meu acesso à plataforma.</span></label>
           <label class="auth-check"><input id="signup-newsletter" type="checkbox" /><span>Também quero receber novidades e materiais por e-mail. Posso cancelar quando quiser.</span></label>
-
           <p class="auth-status info" id="signup-status" role="status" aria-live="polite"></p>
           <button class="auth-submit" id="signup-submit" type="submit">Criar minha conta →</button>
         </form>

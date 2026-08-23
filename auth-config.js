@@ -1,13 +1,9 @@
-/*
- * Configuração pública da autenticação.
- *
- * IMPORTANTE:
- * - SUPABASE_URL e SUPABASE_ANON_KEY são valores públicos do projeto web.
- * - NUNCA coloque service_role, senha de banco ou qualquer segredo administrativo aqui.
- * - Enquanto os valores estiverem vazios, as telas de autenticação permanecem em modo de preparação.
+/* Configuração pública da autenticação da Área do Estudiante.
+ * A publishable key é própria para uso no navegador.
+ * Nunca adicionar service_role, senha do banco ou segredos administrativos aqui.
  */
 window.VAE_AUTH_CONFIG = Object.freeze({
-  supabaseUrl: "",
-  supabaseAnonKey: "",
+  supabaseUrl: "https://clfwoywzalttkvhstsgh.supabase.co",
+  supabaseAnonKey: "sb_publishable_QylDT7fw_RktIiSApbHkLA_w6PHRjmH",
   siteUrl: "https://pratica.vamosaestudiarespanol.com.br"
 });
