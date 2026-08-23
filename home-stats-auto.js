@@ -2,7 +2,7 @@
 (function () {
   const FALLBACKS = {
     levels: 3,
-    quizQuestions: 144,
+    quizQuestions: 168,
     grammar: 35,
     vocabulary: 22,
     readings: 18,
@@ -35,6 +35,14 @@
     }
   }
 
+  function countSongQuiz() {
+    try {
+      if (Array.isArray(window.VAE_SONG_QUIZ_BANK)) return window.VAE_SONG_QUIZ_BANK.length;
+    } catch (_) {}
+    const card = document.getElementById("song-quiz-feature");
+    return numberFromText(card?.dataset?.songQuizCount || "0");
+  }
+
   function countQuizLevels() {
     try {
       if (typeof quizData !== "undefined") return Object.keys(quizData).length;
@@ -52,7 +60,8 @@
     const listeningCards = document.querySelectorAll(".quiz-listening-card").length;
     const listeningQuestions = listeningCards ? listeningCards * 5 : 0;
 
-    const total = base + extended + readingQuestions + listeningQuestions;
+    const songQuestions = countSongQuiz();
+    const total = base + extended + readingQuestions + listeningQuestions + songQuestions;
     return total || FALLBACKS.quizQuestions;
   }
 
