@@ -1,23 +1,41 @@
-/* Substitui os círculos numéricos das últimas aulas de Gramática por imagens temáticas. */
+/* Imagens da home e carregamento progressivo das áreas secundárias. */
 (function () {
   const images = [
     "assets/grammar-home/contrastes-portugues-espanol.webp",
     "assets/grammar-home/pontuacao-interrogacao.webp",
     "assets/grammar-home/acentuacao-ortografica.webp"
   ];
+  let routeLazyInstalled = false;
+
+  function loadScript(id, src, onload) {
+    const existing = document.getElementById(id);
+    if (existing) {
+      if (onload) {
+        if (existing.dataset.loaded === "true") onload();
+        else existing.addEventListener("load", onload, { once: true });
+      }
+      return existing;
+    }
+    const script = document.createElement("script");
+    script.id = id;
+    script.src = src;
+    script.defer = true;
+    script.onload = () => {
+      script.dataset.loaded = "true";
+      if (onload) onload();
+    };
+    document.head.appendChild(script);
+    return script;
+  }
 
   function applyImages() {
     const container = document.getElementById("home-grammar-items");
     if (!container) return false;
-
-    const cards = [...container.querySelectorAll(".home-grammar-item")].slice(0, 3);
-    cards.forEach((card, index) => {
+    [...container.querySelectorAll(".home-grammar-item")].slice(0, 3).forEach((card, index) => {
       const circle = card.querySelector(".home-grammar-circle");
-      if (!circle) return;
-
+      if (!circle || circle.querySelector("img")) return;
       circle.classList.add("home-grammar-circle-image");
       circle.innerHTML = "";
-
       const img = document.createElement("img");
       img.className = "home-grammar-circle-img";
       img.src = images[index] || images[0];
@@ -26,7 +44,6 @@
       img.decoding = "async";
       circle.appendChild(img);
     });
-
     return true;
   }
 
@@ -34,138 +51,92 @@
     if (document.getElementById("home-grammar-images-styles")) return;
     const style = document.createElement("style");
     style.id = "home-grammar-images-styles";
-    style.textContent = `
-      .home-grammar-circle-image {
-        overflow: hidden !important;
-        padding: 0 !important;
-        background: #fff9ed !important;
-      }
-      .home-grammar-circle-img {
-        width: 100%;
-        height: 100%;
-        display: block;
-        object-fit: cover;
-        border-radius: 50%;
-      }
-    `;
+    style.textContent = `.home-grammar-circle-image{overflow:hidden!important;padding:0!important;background:#fff9ed!important}.home-grammar-circle-img{width:100%;height:100%;display:block;object-fit:cover;border-radius:50%}`;
     document.head.appendChild(style);
   }
 
-  function install() {
+  function installImages(attempt = 0) {
     injectStyles();
-    if (!applyImages()) {
-      setTimeout(install, 250);
+    if (!applyImages() && attempt < 30) {
+      window.setTimeout(() => installImages(attempt + 1), 180);
       return;
     }
-
     const container = document.getElementById("home-grammar-items");
-    const observer = new MutationObserver(() => applyImages());
-    observer.observe(container, { childList: true, subtree: false });
+    if (container && !container.dataset.imageObserver) {
+      container.dataset.imageObserver = "true";
+      new MutationObserver(applyImages).observe(container, { childList: true });
+    }
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", () => setTimeout(install, 200), { once: true });
-  } else {
-    setTimeout(install, 200);
+  function loadListeningCore(onload) {
+    loadScript("listening-area-loader", "listening.js?v=20260822-1816", onload);
   }
-})();
 
-/* Carrega Escucha, filtros e a biblioteca ampliada com 18 áudios. */
-(function loadListeningArea() {
-  if (document.getElementById("listening-area-loader")) return;
+  function loadWritingCore(onload) {
+    loadScript("writing-area-loader", "writing.js?v=20260822-1842", onload);
+  }
 
-  const script = document.createElement("script");
-  script.id = "listening-area-loader";
-  script.src = "listening.js?v=20260822-1816";
-  script.onload = () => {
-    if (!document.getElementById("listening-filters-loader")) {
-      const filters = document.createElement("script");
-      filters.id = "listening-filters-loader";
-      filters.src = "listening-filters.js?v=20260822-1830";
-      document.head.appendChild(filters);
-    }
+  function loadListeningExtras() {
+    loadListeningCore(() => {
+      loadScript("listening-filters-loader", "listening-filters.js?v=20260822-1830");
+      loadScript("listening-expanded-loader", "listening-expanded.js?v=20260822-1848", () => {
+        loadScript("listening-expanded-fixes-loader", "listening-expanded-fixes.js?v=20260822-1848");
+      });
+    });
+  }
 
-    if (!document.getElementById("listening-expanded-loader")) {
-      const expanded = document.createElement("script");
-      expanded.id = "listening-expanded-loader";
-      expanded.src = "listening-expanded.js?v=20260822-1848";
-      expanded.onload = () => {
-        if (document.getElementById("listening-expanded-fixes-loader")) return;
-        const fixes = document.createElement("script");
-        fixes.id = "listening-expanded-fixes-loader";
-        fixes.src = "listening-expanded-fixes.js?v=20260822-1848";
-        document.head.appendChild(fixes);
-      };
-      document.head.appendChild(expanded);
-    }
-  };
-  document.head.appendChild(script);
-})();
+  function loadWritingExtras() {
+    loadWritingCore(() => loadScript("writing-search-loader", "writing-search.js?v=20260822-1859"));
+  }
 
-/* Carrega a área Escritura en español e o pesquisador da biblioteca. */
-(function loadWritingArea() {
-  if (document.getElementById("writing-area-loader")) return;
-  const script = document.createElement("script");
-  script.id = "writing-area-loader";
-  script.src = "writing.js?v=20260822-1842";
-  script.onload = () => {
-    if (!document.getElementById("writing-search-loader")) {
-      const search = document.createElement("script");
-      search.id = "writing-search-loader";
-      search.src = "writing-search.js?v=20260822-1859";
-      document.head.appendChild(search);
-    }
+  function loadReadingExtras() {
+    loadScript("readings-casa-loader", "readings-cuentos-casa.js?v=20260822-1856");
+  }
 
-    if (!document.getElementById("home-writing-card-loader")) {
-      const homeCard = document.createElement("script");
-      homeCard.id = "home-writing-card-loader";
-      homeCard.src = "home-writing-card.js?v=20260822-1903";
-      document.head.appendChild(homeCard);
-    }
-  };
-  document.head.appendChild(script);
-})();
+  function installRouteLazyLoading() {
+    if (routeLazyInstalled) return;
+    routeLazyInstalled = true;
+    const maybeLoad = (event) => {
+      const target = event.target?.closest?.("[data-route]");
+      const route = target?.dataset?.route;
+      if (route === "listening") loadListeningExtras();
+      else if (route === "writing") loadWritingExtras();
+      else if (route === "readings") loadReadingExtras();
+    };
+    document.addEventListener("pointerover", maybeLoad, { passive: true });
+    document.addEventListener("focusin", maybeLoad);
+    document.addEventListener("click", maybeLoad, true);
 
-/* Amplia a biblioteca de Lecturas com práticas baseadas em Cuentos para quedarse en casa. */
-(function loadReadingsCasa() {
-  if (document.getElementById("readings-casa-loader")) return;
-  const script = document.createElement("script");
-  script.id = "readings-casa-loader";
-  script.src = "readings-cuentos-casa.js?v=20260822-1856";
-  document.head.appendChild(script);
-})();
+    const path = window.location.pathname.replace(/\/+$/, "");
+    if (path.endsWith("/escucha")) loadListeningExtras();
+    else if (path.endsWith("/escritura")) loadWritingExtras();
+    else if (path.endsWith("/lectura")) loadReadingExtras();
+  }
 
-/* Carrega o rodapé ampliado com categorias e redes sociais. */
-(function loadEnhancedFooter() {
-  if (document.getElementById("enhanced-footer-loader")) return;
-  const script = document.createElement("script");
-  script.id = "enhanced-footer-loader";
-  script.src = "footer-enhanced.js?v=20260822-1906";
-  script.onload = () => {
-    if (document.getElementById("footer-menu-simple-loader")) return;
-    const menu = document.createElement("script");
-    menu.id = "footer-menu-simple-loader";
-    menu.src = "footer-menu-simple.js?v=20260822-2127";
-    document.head.appendChild(menu);
-  };
-  document.head.appendChild(script);
-})();
+  function loadEnhancedFooter() {
+    loadScript("enhanced-footer-loader", "footer-enhanced.js?v=20260822-1906", () => {
+      loadScript("footer-menu-simple-loader", "footer-menu-simple.js?v=20260823-0018");
+    });
+  }
 
-/* Amplia a aba Quiz com testes de compreensão auditiva A1-C2. */
-(function loadQuizListening() {
-  if (document.getElementById("quiz-listening-loader")) return;
-  const script = document.createElement("script");
-  script.id = "quiz-listening-loader";
-  script.src = "quiz-listening.js?v=20260822-1920";
-  document.head.appendChild(script);
-})();
+  function loadResponsiveStyles() {
+    if (document.getElementById("responsive-styles")) return;
+    const link = document.createElement("link");
+    link.id = "responsive-styles";
+    link.rel = "stylesheet";
+    link.href = "responsive.css?v=20260822-1840";
+    document.head.appendChild(link);
+  }
 
-/* Carrega por último a camada responsiva global para celulares e tablets. */
-(function loadResponsiveStyles() {
-  if (document.getElementById("responsive-styles")) return;
-  const link = document.createElement("link");
-  link.id = "responsive-styles";
-  link.rel = "stylesheet";
-  link.href = "responsive.css?v=20260822-1840";
-  document.head.appendChild(link);
+  function install() {
+    installImages();
+    loadResponsiveStyles();
+    loadListeningCore();
+    loadWritingCore(() => loadScript("home-writing-card-loader", "home-writing-card.js?v=20260822-1903"));
+    loadEnhancedFooter();
+    installRouteLazyLoading();
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", install, { once: true });
+  else install();
 })();
