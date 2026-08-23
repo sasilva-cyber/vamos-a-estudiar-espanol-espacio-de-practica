@@ -1,4 +1,4 @@
-/* Carregamento sob demanda dos módulos centrais para reduzir o trabalho da home. */
+/* Carregamento sob demanda dos módulos centrais. Nada pesado é baixado por ociosidade na home. */
 (function () {
   const root = window.__VAE_ROOT__ || (location.hostname.toLowerCase().endsWith('.github.io') ? '/vamos-a-estudiar-espanol-espacio-de-practica/' : '/');
   const loads = new Map();
@@ -9,9 +9,10 @@
     const existing = document.getElementById(id);
     if (existing?.dataset.loaded === 'true') return Promise.resolve(existing);
 
-    const promise = new Promise((resolve) => {
+    const promise = new Promise((resolve, reject) => {
       const script = existing || document.createElement('script');
       const done = () => { script.dataset.loaded = 'true'; resolve(script); };
+      const fail = () => { loads.delete(id); reject(new Error(`Falha ao carregar ${file}`)); };
       if (!existing) {
         script.id = id;
         script.src = root + file;
@@ -21,7 +22,7 @@
       if (script.dataset.loaded === 'true') done();
       else {
         script.addEventListener('load', done, { once:true });
-        script.addEventListener('error', done, { once:true });
+        script.addEventListener('error', fail, { once:true });
       }
     });
     loads.set(id, promise);
@@ -39,15 +40,15 @@
 
   function ensureModule(route) {
     if (loaded(route)) return Promise.resolve();
-    if (route === 'grammar') return loadScript('grammar-core-lazy', 'grammar.js?v=20260823-0138');
-    if (route === 'vocabulary') return loadScript('vocabulary-core-lazy', 'vocabulary.js?v=20260823-0138');
-    if (route === 'readings') return loadScript('readings-core-lazy', 'readings.js?v=20260823-0138');
+    if (route === 'grammar') return loadScript('grammar-core-lazy', 'grammar.js?v=20260823-0220');
+    if (route === 'vocabulary') return loadScript('vocabulary-core-lazy', 'vocabulary.js?v=20260823-0220');
+    if (route === 'readings') return loadScript('readings-core-lazy', 'readings.js?v=20260823-0220');
     return Promise.resolve();
   }
 
   async function loadQuizEnhancements() {
-    await Promise.all([ensureModule('grammar'), ensureModule('vocabulary')]);
-    await loadScript('quiz-activities-lazy', 'quiz-activities.js?v=20260823-0138');
+    await Promise.allSettled([ensureModule('grammar'), ensureModule('vocabulary')]);
+    await loadScript('quiz-activities-lazy', 'quiz-activities.js?v=20260823-0220');
     window.dispatchEvent(new Event('vae:content-counts-changed'));
   }
 
@@ -64,27 +65,30 @@
     const route = target?.dataset?.route;
 
     if (route === 'quiz') {
-      loadQuizEnhancements();
+      loadQuizEnhancements().catch(() => {});
       return;
     }
-
     if (!['grammar','vocabulary','readings'].includes(route) || loaded(route)) return;
 
     event.preventDefault();
     event.stopImmediatePropagation();
     setBusy(target, true);
-    await ensureModule(route);
-    setBusy(target, false);
-    replaying = true;
-    target.click();
-    replaying = false;
+    try {
+      await ensureModule(route);
+      setBusy(target, false);
+      replaying = true;
+      target.click();
+      replaying = false;
+    } catch (_) {
+      setBusy(target, false);
+    }
   }, true);
 
   const prefetch = (event) => {
     const target = event.target.closest?.('[data-route]');
     const route = target?.dataset?.route;
-    if (['grammar','vocabulary','readings'].includes(route)) ensureModule(route);
-    else if (route === 'quiz') loadQuizEnhancements();
+    if (['grammar','vocabulary','readings'].includes(route)) ensureModule(route).catch(() => {});
+    else if (route === 'quiz') loadQuizEnhancements().catch(() => {});
   };
   document.addEventListener('pointerover', prefetch, { passive:true });
   document.addEventListener('focusin', prefetch);
@@ -99,7 +103,7 @@
     if (!route && path.endsWith('/quiz')) route = 'quiz';
 
     if (route === 'quiz') {
-      loadQuizEnhancements();
+      loadQuizEnhancements().catch(() => {});
       return;
     }
     if (!['grammar','vocabulary','readings'].includes(route)) return;
@@ -110,12 +114,8 @@
       replaying = true;
       button.click();
       replaying = false;
-    });
+    }).catch(() => {});
   }
 
   initialRoute();
-
-  // Depois do primeiro paint, prepara Gramática/Vocabulário e o destaque da home.
-  const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 1400));
-  idle(() => loadQuizEnhancements(), { timeout: 4200 });
 })();
