@@ -1,0 +1,55 @@
+name: Performance Audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/performance-audit.yml'
+  workflow_dispatch:
+
+jobs:
+  lighthouse-mobile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Aguardar GitHub Pages publicar
+        run: sleep 90
+
+      - name: Definir URL de teste
+        shell: bash
+        run: |
+          CUSTOM="http://pratica.vamosaestudiarespanol.com.br/"
+          FALLBACK="https://sasilva-cyber.github.io/vamos-a-estudiar-espanol-espacio-de-practica/"
+          if curl -L --fail --silent --show-error --max-time 20 -o /dev/null "$CUSTOM"; then
+            echo "TARGET_URL=$CUSTOM" >> "$GITHUB_ENV"
+          else
+            echo "TARGET_URL=$FALLBACK" >> "$GITHUB_ENV"
+          fi
+
+      - name: Executar Lighthouse mobile
+        run: |
+          npx --yes lighthouse@12.8.2 "$TARGET_URL" \
+            --only-categories=performance \
+            --form-factor=mobile \
+            --screen-emulation.mobile=true \
+            --throttling-method=simulate \
+            --output=json \
+            --output-path=./lighthouse.json \
+            --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
+            --quiet
+
+      - name: Resumo do desempenho
+        run: |
+          node - <<'NODE'
+          const r = require('./lighthouse.json');
+          const a = r.audits;
+          const score = Math.round((r.categories.performance.score || 0) * 100);
+          const get = id => a[id] && a[id].displayValue ? a[id].displayValue : '—';
+          console.log(`URL: ${r.finalDisplayedUrl}`);
+          console.log(`Performance: ${score}/100`);
+          console.log(`FCP: ${get('first-contentful-paint')}`);
+          console.log(`LCP: ${get('largest-contentful-paint')}`);
+          console.log(`Speed Index: ${get('speed-index')}`);
+          console.log(`TBT: ${get('total-blocking-time')}`);
+          console.log(`CLS: ${get('cumulative-layout-shift')}`);
+          NODE
