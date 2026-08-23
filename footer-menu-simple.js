@@ -36,24 +36,23 @@
       style.id = "home-title-adjustment";
       style.textContent = `
         #home-title {
-          max-width: 650px;
-          font-size: clamp(2rem, 4.4vw, 3.25rem);
-          line-height: 1.12;
-          letter-spacing: -0.02em;
           text-align: justify;
           text-justify: inter-word;
           text-align-last: left;
           hyphens: auto;
         }
-        @media (max-width: 600px) {
-          #home-title {
-            max-width: 100%;
-            font-size: clamp(1.9rem, 9vw, 2.6rem);
-          }
-        }
       `;
       document.head.appendChild(style);
     }
+  }
+
+  function loadHomeTypography() {
+    if (document.getElementById("home-typography-styles")) return;
+    const link = document.createElement("link");
+    link.id = "home-typography-styles";
+    link.rel = "stylesheet";
+    link.href = "home-typography.css?v=20260822-2112";
+    document.head.appendChild(link);
   }
 
   function loadRouteQuery() {
@@ -169,6 +168,7 @@
 
   function install() {
     adjustHomeTitle();
+    loadHomeTypography();
     loadGrammarDropdown();
     if (!installMenu()) {
       setTimeout(install, 200);
