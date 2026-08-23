@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PLD6NHQNEN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PLD6NHQNEN');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="robots" content="noindex,follow" />
+  <meta name="theme-color" content="#8f1d2c" />
+  <meta name="description" content="Entre na Área do Estudiante do Vamos a Estudiar Español para acessar seus conteúdos exclusivos." />
+  <title>Entrar | Vamos a Estudiar Español</title>
+  <link rel="stylesheet" href="../auth.css?v=20260823-1" />
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="../auth-config.js?v=20260823-1"></script>
+  <script defer src="../auth-client.js?v=20260823-1"></script>
+  <script defer src="../login.js?v=20260823-1"></script>
+</head>
+<body>
+  <header class="auth-header">
+    <div class="auth-header-inner">
+      <a class="auth-brand" href="../" aria-label="Vamos a Estudiar Español — início">
+        <span class="auth-mark" aria-hidden="true">Ñ</span>
+        <span class="auth-brand-copy"><strong>Vamos a Estudiar Español</strong><small>¡Aprende, practica y avanza!</small></span>
+      </a>
+      <a class="auth-back" href="../">← Voltar à plataforma</a>
+    </div>
+    <div class="heritage-stripe" aria-hidden="true"></div>
+  </header>
+
+  <main class="auth-main">
+    <div class="auth-shell">
+      <section class="auth-story" aria-labelledby="login-story-title">
+        <div class="auth-story-copy">
+          <p class="auth-eyebrow">Área do Estudiante</p>
+          <h1 id="login-story-title">Bienvenido de nuevo.</h1>
+          <p class="auth-story-lead">Entre na sua conta para continuar seus estudos e acessar os materiais reservados para estudantes cadastrados.</p>
+        </div>
+        <div class="auth-benefits" aria-label="Conteúdos da área do aluno">
+          <div class="auth-benefit"><span class="auth-benefit-icon" aria-hidden="true">📄</span><span><strong>Biblioteca pessoal</strong><br />Materiais de estudo e downloads em um só lugar.</span></div>
+          <div class="auth-benefit"><span class="auth-benefit-icon" aria-hidden="true">🎬</span><span><strong>Videoaulas</strong><br />Aulas e explicações exclusivas para complementar a prática.</span></div>
+          <div class="auth-benefit"><span class="auth-benefit-icon" aria-hidden="true">🔐</span><span><strong>Acesso protegido</strong><br />O conteúdo privado exige uma sessão autenticada.</span></div>
+        </div>
+      </section>
+
+      <section class="auth-panel" aria-labelledby="login-title">
+        <div id="login-view">
+          <div class="auth-panel-top">
+            <p class="auth-eyebrow">Acesse sua conta</p>
+            <h1 id="login-title">Entrar</h1>
+            <p class="auth-panel-intro">Use o mesmo e-mail e a senha escolhidos no cadastro.</p>
+          </div>
+          <form class="auth-form" id="login-form" novalidate>
+            <div class="auth-field">
+              <label for="login-email">E-mail</label>
+              <input class="auth-input" id="login-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="seuemail@exemplo.com" required />
+            </div>
+            <div class="auth-field">
+              <label for="login-password">Senha</label>
+              <div class="auth-input-wrap">
+                <input class="auth-input auth-password-input" id="login-password" name="password" type="password" autocomplete="current-password" placeholder="Sua senha" required />
+                <button class="auth-password-toggle" type="button" data-toggle-password="login-password">Mostrar</button>
+              </div>
+            </div>
+            <div class="auth-form-help"><button class="auth-link-button" id="forgot-password" type="button">Esqueci minha senha</button></div>
+            <p class="auth-status info" id="login-status" role="status" aria-live="polite"></p>
+            <button class="auth-submit" id="login-submit" type="submit">Entrar →</button>
+          </form>
+          <p class="auth-switch">Ainda não tem uma conta? <a href="../cadastro/">Criar conta gratuitamente</a></p>
+        </div>
+
+        <div class="hidden" id="reset-request-view">
+          <div class="auth-panel-top">
+            <p class="auth-eyebrow">Recuperação de acesso</p>
+            <h1>Redefinir senha</h1>
+            <p class="auth-panel-intro">Informe seu e-mail. Enviaremos um link seguro para você escolher uma nova senha.</p>
+          </div>
+          <form class="auth-form" id="reset-request-form" novalidate>
+            <div class="auth-field"><label for="reset-email">E-mail</label><input class="auth-input" id="reset-email" type="email" autocomplete="email" inputmode="email" required /></div>
+            <p class="auth-status info" id="reset-request-status" role="status" aria-live="polite"></p>
+            <button class="auth-submit" id="reset-request-submit" type="submit">Enviar link de recuperação →</button>
+            <button class="auth-secondary-button" id="back-to-login" type="button">← Voltar para o login</button>
+          </form>
+        </div>
+
+        <div class="hidden" id="new-password-view">
+          <div class="auth-panel-top">
+            <p class="auth-eyebrow">Nova senha</p>
+            <h1>Crie uma nova senha</h1>
+            <p class="auth-panel-intro">Escolha uma senha com pelo menos 8 caracteres para concluir a recuperação da conta.</p>
+          </div>
+          <form class="auth-form" id="new-password-form" novalidate>
+            <div class="auth-field"><label for="new-password">Nova senha</label><input class="auth-input" id="new-password" type="password" autocomplete="new-password" minlength="8" required /></div>
+            <div class="auth-field"><label for="new-password-confirm">Confirmar nova senha</label><input class="auth-input" id="new-password-confirm" type="password" autocomplete="new-password" minlength="8" required /></div>
+            <p class="auth-status info" id="new-password-status" role="status" aria-live="polite"></p>
+            <button class="auth-submit" id="new-password-submit" type="submit">Salvar nova senha →</button>
+          </form>
+        </div>
+
+        <div class="auth-security-note"><span aria-hidden="true">🔒</span><span>Nunca envie sua senha por e-mail. Links de confirmação e recuperação devem levar apenas ao domínio oficial da plataforma.</span></div>
+      </section>
+    </div>
+  </main>
+  <footer class="auth-footer">Vamos a Estudiar Español · Área do Estudiante</footer>
+</body>
+</html>
