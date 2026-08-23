@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PLD6NHQNEN"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-PLD6NHQNEN');</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="robots" content="noindex,nofollow" />
+  <meta name="theme-color" content="#8f1d2c" />
+  <title>Prática de Escuta | Área do Estudiante</title>
+  <link rel="stylesheet" href="../../auth.css?v=20260823-3" />
+  <link rel="stylesheet" href="../../listening-exclusive.css?v=20260823-1" />
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="../../auth-config.js?v=20260823-2"></script>
+  <script defer src="../../auth-client.js?v=20260823-3"></script>
+  <script defer src="../../listening-exclusive.js?v=20260823-1"></script>
+</head>
+<body>
+  <header class="auth-header">
+    <div class="auth-header-inner">
+      <a class="auth-brand" href="../" aria-label="Área do Estudiante"><span class="auth-mark" aria-hidden="true">Ñ</span><span class="auth-brand-copy"><strong>Vamos a Estudiar Español</strong><small>Escuta exclusiva</small></span></a>
+      <a class="auth-header-action" href="../">Voltar à área</a>
+    </div><div class="heritage-stripe" aria-hidden="true"></div>
+  </header>
+  <main class="listen-main" id="listen-main" aria-busy="true">
+    <a class="listen-back" href="../">← Voltar para a Área do Estudiante</a>
+    <div class="auth-loading" id="listen-loading">Carregando atividade exclusiva…</div>
+    <section class="listen-shell hidden" id="listen-content">
+      <div class="listen-top">
+        <div class="listen-top-row">
+          <div><p class="auth-eyebrow">Comprensión auditiva</p><h1 id="listen-title">Atividade de escuta</h1><p id="listen-description"></p></div>
+          <span class="listen-level" id="listen-level">A1</span>
+        </div>
+      </div>
+      <div class="listen-player">
+        <div class="listen-player-box">
+          <button class="listen-play" id="listen-play" type="button" aria-label="Reproduzir áudio">▶</button>
+          <div class="listen-player-copy"><strong id="listen-player-title">Escute com atenção</strong><span id="listen-player-help">Você pode ouvir o áudio até 3 vezes antes de enviar suas respostas.</span><div class="listen-progress" aria-hidden="true"><div class="listen-progress-bar" id="listen-progress-bar"></div></div></div>
+        </div>
+        <div class="listen-status info" id="listen-status" role="status" aria-live="polite">Ouça primeiro. A transcrição não é exibida durante a atividade.</div>
+      </div>
+      <form class="listen-body" id="listen-form"><div id="listen-questions"></div><div class="listen-actions"><button class="listen-submit" id="listen-submit" type="submit">Corrigir atividade →</button></div></form>
+      <section class="listen-result hidden" id="listen-result" aria-live="polite"></section>
+    </section>
+  </main>
+  <footer class="auth-footer">Vamos a Estudiar Español · Atividade exclusiva de escuta</footer>
+</body>
+</html>
