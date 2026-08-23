@@ -1,4 +1,4 @@
-/* Amplia o quiz musical antes da inicialização do banco principal. */
+/* Amplia o quiz musical sem manter um observador global sobre todo o DOM. */
 (function () {
   const EXTRA_ARTISTS = {
     "Nicki Nicole": ["Wapo Traketero", "Colocao", "Mamichula", "Parte de Mí", "Ojos Verdes"],
@@ -10,18 +10,11 @@
     "Luis Miguel": ["Ahora Te Puedes Marchar", "La Incondicional", "Hasta Que Me Olvides", "Culpable o No", "Suave"]
   };
 
-  const EXTRA_ENRIQUE = [
-    "Héroe",
-    "Experiencia Religiosa",
-    "Nunca Te Olvidaré",
-    "Por Amarte",
-    "Quizás"
-  ];
-
+  const EXTRA_ENRIQUE = ["Héroe", "Experiencia Religiosa", "Nunca Te Olvidaré", "Por Amarte", "Quizás"];
   const originalEntries = Object.entries;
   let applied = false;
 
-  Object.entries = function (obj) {
+  function patchedEntries(obj) {
     const looksLikeSongArtists = obj
       && Array.isArray(obj.TINI)
       && Array.isArray(obj.Maluma)
@@ -31,17 +24,19 @@
       Object.keys(EXTRA_ARTISTS).forEach((artist) => {
         if (!Array.isArray(obj[artist])) obj[artist] = [...EXTRA_ARTISTS[artist]];
       });
-
       EXTRA_ENRIQUE.forEach((title) => {
         if (!obj["Enrique Iglesias"].includes(title)) obj["Enrique Iglesias"].push(title);
       });
-
       applied = true;
       Object.entries = originalEntries;
     }
-
     return originalEntries(obj);
-  };
+  }
+
+  Object.entries = patchedEntries;
+  window.setTimeout(() => {
+    if (Object.entries === patchedEntries) Object.entries = originalEntries;
+  }, 5000);
 
   const COUNTS = {
     ...Object.fromEntries(Object.keys(EXTRA_ARTISTS).map((artist) => [artist, 5])),
@@ -52,8 +47,8 @@
     const bank = Array.isArray(window.VAE_SONG_QUIZ_BANK) ? window.VAE_SONG_QUIZ_BANK : [];
     const totalSongs = bank.length || 145;
     const totalArtists = bank.length ? new Set(bank.map((song) => song.artist)).size : 28;
-
     const card = document.getElementById("song-quiz-feature");
+
     if (card) {
       card.dataset.songQuizCount = String(totalSongs);
       const meta = card.querySelectorAll(".song-feature-meta span");
@@ -70,8 +65,8 @@
     });
   }
 
-  const observer = new MutationObserver(refreshVisibleCounts);
-  observer.observe(document.documentElement, { childList: true, subtree: true });
   document.addEventListener("DOMContentLoaded", refreshVisibleCounts, { once: true });
-  window.setTimeout(refreshVisibleCounts, 1200);
+  window.addEventListener("vae:song-quiz-ready", refreshVisibleCounts);
+  window.setTimeout(refreshVisibleCounts, 500);
+  window.setTimeout(refreshVisibleCounts, 1600);
 })();
