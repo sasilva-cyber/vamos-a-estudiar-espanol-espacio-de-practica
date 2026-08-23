@@ -80,30 +80,54 @@
     document.head.appendChild(script);
   }
 
-  function loadHomeFalseFriends() {
-    if (document.getElementById("home-false-friends-loader")) {
-      loadHomeGameOrder();
-      return;
-    }
+  function loadHomeGameRename() {
+    if (document.getElementById("home-jugando-loader")) return;
     const script = document.createElement("script");
-    script.id = "home-false-friends-loader";
-    script.src = "home-falsos-amigos.js?v=20260822-2032";
+    script.id = "home-jugando-loader";
+    script.src = "home-jugando-y-aprendiendo.js?v=20260822-2052";
     script.onload = loadHomeGameOrder;
     script.onerror = loadHomeGameOrder;
     document.head.appendChild(script);
   }
 
-  function loadFalseFriendsGame() {
+  function loadHomeFalseFriends() {
+    if (document.getElementById("home-false-friends-loader")) {
+      loadHomeGameRename();
+      return;
+    }
+    const script = document.createElement("script");
+    script.id = "home-false-friends-loader";
+    script.src = "home-falsos-amigos.js?v=20260822-2032";
+    script.onload = loadHomeGameRename;
+    script.onerror = loadHomeGameRename;
+    document.head.appendChild(script);
+  }
+
+  function loadFalseFriendsGameCore() {
     if (document.getElementById("false-friends-game-loader")) {
       loadHomeFalseFriends();
       return;
     }
     const script = document.createElement("script");
     script.id = "false-friends-game-loader";
-    script.src = "quiz-falsos-amigos.js?v=20260822-2028";
+    script.src = "quiz-falsos-amigos.js?v=20260822-2052";
     script.onload = loadHomeFalseFriends;
     script.onerror = loadHomeFalseFriends;
     document.head.appendChild(script);
+  }
+
+  function loadFalseFriendsGame() {
+    if (Array.isArray(window.VAE_FALSE_FRIENDS_BANK) && window.VAE_FALSE_FRIENDS_BANK.length) {
+      loadFalseFriendsGameCore();
+      return;
+    }
+    if (document.getElementById("false-friends-data-loader")) return;
+    const data = document.createElement("script");
+    data.id = "false-friends-data-loader";
+    data.src = "falsos-amigos-data.js?v=20260822-2052";
+    data.onload = loadFalseFriendsGameCore;
+    data.onerror = loadFalseFriendsGameCore;
+    document.head.appendChild(data);
   }
 
   function loadHomeStats() {
