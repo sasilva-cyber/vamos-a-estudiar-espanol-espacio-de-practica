@@ -40,17 +40,20 @@
 
   function ensureModule(route) {
     if (loaded(route)) return Promise.resolve();
-    if (route === 'grammar') return loadScript('grammar-core-lazy', 'grammar.js?v=20260823-0220');
-    if (route === 'vocabulary') return loadScript('vocabulary-core-lazy', 'vocabulary.js?v=20260823-0220');
-    if (route === 'readings') return loadScript('readings-core-lazy', 'readings.js?v=20260823-0220');
+    if (route === 'grammar') return loadScript('grammar-core-lazy', 'grammar.js?v=20260823-0225');
+    if (route === 'vocabulary') return loadScript('vocabulary-core-lazy', 'vocabulary.js?v=20260823-0225');
+    if (route === 'readings') return loadScript('readings-core-lazy', 'readings.js?v=20260823-0225');
     return Promise.resolve();
   }
 
   async function loadQuizEnhancements() {
     await Promise.allSettled([ensureModule('grammar'), ensureModule('vocabulary')]);
-    await loadScript('quiz-activities-lazy', 'quiz-activities.js?v=20260823-0220');
+    await loadScript('quiz-activities-lazy', 'quiz-activities.js?v=20260823-0225');
     window.dispatchEvent(new Event('vae:content-counts-changed'));
   }
+
+  window.__vaeEnsureModule = ensureModule;
+  window.__vaeLoadQuizExtras = loadQuizEnhancements;
 
   function setBusy(el, busy) {
     if (!el) return;
