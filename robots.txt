@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pratica.vamosaestudiarespanol.com.br/sitemap.xml
