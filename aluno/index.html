@@ -20,9 +20,11 @@
   <link rel="stylesheet" href="../placement.css?v=20260823-1" />
   <link rel="stylesheet" href="../listening-exclusive.css?v=20260823-1" />
   <link rel="stylesheet" href="../progressive-practice.css?v=20260823-1" />
+  <link rel="stylesheet" href="../premium-membership.css?v=20260823-1" />
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script defer src="../auth-config.js?v=20260823-2"></script>
-  <script defer src="../auth-client.js?v=20260823-3"></script>
+  <script defer src="../auth-client.js?v=20260823-4"></script>
+  <script defer src="../premium-membership.js?v=20260823-1"></script>
   <script defer src="../aluno.js?v=20260823-3"></script>
   <script defer src="../student-admin-link.js?v=20260823-1"></script>
   <script defer src="../student-placement-summary.js?v=20260823-1"></script>
@@ -53,7 +55,7 @@
           <div class="student-hero-copy">
             <p class="auth-eyebrow">Mi espacio de estudio</p>
             <h1 id="student-title">Olá, <span id="student-name">estudiante</span>.</h1>
-            <p>Aqui você encontra materiais, videoaulas, atividades e ferramentas de acompanhamento reservadas para estudantes cadastrados.</p>
+            <p>Aqui você acompanha sua conta e, com o plano Premium, acessa testes, atividades, videoaulas e materiais exclusivos para evoluir no espanhol.</p>
           </div>
           <div class="student-user-chip" title="Conta autenticada">
             <span class="student-avatar" id="student-avatar" aria-hidden="true">Ñ</span>
@@ -64,6 +66,7 @@
           <div class="student-meta">
             <span class="student-badge">✓ Conta autenticada</span>
             <span class="student-badge" id="student-member-since">Membro da comunidade</span>
+            <span class="student-badge free-badge" id="student-plan-badge">Verificando plano…</span>
           </div>
           <div class="student-toolbar-actions">
             <a class="student-admin-link hidden" id="student-admin-link" href="../admin/">Administrar conteúdos</a>
@@ -72,7 +75,32 @@
         </div>
       </section>
 
-      <section class="student-section placement-summary" id="placement-summary" aria-labelledby="placement-summary-title">
+      <section class="student-section premium-offer" id="premium-offer" aria-labelledby="premium-offer-title">
+        <div class="premium-offer-grid">
+          <div>
+            <p class="student-section-kicker">Vamos a Estudiar Español Premium</p>
+            <h2 id="premium-offer-title">Seu espanhol em evolução, por R$ 9,90 por mês</h2>
+            <p class="premium-offer-lead">Tenha uma área de estudos contínua para praticar, descobrir seu nível e acompanhar sua evolução. Novos conteúdos podem ser adicionados ao percurso sem você perder o progresso já conquistado.</p>
+            <ul class="premium-benefits">
+              <li>Teste de nivelamento A1–C2</li>
+              <li>Atividades progressivas e inéditas</li>
+              <li>Práctica de escucha exclusiva</li>
+              <li>Videoaulas para membros</li>
+              <li>PDFs e materiais exclusivos</li>
+              <li>Histórico e evolução individual</li>
+            </ul>
+          </div>
+          <aside class="premium-price-card" aria-label="Plano Premium mensal">
+            <span class="premium-price-label">Assinatura mensal</span>
+            <div class="premium-price"><strong>R$ 9,90</strong><span>/mês</span></div>
+            <p class="premium-price-note">Cobrança recorrente pelo Mercado Pago. A liberação do conteúdo ocorre após a confirmação da assinatura.</p>
+            <button class="premium-subscribe-button" id="premium-subscribe-button" type="button">Assinar por R$ 9,90/mês →</button>
+            <p class="premium-status" id="premium-status" role="status" aria-live="polite">Pagamento processado com segurança pelo Mercado Pago.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="student-section placement-summary" id="placement-summary" data-premium-section aria-labelledby="placement-summary-title">
         <div class="placement-summary-copy">
           <p class="student-section-kicker">Acompanhamento de aprendizagem</p>
           <h2 id="placement-summary-title">Teste de nivelamento</h2>
@@ -85,7 +113,7 @@
         <a class="placement-summary-action" id="placement-summary-cta" href="nivelamento/">Descobrir meu nível →</a>
       </section>
 
-      <section class="student-section practice-path" id="practice-path" aria-labelledby="practice-path-title">
+      <section class="student-section practice-path" id="practice-path" data-premium-section aria-labelledby="practice-path-title">
         <div class="practice-path-head">
           <div class="practice-path-copy">
             <p class="student-section-kicker">Atividades exclusivas · fixação</p>
@@ -114,7 +142,7 @@
         <p class="practice-path-note">Ao concluir e enviar uma atividade, ela é registrada no seu histórico e sai definitivamente da sua fila. A próxima atividade disponível é selecionada automaticamente pelo sistema.</p>
       </section>
 
-      <section class="student-section listening-hub" aria-labelledby="listening-hub-title">
+      <section class="student-section listening-hub" data-premium-section aria-labelledby="listening-hub-title">
         <div class="listening-hub-head">
           <div>
             <p class="student-section-kicker">Atividades exclusivas</p>
@@ -127,12 +155,12 @@
         <div class="listening-hub-note" id="listening-hub-status">Carregando atividades de escuta…</div>
       </section>
 
-      <section class="student-section" aria-labelledby="student-library-title">
+      <section class="student-section" data-premium-section aria-labelledby="student-library-title">
         <div class="student-section-head">
           <div>
-            <p class="student-section-kicker">Conteúdo para membros</p>
+            <p class="student-section-kicker">Conteúdo Premium</p>
             <h2 id="student-library-title">Biblioteca exclusiva</h2>
-            <p>Os arquivos ficam em armazenamento privado e só são liberados para contas autenticadas.</p>
+            <p>PDFs, videoaulas e atividades ficam em armazenamento privado e são liberados somente para assinaturas ativas.</p>
           </div>
           <span class="student-library-count" id="student-library-count">Carregando…</span>
         </div>
@@ -148,16 +176,16 @@
         <div class="student-grid" id="student-library-grid" aria-live="polite"></div>
       </section>
 
-      <section class="student-section" aria-labelledby="student-security-title">
+      <section class="student-section" data-premium-section aria-labelledby="student-security-title">
         <div class="student-section-head">
           <div>
-            <p class="student-section-kicker">Acesso protegido</p>
+            <p class="student-section-kicker">Acesso Premium protegido</p>
             <h2 id="student-security-title">Como funciona a biblioteca</h2>
             <p>O conteúdo não fica público no GitHub nem usa links permanentes.</p>
           </div>
         </div>
         <div class="student-coming">
-          Ao abrir um material, a plataforma solicita ao Supabase um link temporário válido por aproximadamente 5 minutos. Conteúdos em rascunho permanecem inacessíveis aos estudantes, mesmo que o arquivo já tenha sido enviado ao Storage.
+          Ao abrir um material, a plataforma solicita ao Supabase um link temporário válido por aproximadamente 5 minutos. Conteúdos em rascunho e materiais Premium permanecem inacessíveis para contas sem assinatura ativa.
         </div>
       </section>
     </div>
