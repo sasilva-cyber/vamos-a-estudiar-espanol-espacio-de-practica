@@ -164,7 +164,7 @@
     const root = IS_GITHUB_HOST ? `${REPOSITORY_PATH}/` : "/";
     const config = document.createElement("script");
     config.id = "vae-analytics-config";
-    config.src = `${root}analytics-config.js?v=20260823-1819`;
+    config.src = `${root}analytics-config.js?v=20260823-1612`;
     config.onload = () => {
       const analytics = document.createElement("script");
       analytics.id = "vae-analytics-runtime";
