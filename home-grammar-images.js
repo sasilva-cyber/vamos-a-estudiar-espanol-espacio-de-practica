@@ -87,20 +87,20 @@
   }
 
   async function loadListening() {
-    await loadScript('listening-area-loader', 'listening.js?v=20260823-0138');
-    loadScript('listening-filters-loader', 'listening-filters.js?v=20260823-0138');
-    await loadScript('listening-expanded-loader', 'listening-expanded.js?v=20260823-0138');
-    loadScript('listening-expanded-fixes-loader', 'listening-expanded-fixes.js?v=20260823-0138');
+    await loadScript('listening-area-loader', 'listening.js?v=20260823-0225');
+    loadScript('listening-filters-loader', 'listening-filters.js?v=20260823-0225');
+    await loadScript('listening-expanded-loader', 'listening-expanded.js?v=20260823-0225');
+    loadScript('listening-expanded-fixes-loader', 'listening-expanded-fixes.js?v=20260823-0225');
   }
 
   async function loadWriting() {
-    await loadScript('writing-area-loader', 'writing.js?v=20260823-0138');
-    loadScript('writing-search-loader', 'writing-search.js?v=20260823-0138');
-    loadScript('home-writing-card-loader', 'home-writing-card.js?v=20260823-0138');
+    await loadScript('writing-area-loader', 'writing.js?v=20260823-0225');
+    loadScript('writing-search-loader', 'writing-search.js?v=20260823-0225');
+    loadScript('home-writing-card-loader', 'home-writing-card.js?v=20260823-0225');
   }
 
   async function loadReadingExpansion() {
-    await loadScript('readings-casa-loader', 'readings-cuentos-casa.js?v=20260823-0138');
+    await loadScript('readings-casa-loader', 'readings-cuentos-casa.js?v=20260823-0225');
   }
 
   async function loadRoute(route) {
@@ -165,7 +165,7 @@
 
   function installImages(attempt=0) {
     injectImageStyles();
-    if (!applyGrammarImages() && attempt < 18) return setTimeout(() => installImages(attempt+1), 180);
+    if (!applyGrammarImages() && attempt < 28) return setTimeout(() => installImages(attempt+1), 220);
     const container = document.getElementById('home-grammar-items');
     if (container && !container.dataset.vaeImageObserver) {
       container.dataset.vaeImageObserver = '1';
@@ -173,19 +173,37 @@
     }
   }
 
+  function loadHomeShowcaseNearViewport() {
+    const target = document.querySelector('#home-screen .feature-grid');
+    if (!target || typeof window.__vaeLoadQuizExtras !== 'function') return;
+    let started = false;
+    const start = () => {
+      if (started) return;
+      started = true;
+      window.__vaeLoadQuizExtras().then(() => installImages()).catch(() => {});
+    };
+    if (!('IntersectionObserver' in window)) return;
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        observer.disconnect();
+        start();
+      }
+    }, { rootMargin: '180px 0px' });
+    observer.observe(target);
+  }
+
   function install() {
     ensureLightShell();
     installRouteGate();
-    installImages();
-    loadScript('grammar-dropdown-nav-loader', 'nav-grammar-dropdown.js?v=20260823-0138');
+    injectImageStyles();
+    loadScript('grammar-dropdown-nav-loader', 'nav-grammar-dropdown.js?v=20260823-0225');
     openInitialLazyRoute();
+    loadHomeShowcaseNearViewport();
 
-    // O rodapé é visualmente abaixo da dobra e pode ser preparado quando o navegador fica ocioso.
-    // Escucha e Escritura NÃO são mais pré-carregadas: entram somente no primeiro hover/toque.
     const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 1400));
     idle(() => {
-      loadScript('enhanced-footer-loader', 'footer-enhanced.js?v=20260823-0138')
-        .then(() => loadScript('footer-menu-simple-loader', 'footer-menu-simple.js?v=20260823-0138'));
+      loadScript('enhanced-footer-loader', 'footer-enhanced.js?v=20260823-0225')
+        .then(() => loadScript('footer-menu-simple-loader', 'footer-menu-simple.js?v=20260823-0225'));
     }, { timeout: 3500 });
   }
 
