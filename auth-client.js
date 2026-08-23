@@ -26,13 +26,7 @@
     client = window.supabase.createClient(
       String(config.supabaseUrl).trim().replace(/\/$/, ""),
       String(config.supabaseAnonKey).trim(),
-      {
-        auth: {
-          persistSession: true,
-          autoRefreshToken: true,
-          detectSessionInUrl: true
-        }
-      }
+      { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } }
     );
     return client;
   }
@@ -62,11 +56,7 @@
       password,
       options: {
         emailRedirectTo: rootUrl("login/?confirmed=1"),
-        data: {
-          full_name: String(name || "").trim(),
-          newsletter_opt_in: Boolean(newsletter),
-          source: "site_pratica"
-        }
+        data: { full_name: String(name || "").trim(), newsletter_opt_in: Boolean(newsletter), source: "site_pratica" }
       }
     });
     if (error) throw error;
