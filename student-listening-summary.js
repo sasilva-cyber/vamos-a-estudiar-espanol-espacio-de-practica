@@ -6,7 +6,7 @@
       const link = document.createElement("link");
       link.id = "reading-classics-css";
       link.rel = "stylesheet";
-      link.href = `${rootPath}reading-classics.css?v=20260823-1`;
+      link.href = `${rootPath}reading-classics.css?v=20260823-2`;
       document.head.appendChild(link);
     }
     if (!document.getElementById("reading-classics-script")) {
@@ -15,6 +15,13 @@
       script.src = `${rootPath}reading-classics.js?v=20260823-2`;
       script.defer = true;
       document.head.appendChild(script);
+    }
+    if (!document.getElementById("reading-pagination-script")) {
+      const pagination = document.createElement("script");
+      pagination.id = "reading-pagination-script";
+      pagination.src = `${rootPath}reading-pagination.js?v=20260823-1`;
+      pagination.defer = true;
+      document.head.appendChild(pagination);
     }
   }
 
