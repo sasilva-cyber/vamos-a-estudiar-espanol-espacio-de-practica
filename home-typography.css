@@ -39,10 +39,9 @@
   line-height: 1.35;
 }
 
-.home-screen .hero-panel > p,
-.home-screen .hero-panel p:last-child {
-  font-size: .92rem;
-  line-height: 1.65;
+/* Remove o parágrafo descritivo que ficava abaixo das estatísticas. */
+.home-screen .hero-panel > p:last-child {
+  display: none !important;
 }
 
 .home-screen .feature-card > p:not(.eyebrow),
@@ -85,9 +84,7 @@
     font-size: .98rem;
   }
 
-  .home-screen .hero-stat span,
-  .home-screen .hero-panel > p,
-  .home-screen .hero-panel p:last-child {
+  .home-screen .hero-stat span {
     font-size: .95rem;
   }
 }
