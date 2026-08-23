@@ -18,6 +18,15 @@
   const isGithub = window.location.hostname.toLowerCase().endsWith(".github.io");
   const root = isGithub ? "/vamos-a-estudiar-espanol-espacio-de-practica/" : "/";
 
+  /* Estatísticas próprias no Supabase. O script é leve e registra apenas depois que o navegador fica ocioso. */
+  if (!document.getElementById("vae-internal-analytics")) {
+    const internalAnalytics = document.createElement("script");
+    internalAnalytics.id = "vae-internal-analytics";
+    internalAnalytics.src = `${root}internal-analytics.js?v=20260823-1`;
+    internalAnalytics.defer = true;
+    document.head.appendChild(internalAnalytics);
+  }
+
   /* Carrega os acessos públicos de Login/Cadastro sem duplicar o script. */
   if (!document.getElementById("vae-student-nav")) {
     const studentNav = document.createElement("script");
