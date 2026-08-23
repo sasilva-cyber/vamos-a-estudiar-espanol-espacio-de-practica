@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PLD6NHQNEN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PLD6NHQNEN');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="robots" content="noindex,nofollow" />
+  <meta name="theme-color" content="#8f1d2c" />
+  <meta name="description" content="Atividades progressivas exclusivas da Área do Estudiante." />
+  <title>Atividades progressivas | Vamos a Estudiar Español</title>
+  <link rel="stylesheet" href="../../auth.css?v=20260823-3" />
+  <link rel="stylesheet" href="../../progressive-practice.css?v=20260823-1" />
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="../../auth-config.js?v=20260823-2"></script>
+  <script defer src="../../auth-client.js?v=20260823-3"></script>
+  <script defer src="../../progressive-practice.js?v=20260823-1"></script>
+</head>
+<body>
+  <header class="auth-header">
+    <div class="auth-header-inner">
+      <a class="auth-brand" href="../" aria-label="Voltar à Área do Estudiante">
+        <span class="auth-mark" aria-hidden="true">Ñ</span>
+        <span class="auth-brand-copy"><strong>Vamos a Estudiar Español</strong><small>Atividades exclusivas</small></span>
+      </a>
+      <a class="auth-header-action" href="../">Área do Estudiante</a>
+    </div>
+    <div class="heritage-stripe" aria-hidden="true"></div>
+  </header>
+
+  <main class="practice-main" id="practice-main" aria-busy="true">
+    <div class="auth-loading" id="practice-loading">Preparando sua próxima atividade…</div>
+
+    <section class="practice-shell hidden" id="practice-content" aria-labelledby="practice-title">
+      <div class="practice-hero">
+        <a class="practice-breadcrumb" href="../">← Voltar à Área do Estudiante</a>
+        <p class="practice-kicker">Percurso progressivo · atividade exclusiva</p>
+        <h1 id="practice-title">Atividade</h1>
+        <p class="practice-lead" id="practice-description"></p>
+        <div class="practice-meta">
+          <span class="practice-chip" id="practice-level">—</span>
+          <span class="practice-chip" id="practice-skill">—</span>
+          <span class="practice-chip" id="practice-progress-label">Carregando progresso…</span>
+        </div>
+        <div class="practice-rule"><strong>Como funciona:</strong> esta atividade aparece uma única vez no seu percurso. Depois de enviada, ela é marcada como concluída e a plataforma libera automaticamente a próxima atividade inédita.</div>
+      </div>
+
+      <div class="practice-body">
+        <div class="practice-status info" id="practice-status" role="status" aria-live="polite">Responda todas as questões e envie quando terminar.</div>
+        <form id="practice-form">
+          <div id="practice-questions"></div>
+          <button class="practice-submit" id="practice-submit" type="submit">Concluir atividade →</button>
+        </form>
+        <div class="practice-result hidden" id="practice-result" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="practice-shell hidden" id="practice-finished">
+      <div class="practice-finished">
+        <div class="practice-finished-badge">✓</div>
+        <h1>Você concluiu as atividades disponíveis.</h1>
+        <p>Seu percurso está atualizado. Quando novas atividades forem adicionadas ao seu nível atual ou a níveis superiores, elas poderão entrar automaticamente na fila sem repetir o que você já concluiu.</p>
+        <a class="practice-next-button" href="../">Voltar à Área do Estudiante</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="auth-footer">Vamos a Estudiar Español · Prática progressiva</footer>
+</body>
+</html>

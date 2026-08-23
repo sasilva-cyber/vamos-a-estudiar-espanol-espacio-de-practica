@@ -19,12 +19,14 @@
   <link rel="stylesheet" href="../student-library.css?v=20260823-2" />
   <link rel="stylesheet" href="../placement.css?v=20260823-1" />
   <link rel="stylesheet" href="../listening-exclusive.css?v=20260823-1" />
+  <link rel="stylesheet" href="../progressive-practice.css?v=20260823-1" />
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script defer src="../auth-config.js?v=20260823-2"></script>
   <script defer src="../auth-client.js?v=20260823-3"></script>
   <script defer src="../aluno.js?v=20260823-3"></script>
   <script defer src="../student-admin-link.js?v=20260823-1"></script>
   <script defer src="../student-placement-summary.js?v=20260823-1"></script>
+  <script defer src="../student-progressive-summary.js?v=20260823-1"></script>
   <script defer src="../student-listening-summary.js?v=20260823-1"></script>
 </head>
 <body>
@@ -81,6 +83,35 @@
           </div>
         </div>
         <a class="placement-summary-action" id="placement-summary-cta" href="nivelamento/">Descobrir meu nível →</a>
+      </section>
+
+      <section class="student-section practice-path" id="practice-path" aria-labelledby="practice-path-title">
+        <div class="practice-path-head">
+          <div class="practice-path-copy">
+            <p class="student-section-kicker">Atividades exclusivas · fixação</p>
+            <h2 id="practice-path-title">Prática progressiva</h2>
+            <p>A plataforma oferece uma atividade inédita por vez para fixar gramática, vocabulário, coesão e uso real do espanhol. O percurso parte do seu nível estimado e fica progressivamente mais exigente.</p>
+          </div>
+          <span class="student-library-count">A1 → C2</span>
+        </div>
+
+        <div class="practice-next">
+          <span class="practice-next-level" id="practice-path-level" aria-label="Nível da próxima atividade">…</span>
+          <div class="practice-next-copy">
+            <strong id="practice-path-title-next">Carregando sua próxima atividade…</strong>
+            <span id="practice-path-meta">Consultando seu progresso individual.</span>
+          </div>
+          <a class="practice-next-action" id="practice-path-action" href="atividades/">Abrir atividades →</a>
+        </div>
+
+        <div class="practice-progress" aria-label="Progresso nas atividades exclusivas">
+          <div class="practice-progress-row">
+            <span id="practice-path-progress-text">Carregando progresso…</span>
+            <span>concluídas não retornam</span>
+          </div>
+          <div class="practice-progress-track"><div class="practice-progress-bar" id="practice-path-progress-bar"></div></div>
+        </div>
+        <p class="practice-path-note">Ao concluir e enviar uma atividade, ela é registrada no seu histórico e sai definitivamente da sua fila. A próxima atividade disponível é selecionada automaticamente pelo sistema.</p>
       </section>
 
       <section class="student-section listening-hub" aria-labelledby="listening-hub-title">
