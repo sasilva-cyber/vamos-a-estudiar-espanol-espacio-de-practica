@@ -13,23 +13,91 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="robots" content="noindex,nofollow" />
   <meta name="theme-color" content="#8f1d2c" />
+  <meta name="description" content="Área exclusiva para estudantes cadastrados no Vamos a Estudiar Español." />
   <title>Área do Estudiante | Vamos a Estudiar Español</title>
-  <link rel="stylesheet" href="../auth.css?v=20260823-2" />
+  <link rel="stylesheet" href="../auth.css?v=20260823-3" />
+  <link rel="stylesheet" href="../student-library.css?v=20260823-1" />
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script defer src="../auth-config.js?v=20260823-2"></script>
-  <script defer src="../auth-client.js?v=20260823-2"></script>
-  <script defer src="../aluno.js?v=20260823-2"></script>
+  <script defer src="../auth-client.js?v=20260823-3"></script>
+  <script defer src="../aluno.js?v=20260823-3"></script>
 </head>
 <body>
-  <header class="auth-header"><div class="auth-header-inner"><a class="auth-brand" href="../"><span class="auth-mark">Ñ</span><span class="auth-brand-copy"><strong>Vamos a Estudiar Español</strong><small>Área do Estudiante</small></span></a><a class="auth-header-action" href="../">Ir para a plataforma</a></div><div class="heritage-stripe"></div></header>
+  <header class="auth-header">
+    <div class="auth-header-inner">
+      <a class="auth-brand" href="../" aria-label="Vamos a Estudiar Español — início">
+        <span class="auth-mark" aria-hidden="true">Ñ</span>
+        <span class="auth-brand-copy">
+          <strong>Vamos a Estudiar Español</strong>
+          <small>Área do Estudiante</small>
+        </span>
+      </a>
+      <a class="auth-header-action" href="../">Ir para a plataforma</a>
+    </div>
+    <div class="heritage-stripe" aria-hidden="true"></div>
+  </header>
+
   <main class="student-main" id="student-main" aria-busy="true">
     <div class="auth-loading" id="student-loading">Verificando seu acesso…</div>
+
     <div class="hidden" id="student-content">
-      <section class="student-hero" aria-labelledby="student-title"><div class="student-hero-top"><div class="student-hero-copy"><p class="auth-eyebrow">Mi espacio de estudio</p><h1 id="student-title">Olá, <span id="student-name">estudiante</span>.</h1><p>Aqui você encontrará materiais e conteúdos reservados para quem possui uma conta no Vamos a Estudiar Español.</p></div><div class="student-user-chip"><span class="student-avatar" id="student-avatar">Ñ</span><span id="student-email">—</span></div></div><div class="student-toolbar"><div class="student-meta"><span class="student-badge">✓ Conta autenticada</span><span class="student-badge" id="student-member-since">Membro da comunidade</span></div><button class="student-logout" id="student-logout" type="button">Sair da conta</button></div></section>
-      <section class="student-section" aria-labelledby="student-library-title"><div class="student-section-head"><div><h2 id="student-library-title">Biblioteca exclusiva</h2><p>Conteúdos disponíveis apenas para estudantes autenticados.</p></div></div><div class="student-grid"><article class="student-card"><span class="student-card-icon">📚</span><p class="student-card-kicker">Materiais</p><h3>Materiais de estudo</h3><p>PDFs, guias de revisão, exercícios extras e materiais complementares.</p><span class="student-card-action disabled" aria-disabled="true">Em preparação</span></article><article class="student-card"><span class="student-card-icon">▶</span><p class="student-card-kicker">Videoaulas</p><h3>Aulas exclusivas</h3><p>Videoaulas de gramática, vocabulário, compreensão e estratégias de estudo.</p><span class="student-card-action disabled" aria-disabled="true">Em preparação</span></article><article class="student-card"><span class="student-card-icon">✦</span><p class="student-card-kicker">Conteúdo especial</p><h3>Atividades para membros</h3><p>Práticas adicionais e conteúdos que não ficam disponíveis na área pública.</p><span class="student-card-action disabled" aria-disabled="true">Em preparação</span></article></div></section>
-      <section class="student-section"><div class="student-section-head"><div><h2>Próximas etapas</h2><p>A Área do Estudiante crescerá junto com a plataforma.</p></div></div><div class="student-coming">A infraestrutura já utiliza autenticação real e armazenamento privado. Os próximos materiais poderão ser liberados sem expor arquivos no repositório público.</div></section>
+      <section class="student-hero" aria-labelledby="student-title">
+        <div class="student-hero-top">
+          <div class="student-hero-copy">
+            <p class="auth-eyebrow">Mi espacio de estudio</p>
+            <h1 id="student-title">Olá, <span id="student-name">estudiante</span>.</h1>
+            <p>Aqui você encontra materiais, videoaulas e atividades reservados para estudantes cadastrados.</p>
+          </div>
+          <div class="student-user-chip" title="Conta autenticada">
+            <span class="student-avatar" id="student-avatar" aria-hidden="true">Ñ</span>
+            <span id="student-email">—</span>
+          </div>
+        </div>
+        <div class="student-toolbar">
+          <div class="student-meta">
+            <span class="student-badge">✓ Conta autenticada</span>
+            <span class="student-badge" id="student-member-since">Membro da comunidade</span>
+          </div>
+          <button class="student-logout" id="student-logout" type="button">Sair da conta</button>
+        </div>
+      </section>
+
+      <section class="student-section" aria-labelledby="student-library-title">
+        <div class="student-section-head">
+          <div>
+            <p class="student-section-kicker">Conteúdo para membros</p>
+            <h2 id="student-library-title">Biblioteca exclusiva</h2>
+            <p>Os arquivos ficam em armazenamento privado e só são liberados para contas autenticadas.</p>
+          </div>
+          <span class="student-library-count" id="student-library-count">Carregando…</span>
+        </div>
+
+        <div class="student-library-filters" role="group" aria-label="Filtrar biblioteca exclusiva">
+          <button class="student-filter active" type="button" data-content-filter="all" aria-pressed="true">Todos</button>
+          <button class="student-filter" type="button" data-content-filter="material" aria-pressed="false">📚 Materiais</button>
+          <button class="student-filter" type="button" data-content-filter="video" aria-pressed="false">▶ Videoaulas</button>
+          <button class="student-filter" type="button" data-content-filter="activity" aria-pressed="false">✦ Atividades</button>
+        </div>
+
+        <div class="student-library-status info" id="student-library-status" role="status" aria-live="polite">Carregando conteúdos exclusivos…</div>
+        <div class="student-grid" id="student-library-grid" aria-live="polite"></div>
+      </section>
+
+      <section class="student-section" aria-labelledby="student-security-title">
+        <div class="student-section-head">
+          <div>
+            <p class="student-section-kicker">Acesso protegido</p>
+            <h2 id="student-security-title">Como funciona a biblioteca</h2>
+            <p>O conteúdo não fica público no GitHub nem usa links permanentes.</p>
+          </div>
+        </div>
+        <div class="student-coming">
+          Ao abrir um material, a plataforma solicita ao Supabase um link temporário válido por aproximadamente 5 minutos. Conteúdos em rascunho permanecem inacessíveis aos estudantes, mesmo que o arquivo já tenha sido enviado ao Storage.
+        </div>
+      </section>
     </div>
   </main>
+
   <footer class="auth-footer">Vamos a Estudiar Español · Área do Estudiante</footer>
 </body>
 </html>
