@@ -55,11 +55,14 @@
   function removeBlogFromMenu() {
     const nav = document.querySelector('.main-nav');
     if (!nav) return;
+
     nav.querySelectorAll('a, button, [data-route]').forEach((item) => {
       const route = (item.dataset?.route || '').trim().toLowerCase();
       const label = (item.textContent || '').trim().toLowerCase();
       const href = (item.getAttribute?.('href') || '').trim().toLowerCase();
-      if (route === 'blog' || label === 'blog' || /(^|\/)blog(?:\/|$)/.test(href)) item.remove();
+      if (route === 'blog' || label === 'blog' || /(^|\/)blog(?:\/|$)/.test(href)) {
+        item.remove();
+      }
     });
   }
 
@@ -194,44 +197,23 @@
     }
   }
 
-  /*
-   * A versão anterior observava a própria feature-grid com margem positiva.
-   * Como ela fica logo no início da home, Gramática + Vocabulário + Quiz eram
-   * baixados quase imediatamente. Agora usamos um sentinela DEPOIS da grade:
-   * o pacote pesado só começa quando o visitante realmente se aproxima do fim
-   * da introdução da página.
-   */
   function loadHomeShowcaseNearViewport() {
-    const grid = document.querySelector('#home-screen .feature-grid');
-    if (!grid || typeof window.__vaeLoadQuizExtras !== 'function') return;
-    if (document.getElementById('vae-home-showcase-sentinel')) return;
-
-    const sentinel = document.createElement('span');
-    sentinel.id = 'vae-home-showcase-sentinel';
-    sentinel.setAttribute('aria-hidden', 'true');
-    sentinel.style.cssText = 'display:block;width:1px;height:1px;pointer-events:none;';
-    grid.insertAdjacentElement('afterend', sentinel);
-
+    const target = document.querySelector('#home-screen .feature-grid');
+    if (!target || typeof window.__vaeLoadQuizExtras !== 'function') return;
     let started = false;
     const start = () => {
       if (started) return;
       started = true;
-      sentinel.remove();
       window.__vaeLoadQuizExtras().then(() => installImages()).catch(() => {});
     };
-
-    if (!('IntersectionObserver' in window)) {
-      window.addEventListener('scroll', start, { once:true, passive:true });
-      return;
-    }
-
+    if (!('IntersectionObserver' in window)) return;
     const observer = new IntersectionObserver((entries) => {
       if (entries.some((entry) => entry.isIntersecting)) {
         observer.disconnect();
         start();
       }
-    }, { rootMargin: '0px 0px 180px 0px', threshold: 0 });
-    observer.observe(sentinel);
+    }, { rootMargin: '180px 0px' });
+    observer.observe(target);
   }
 
   function installHomeNewsletter() {
