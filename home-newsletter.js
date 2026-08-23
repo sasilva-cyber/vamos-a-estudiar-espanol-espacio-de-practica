@@ -67,13 +67,29 @@
       .home-newsletter-form {
         display: grid;
         grid-template-columns: minmax(0,1fr) auto;
-        gap: 10px;
-        align-items: center;
+        gap: 12px;
+        align-items: end;
+      }
+
+      .home-newsletter-field {
+        min-width: 0;
+        display: grid;
+        gap: 6px;
+      }
+
+      .home-newsletter-field label {
+        margin: 0;
+        color: #342b27;
+        font-size: .86rem;
+        font-weight: 700;
+        line-height: 1.25;
+        text-align: left !important;
       }
 
       .home-newsletter-form input[type="email"] {
         width: 100%;
         min-height: 48px;
+        margin: 0;
         padding: 12px 15px;
         border: 1px solid rgba(143,29,44,.22);
         border-radius: 13px;
@@ -82,6 +98,7 @@
         font: inherit;
         font-size: .95rem;
         outline: none;
+        box-sizing: border-box;
         transition: border-color .16s ease, box-shadow .16s ease;
       }
 
@@ -91,7 +108,9 @@
       }
 
       .home-newsletter-form button {
+        min-width: 142px;
         min-height: 48px;
+        margin: 0;
         padding: 12px 19px;
         border: 1px solid var(--red, #981c2d);
         border-radius: 13px;
@@ -134,7 +153,7 @@
         .home-newsletter { padding: 18px; margin-top: 20px; }
         .home-newsletter-head { gap: 11px; }
         .home-newsletter-form { grid-template-columns: 1fr; }
-        .home-newsletter-form button { width: 100%; }
+        .home-newsletter-form button { width: 100%; min-width: 0; }
       }
     `;
     document.head.appendChild(style);
@@ -181,8 +200,10 @@
         </div>
 
         <form class="home-newsletter-form" action="${FORM_ACTION}" method="POST">
-          <label class="sr-only" for="home-newsletter-email">Seu e-mail</label>
-          <input id="home-newsletter-email" type="email" name="email" autocomplete="email" inputmode="email" placeholder="seuemail@exemplo.com" required />
+          <div class="home-newsletter-field">
+            <label for="home-newsletter-email">Seu e-mail</label>
+            <input id="home-newsletter-email" type="email" name="email" autocomplete="email" inputmode="email" placeholder="seuemail@exemplo.com" required />
+          </div>
           <button type="submit">Assinar →</button>
           <input type="hidden" name="_subject" value="Nova inscrição — Newsletter Vamos a Estudiar Español" />
           <input type="hidden" name="_template" value="table" />
