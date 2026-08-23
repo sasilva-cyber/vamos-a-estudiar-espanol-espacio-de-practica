@@ -2,8 +2,9 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#8f1d2c" />
+  <meta name="color-scheme" content="light" />
   <title>Vamos a Estudiar Español</title>
   <style>
     html,body{margin:0;min-height:100%;background:#fff8ea;color:#74111e;font-family:Arial,sans-serif}
@@ -11,15 +12,26 @@
     .boot-mark{width:54px;height:54px;border-radius:16px;background:#981c2d;color:#fff;display:grid;place-items:center;margin:0 auto 14px;font:700 30px Georgia,serif}
     .boot strong{display:block;font:700 22px Georgia,serif}.boot span{display:block;margin-top:8px;color:#6b625d;font-size:14px}
   </style>
-</head>
-<body>
-  <div class="boot" id="boot"><div><div class="boot-mark">Ñ</div><strong>Vamos a Estudiar Español</strong><span>Carregando seu espaço de prática…</span></div></div>
   <script>
     (() => {
       const project = "/vamos-a-estudiar-espanol-espacio-de-practica";
       const onGithub = location.hostname.toLowerCase().endsWith(".github.io");
       const root = onGithub ? `${project}/` : "/";
-      const shellUrl = `${root}app-shell.html?v=20260823-0032`;
+      window.__VAE_ROOT__ = root;
+      const responsive = document.createElement("link");
+      responsive.rel = "preload";
+      responsive.as = "style";
+      responsive.href = `${root}responsive.css?v=20260823-0118`;
+      document.head.appendChild(responsive);
+    })();
+  </script>
+</head>
+<body>
+  <div class="boot" id="boot"><div><div class="boot-mark">Ñ</div><strong>Vamos a Estudiar Español</strong><span>Carregando seu espaço de prática…</span></div></div>
+  <script>
+    (() => {
+      const root = window.__VAE_ROOT__ || "/";
+      const shellUrl = `${root}app-shell.html?v=20260823-0118`;
       fetch(shellUrl, { cache: "force-cache" })
         .then((response) => {
           if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -28,6 +40,20 @@
         .then((html) => {
           const base = `<base href="${root}" />`;
           html = html.replace(/<base\s+href=["']\/vamos-a-estudiar-espanol-espacio-de-practica\/["']\s*\/?\s*>/i, base);
+
+          // Somente o CSS estrutural bloqueia o primeiro paint. As folhas específicas
+          // de áreas internas carregam em segundo plano e ficam prontas para a navegação.
+          html = html.replace(/<link rel="stylesheet" href="(readings|grammar|vocabulary|quiz-activities)\.css([^\"]*)"\s*\/>/g,
+            '<link rel="stylesheet" href="$1.css$2" media="print" onload="this.media=\'all\'" />');
+
+          // O responsivo entra no primeiro render, evitando layout desktop no celular.
+          if (!html.includes('id="responsive-styles"')) {
+            html = html.replace('</head>', `<link id="responsive-styles" rel="stylesheet" href="${root}responsive.css?v=20260823-0118" /></head>`);
+          }
+
+          // Scripts externos passam a baixar em paralelo e executam em ordem após o parse.
+          html = html.replace(/<script\s+src=/g, '<script defer src=');
+
           document.open();
           document.write(html);
           document.close();
