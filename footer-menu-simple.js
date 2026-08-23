@@ -3,6 +3,7 @@
   const ABOUT_URL = "quem-somos.html";
   const CONTACT_URL = "contato/";
   let quizExtrasRequested = false;
+  let quizLazyInstalled = false;
 
   function appendScript(id, src, onload) {
     const existing = document.getElementById(id);
@@ -119,6 +120,8 @@
   }
 
   function installQuizLazyLoading() {
+    if (quizLazyInstalled) return;
+    quizLazyInstalled = true;
     const maybeLoad = (event) => {
       const target = event.target?.closest?.('[data-route="quiz"], #home-ff-play');
       if (target) loadQuizExtras();
