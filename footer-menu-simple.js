@@ -158,12 +158,25 @@
     document.head.appendChild(data);
   }
 
-  function loadSongQuiz() {
+  function loadSongQuizCore() {
     if (document.getElementById("complete-song-quiz-loader")) return;
     const script = document.createElement("script");
     script.id = "complete-song-quiz-loader";
-    script.src = "quiz-completa-cancion.js?v=20260822-2345";
+    script.src = "quiz-completa-cancion.js?v=20260823-0004";
     document.head.appendChild(script);
+  }
+
+  function loadSongQuiz() {
+    if (document.getElementById("song-extra-artists-loader")) {
+      loadSongQuizCore();
+      return;
+    }
+    const extra = document.createElement("script");
+    extra.id = "song-extra-artists-loader";
+    extra.src = "quiz-musica-extra-artistas.js?v=20260823-0004";
+    extra.onload = loadSongQuizCore;
+    extra.onerror = loadSongQuizCore;
+    document.head.appendChild(extra);
   }
 
   function loadHomeStats() {
