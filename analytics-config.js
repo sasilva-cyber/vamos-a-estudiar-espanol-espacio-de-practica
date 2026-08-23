@@ -36,12 +36,32 @@
     document.head.appendChild(newsletter);
   }
 
+  function simplifyYoutubeIntro() {
+    const section = document.getElementById("home-youtube-showcase");
+    if (!section) return false;
+    const description = section.querySelector(".home-youtube-head-copy > p:last-child");
+    if (description) description.textContent = "Assista aos vídeos mais recentes do Vamos a Estudiar Español.";
+    section.querySelector(".home-youtube-auto")?.remove();
+    return true;
+  }
+
+  function watchYoutubeIntro() {
+    if (simplifyYoutubeIntro()) return;
+    const observer = new MutationObserver(() => {
+      if (simplifyYoutubeIntro()) observer.disconnect();
+    });
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+  }
+
   /* Exibe os vídeos públicos mais recentes do canal abaixo das últimas aulas de gramática. */
   if (!document.getElementById("vae-home-youtube")) {
     const youtube = document.createElement("script");
     youtube.id = "vae-home-youtube";
-    youtube.src = `${root}home-youtube.js?v=20260823-1612`;
+    youtube.src = `${root}home-youtube.js?v=20260823-1725`;
     youtube.defer = true;
+    youtube.addEventListener("load", watchYoutubeIntro, { once: true });
     document.head.appendChild(youtube);
+  } else {
+    watchYoutubeIntro();
   }
 })();
