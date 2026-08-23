@@ -21,69 +21,21 @@
 
   function injectVocabularyPaginationStyles() {
     if (document.getElementById("vocabulary-pagination-styles")) return;
-
     const style = document.createElement("style");
     style.id = "vocabulary-pagination-styles";
     style.textContent = `
-      .vocabulary-pagination {
-        margin: 28px 0 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 12px;
-      }
-      .vocabulary-pagination-button {
-        min-height: 44px;
-        border: 1px solid rgba(143,29,44,.30);
-        border-radius: 13px;
-        background: #fff;
-        color: var(--red);
-        padding: 10px 16px;
-        font: inherit;
-        font-weight: 900;
-        cursor: pointer;
-        transition: background .15s ease, border-color .15s ease, transform .15s ease;
-      }
-      .vocabulary-pagination-button:hover:not(:disabled),
-      .vocabulary-pagination-button:focus-visible:not(:disabled) {
-        background: #fff8f3;
-        border-color: var(--red);
-        transform: translateY(-1px);
-        outline: none;
-      }
-      .vocabulary-pagination-button:disabled {
-        opacity: .42;
-        cursor: not-allowed;
-      }
-      .vocabulary-pagination-status {
-        min-width: 180px;
-        text-align: center !important;
-        color: var(--muted);
-        font-size: .86rem;
-        font-weight: 800;
-      }
-      @media (max-width: 560px) {
-        .vocabulary-pagination {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-        }
-        .vocabulary-pagination-status {
-          grid-column: 1 / -1;
-          grid-row: 1;
-          min-width: 0;
-        }
-        .vocabulary-pagination-button {
-          width: 100%;
-        }
-      }
+      .vocabulary-pagination{margin:28px 0 8px;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:12px}
+      .vocabulary-pagination-button{min-height:44px;border:1px solid rgba(143,29,44,.30);border-radius:13px;background:#fff;color:var(--red);padding:10px 16px;font:inherit;font-weight:900;cursor:pointer;transition:background .15s ease,border-color .15s ease,transform .15s ease}
+      .vocabulary-pagination-button:hover:not(:disabled),.vocabulary-pagination-button:focus-visible:not(:disabled){background:#fff8f3;border-color:var(--red);transform:translateY(-1px);outline:none}
+      .vocabulary-pagination-button:disabled{opacity:.42;cursor:not-allowed}
+      .vocabulary-pagination-status{min-width:180px;text-align:center!important;color:var(--muted);font-size:.86rem;font-weight:800}
+      @media(max-width:560px){.vocabulary-pagination{display:grid;grid-template-columns:1fr 1fr}.vocabulary-pagination-status{grid-column:1/-1;grid-row:1;min-width:0}.vocabulary-pagination-button{width:100%}}
     `;
     document.head.appendChild(style);
   }
 
   function renderVocabularyPagination(totalItems, totalPages) {
     const pagination = ensureVocabularyPagination();
-
     if (!totalItems || totalPages <= 1) {
       pagination.innerHTML = "";
       pagination.hidden = true;
@@ -94,8 +46,7 @@
     pagination.innerHTML = `
       <button class="vocabulary-pagination-button" id="vocabulary-page-prev" type="button" ${vocabularyCurrentPage === 1 ? "disabled" : ""}>← Página anterior</button>
       <span class="vocabulary-pagination-status">Página ${vocabularyCurrentPage} de ${totalPages} · ${totalItems} temas</span>
-      <button class="vocabulary-pagination-button" id="vocabulary-page-next" type="button" ${vocabularyCurrentPage === totalPages ? "disabled" : ""}>Página seguinte →</button>
-    `;
+      <button class="vocabulary-pagination-button" id="vocabulary-page-next" type="button" ${vocabularyCurrentPage === totalPages ? "disabled" : ""}>Página seguinte →</button>`;
 
     document.getElementById("vocabulary-page-prev")?.addEventListener("click", () => {
       if (vocabularyCurrentPage <= 1) return;
@@ -134,7 +85,6 @@
 
     const totalPages = Math.ceil(matches.length / VOCABULARY_PAGE_SIZE);
     if (vocabularyCurrentPage > totalPages) vocabularyCurrentPage = totalPages;
-
     const start = (vocabularyCurrentPage - 1) * VOCABULARY_PAGE_SIZE;
     const pageTopics = matches.slice(start, start + VOCABULARY_PAGE_SIZE);
 
@@ -142,24 +92,17 @@
       const card = document.createElement("article");
       card.className = "vocabulary-card";
       card.innerHTML = `
-        <div class="vocabulary-card-top">
-          <span class="vocabulary-level">${topic.level}</span>
-          <span class="vocabulary-count">${topic.items.length} termos</span>
-        </div>
+        <div class="vocabulary-card-top"><span class="vocabulary-level">${topic.level}</span><span class="vocabulary-count">${topic.items.length} termos</span></div>
         <p class="vocabulary-group">${topic.group}</p>
         <h2>${topic.title}</h2>
         <p>${topic.description}</p>
-        <div class="vocabulary-card-footer">
-          <button class="secondary-button" type="button" data-open-vocabulary="${id}">Estudiar vocabulario</button>
-          <span class="vocabulary-status">${vocabularyIsStudied(id) ? "✓ Estudiado" : ""}</span>
-        </div>`;
+        <div class="vocabulary-card-footer"><button class="secondary-button" type="button" data-open-vocabulary="${id}">Estudiar vocabulario</button><span class="vocabulary-status">${vocabularyIsStudied(id) ? "✓ Estudiado" : ""}</span></div>`;
       vocabularyGrid.appendChild(card);
     });
 
     vocabularyGrid.querySelectorAll("[data-open-vocabulary]").forEach((button) => {
       button.addEventListener("click", () => openVocabularyTopic(button.dataset.openVocabulary));
     });
-
     renderVocabularyPagination(matches.length, totalPages);
   };
 
@@ -172,20 +115,18 @@
   renderVocabularyCards();
 })();
 
-/* Carrega os testes de compreensão leitora depois das extensões do Quiz. */
-(function loadReadingTests() {
-  if (document.getElementById("reading-tests-loader")) return;
-  const script = document.createElement("script");
-  script.id = "reading-tests-loader";
-  script.src = "reading-tests.js?v=20260822-1750";
-  document.head.appendChild(script);
-})();
-
-/* Carrega as imagens temáticas e as extensões mais recentes da plataforma. */
-(function loadHomeGrammarImages() {
+/* A home completa é carregada depois do primeiro paint. Os testes de leitura ficam para a abertura do Quiz. */
+(function loadHomeGrammarImagesWhenIdle() {
   if (document.getElementById("home-grammar-images-loader")) return;
-  const script = document.createElement("script");
-  script.id = "home-grammar-images-loader";
-  script.src = "home-grammar-images.js?v=20260822-2112";
-  document.head.appendChild(script);
+  const start = () => {
+    if (document.getElementById("home-grammar-images-loader")) return;
+    const script = document.createElement("script");
+    script.id = "home-grammar-images-loader";
+    script.src = "home-grammar-images.js?v=20260823-0018";
+    script.defer = true;
+    document.head.appendChild(script);
+  };
+
+  if ("requestIdleCallback" in window) window.requestIdleCallback(start, { timeout: 700 });
+  else window.setTimeout(start, 250);
 })();
