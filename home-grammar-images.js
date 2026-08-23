@@ -52,11 +52,35 @@
     actions.insertBefore(button, beforeRoute ? actions.querySelector(`[data-route="${beforeRoute}"]`) : null);
   }
 
+  function removeBlogFromMenu() {
+    const nav = document.querySelector('.main-nav');
+    if (!nav) return;
+
+    nav.querySelectorAll('a, button, [data-route]').forEach((item) => {
+      const route = (item.dataset?.route || '').trim().toLowerCase();
+      const label = (item.textContent || '').trim().toLowerCase();
+      const href = (item.getAttribute?.('href') || '').trim().toLowerCase();
+      if (route === 'blog' || label === 'blog' || /(^|\/)blog(?:\/|$)/.test(href)) {
+        item.remove();
+      }
+    });
+  }
+
+  function watchNavForBlog() {
+    const nav = document.querySelector('.main-nav');
+    if (!nav) return;
+    removeBlogFromMenu();
+    if (nav.dataset.vaeNoBlogObserver === '1') return;
+    nav.dataset.vaeNoBlogObserver = '1';
+    new MutationObserver(removeBlogFromMenu).observe(nav, { childList: true, subtree: true });
+  }
+
   function ensureLightShell() {
     ensureNavButton('listening', 'Escucha', 'readings');
     ensureNavButton('writing', 'Escritura', 'readings');
     ensureHeroButton('listening', 'Practicar escucha', 'readings');
     ensureHeroButton('writing', 'Practicar escritura', 'readings');
+    removeBlogFromMenu();
   }
 
   function applyGrammarImages() {
@@ -194,6 +218,7 @@
 
   function install() {
     ensureLightShell();
+    watchNavForBlog();
     installRouteGate();
     injectImageStyles();
     loadScript('grammar-dropdown-nav-loader', 'nav-grammar-dropdown.js?v=20260823-0225');
