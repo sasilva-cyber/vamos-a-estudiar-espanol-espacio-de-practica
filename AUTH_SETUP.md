@@ -13,7 +13,8 @@ A infraestrutura está conectada ao projeto Supabase `clfwoywzalttkvhstsgh`.
 - leitura do bucket apenas por usuários autenticados;
 - funções internas de trigger sem permissão de execução via API;
 - cadastro, login, recuperação de senha, logout e proteção de `/aluno/`;
-- eventos de autenticação para Google Analytics.
+- eventos de autenticação para Google Analytics;
+- auditoria de segurança do Supabase sem alertas após o hardening.
 
 ## Segurança
 
@@ -32,12 +33,14 @@ No painel do Supabase, em **Authentication → URL Configuration**, usar:
 
 Manter confirmação de e-mail habilitada em Authentication → Providers → Email.
 
-## Fluxo de teste antes de publicar no menu
+## Fluxo de homologação antes de publicar links no menu
 
-1. Criar conta em `/cadastro/`.
-2. Confirmar o endereço pelo e-mail recebido.
-3. Entrar em `/login/`.
-4. Confirmar acesso a `/aluno/`.
-5. Sair e tentar acessar `/aluno/` diretamente: deve redirecionar para `/login/`.
-6. Testar “Esqueci minha senha”.
-7. Depois dos testes, adicionar links visíveis de **Entrar** e **Criar conta** à navegação pública.
+1. Configurar as URLs acima no painel do Supabase.
+2. Mesclar a branch de homologação.
+3. Criar conta em `/cadastro/`.
+4. Confirmar o endereço pelo e-mail recebido.
+5. Entrar em `/login/`.
+6. Confirmar acesso a `/aluno/`.
+7. Sair e tentar acessar `/aluno/` diretamente: deve redirecionar para `/login/`.
+8. Testar “Esqueci minha senha”.
+9. Depois dos testes, adicionar links visíveis de **Entrar** e **Criar conta** à navegação pública.
