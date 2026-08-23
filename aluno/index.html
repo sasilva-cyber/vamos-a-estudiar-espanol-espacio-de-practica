@@ -16,11 +16,12 @@
   <meta name="description" content="Área exclusiva para estudantes cadastrados no Vamos a Estudiar Español." />
   <title>Área do Estudiante | Vamos a Estudiar Español</title>
   <link rel="stylesheet" href="../auth.css?v=20260823-3" />
-  <link rel="stylesheet" href="../student-library.css?v=20260823-1" />
+  <link rel="stylesheet" href="../student-library.css?v=20260823-2" />
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script defer src="../auth-config.js?v=20260823-2"></script>
   <script defer src="../auth-client.js?v=20260823-3"></script>
   <script defer src="../aluno.js?v=20260823-3"></script>
+  <script defer src="../student-admin-link.js?v=20260823-1"></script>
 </head>
 <body>
   <header class="auth-header">
@@ -58,7 +59,10 @@
             <span class="student-badge">✓ Conta autenticada</span>
             <span class="student-badge" id="student-member-since">Membro da comunidade</span>
           </div>
-          <button class="student-logout" id="student-logout" type="button">Sair da conta</button>
+          <div class="student-toolbar-actions">
+            <a class="student-admin-link hidden" id="student-admin-link" href="../admin/">Administrar conteúdos</a>
+            <button class="student-logout" id="student-logout" type="button">Sair da conta</button>
+          </div>
         </div>
       </section>
 
