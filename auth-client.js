@@ -1,8 +1,9 @@
-/* Cliente compartilhado de autenticação da Área do Aluno. */
+/* Cliente compartilhado de autenticação e conteúdo da Área do Aluno. */
 (function () {
   const REPOSITORY_PATH = "/vamos-a-estudiar-espanol-espacio-de-practica";
   const IS_GITHUB = location.hostname.toLowerCase().endsWith(".github.io");
   const ROOT_PATH = IS_GITHUB ? `${REPOSITORY_PATH}/` : "/";
+  const PRIVATE_BUCKET = "materiais-exclusivos";
   const config = window.VAE_AUTH_CONFIG || {};
   let client = null;
 
@@ -46,6 +47,7 @@
     if (message.includes("user already registered")) return "Este e-mail já possui uma conta.";
     if (message.includes("password should be at least")) return "A senha precisa ter pelo menos 8 caracteres.";
     if (message.includes("rate limit")) return "Muitas tentativas em pouco tempo. Aguarde alguns minutos e tente novamente.";
+    if (message.includes("row-level security") || message.includes("not authorized")) return "Este conteúdo não está disponível para sua conta.";
     return error?.message || "Não foi possível concluir a operação. Tente novamente.";
   }
 
@@ -117,9 +119,49 @@
     return data.user || null;
   }
 
+  async function listExclusiveContent() {
+    const supabase = getClient();
+    const { data, error } = await supabase
+      .from("exclusive_contents")
+      .select("id,title,description,content_type,storage_path,file_name,level,category,sort_order,published_at,created_at")
+      .eq("published", true)
+      .order("sort_order", { ascending: true })
+      .order("published_at", { ascending: false });
+    if (error) throw error;
+    return Array.isArray(data) ? data : [];
+  }
+
+  async function createSignedContentUrl(storagePath, expiresIn = 300) {
+    const path = String(storagePath || "").trim().replace(/^\/+/, "");
+    if (!path) throw new Error("CONTENT_PATH_MISSING");
+    const supabase = getClient();
+    const { data, error } = await supabase.storage.from(PRIVATE_BUCKET).createSignedUrl(path, expiresIn);
+    if (error) throw error;
+    if (!data?.signedUrl) throw new Error("SIGNED_URL_UNAVAILABLE");
+    return data.signedUrl;
+  }
+
   function onAuthStateChange(callback) {
     return getClient().auth.onAuthStateChange(callback);
   }
 
-  window.VAEAuth = Object.freeze({ ROOT_PATH, isConfigured, getClient, friendlyError, signUp, signIn, signOut, requestPasswordReset, updatePassword, getSession, requireSession, getUser, onAuthStateChange, rootUrl });
+  window.VAEAuth = Object.freeze({
+    ROOT_PATH,
+    PRIVATE_BUCKET,
+    isConfigured,
+    getClient,
+    friendlyError,
+    signUp,
+    signIn,
+    signOut,
+    requestPasswordReset,
+    updatePassword,
+    getSession,
+    requireSession,
+    getUser,
+    listExclusiveContent,
+    createSignedContentUrl,
+    onAuthStateChange,
+    rootUrl
+  });
 })();
