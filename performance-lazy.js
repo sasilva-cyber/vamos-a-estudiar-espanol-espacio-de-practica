@@ -52,11 +52,26 @@
     section.querySelector('.home-youtube-auto')?.remove();
   }
 
-  function lazyNewsletter() {
-    const form = document.querySelector('#newsletter-form, form[data-newsletter], .newsletter-form');
+  function armNewsletter(form) {
     const section = form?.closest('section') || form;
     if (!section) return;
     deferUntilVisible(section, () => loadScript('vae-newsletter-runtime', 'newsletter-runtime.js?v=20260823-1455'), '500px 0px');
+  }
+
+  function lazyNewsletter() {
+    const find = () => document.querySelector('#newsletter-form, form[data-newsletter], .newsletter-form');
+    const existing = find();
+    if (existing) return armNewsletter(existing);
+
+    const home = document.getElementById('home-screen') || document.body;
+    if (!home) return;
+    const observer = new MutationObserver(() => {
+      const form = find();
+      if (!form) return;
+      observer.disconnect();
+      armNewsletter(form);
+    });
+    observer.observe(home, { childList: true, subtree: true });
   }
 
   function loadYoutube() {
