@@ -1,7 +1,26 @@
-/* Ajusta o menu "Categorias" do rodapé para Início, Quem somos e Contato. */
+/* Ajusta o rodapé e carrega recursos pesados apenas quando o visitante realmente abre o Quiz. */
 (function () {
   const ABOUT_URL = "quem-somos.html";
   const CONTACT_URL = "contato/";
+  let quizExtrasRequested = false;
+
+  function appendScript(id, src, onload) {
+    const existing = document.getElementById(id);
+    if (existing) {
+      if (onload && existing.dataset.loaded === "true") onload();
+      return existing;
+    }
+    const script = document.createElement("script");
+    script.id = id;
+    script.src = src;
+    script.defer = true;
+    script.onload = () => {
+      script.dataset.loaded = "true";
+      if (onload) onload();
+    };
+    document.head.appendChild(script);
+    return script;
+  }
 
   function installMenu() {
     const footer = document.querySelector(".site-footer-enhanced");
@@ -26,24 +45,15 @@
         if (url) window.open(url, "_blank", "noopener,noreferrer");
       });
     });
-
     return true;
   }
 
   function adjustHomeTitle() {
-    if (!document.getElementById("home-title-adjustment")) {
-      const style = document.createElement("style");
-      style.id = "home-title-adjustment";
-      style.textContent = `
-        #home-title {
-          text-align: justify;
-          text-justify: inter-word;
-          text-align-last: left;
-          hyphens: auto;
-        }
-      `;
-      document.head.appendChild(style);
-    }
+    if (document.getElementById("home-title-adjustment")) return;
+    const style = document.createElement("style");
+    style.id = "home-title-adjustment";
+    style.textContent = `#home-title{text-align:justify;text-justify:inter-word;text-align-last:left;hyphens:auto}`;
+    document.head.appendChild(style);
   }
 
   function loadHomeTypography() {
@@ -51,97 +61,36 @@
     const link = document.createElement("link");
     link.id = "home-typography-styles";
     link.rel = "stylesheet";
-    link.href = "home-typography.css?v=20260822-2151";
+    link.href = "home-typography.css?v=20260823-0018";
     document.head.appendChild(link);
   }
 
-  function loadRouteQuery() {
-    if (document.getElementById("route-query-loader")) return;
-    const script = document.createElement("script");
-    script.id = "route-query-loader";
-    script.src = "route-query.js?v=20260822-2010";
-    document.head.appendChild(script);
-  }
-
   function loadGrammarDropdown() {
-    if (document.getElementById("grammar-dropdown-nav-loader")) return;
-    const script = document.createElement("script");
-    script.id = "grammar-dropdown-nav-loader";
-    script.src = "nav-grammar-dropdown.js?v=20260822-2042";
-    document.head.appendChild(script);
+    appendScript("grammar-dropdown-nav-loader", "nav-grammar-dropdown.js?v=20260822-2042");
   }
 
   function loadHomeGameOrder() {
-    if (document.getElementById("home-game-order-loader")) return;
-    const script = document.createElement("script");
-    script.id = "home-game-order-loader";
-    script.src = "home-game-before-grammar.js?v=20260822-2045";
-    document.head.appendChild(script);
+    appendScript("home-game-order-loader", "home-game-before-grammar.js?v=20260822-2045");
   }
 
   function loadHomeGameLayout() {
-    if (document.getElementById("home-jugando-layout-loader")) {
-      loadHomeGameOrder();
-      return;
-    }
-    const script = document.createElement("script");
-    script.id = "home-jugando-layout-loader";
-    script.src = "home-jugando-layout.js?v=20260822-2109";
-    script.onload = loadHomeGameOrder;
-    script.onerror = loadHomeGameOrder;
-    document.head.appendChild(script);
+    appendScript("home-jugando-layout-loader", "home-jugando-layout.js?v=20260822-2109", loadHomeGameOrder);
   }
 
   function loadHomeGameRename() {
-    if (document.getElementById("home-jugando-loader")) {
-      loadHomeGameLayout();
-      return;
-    }
-    const script = document.createElement("script");
-    script.id = "home-jugando-loader";
-    script.src = "home-jugando-y-aprendiendo.js?v=20260822-2109";
-    script.onload = loadHomeGameLayout;
-    script.onerror = loadHomeGameLayout;
-    document.head.appendChild(script);
+    appendScript("home-jugando-loader", "home-jugando-y-aprendiendo.js?v=20260822-2109", loadHomeGameLayout);
   }
 
   function loadHomeFalseFriends() {
-    if (document.getElementById("home-false-friends-loader")) {
-      loadHomeGameRename();
-      return;
-    }
-    const script = document.createElement("script");
-    script.id = "home-false-friends-loader";
-    script.src = "home-falsos-amigos.js?v=20260822-2109";
-    script.onload = loadHomeGameRename;
-    script.onerror = loadHomeGameRename;
-    document.head.appendChild(script);
+    appendScript("home-false-friends-loader", "home-falsos-amigos.js?v=20260823-0018", loadHomeGameRename);
   }
 
   function loadFalseFriendsGameCore() {
-    if (document.getElementById("false-friends-game-loader")) {
-      loadHomeFalseFriends();
-      return;
-    }
-    const script = document.createElement("script");
-    script.id = "false-friends-game-loader";
-    script.src = "quiz-falsos-amigos.js?v=20260822-2053";
-    script.onload = loadHomeFalseFriends;
-    script.onerror = loadHomeFalseFriends;
-    document.head.appendChild(script);
+    appendScript("false-friends-game-loader", "quiz-falsos-amigos.js?v=20260822-2053");
   }
 
   function loadFalseFriendsFixes() {
-    if (document.getElementById("false-friends-fixes-loader")) {
-      loadFalseFriendsGameCore();
-      return;
-    }
-    const fixes = document.createElement("script");
-    fixes.id = "false-friends-fixes-loader";
-    fixes.src = "falsos-amigos-data-fixes.js?v=20260822-2053";
-    fixes.onload = loadFalseFriendsGameCore;
-    fixes.onerror = loadFalseFriendsGameCore;
-    document.head.appendChild(fixes);
+    appendScript("false-friends-fixes-loader", "falsos-amigos-data-fixes.js?v=20260822-2053", loadFalseFriendsGameCore);
   }
 
   function loadFalseFriendsGame() {
@@ -149,61 +98,56 @@
       loadFalseFriendsFixes();
       return;
     }
-    if (document.getElementById("false-friends-data-loader")) return;
-    const data = document.createElement("script");
-    data.id = "false-friends-data-loader";
-    data.src = "falsos-amigos-data.js?v=20260822-2053";
-    data.onload = loadFalseFriendsFixes;
-    data.onerror = loadFalseFriendsGameCore;
-    document.head.appendChild(data);
+    appendScript("false-friends-data-loader", "falsos-amigos-data.js?v=20260822-2053", loadFalseFriendsFixes);
   }
 
   function loadSongQuizCore() {
-    if (document.getElementById("complete-song-quiz-loader")) return;
-    const script = document.createElement("script");
-    script.id = "complete-song-quiz-loader";
-    script.src = "quiz-completa-cancion.js?v=20260823-0004";
-    document.head.appendChild(script);
+    appendScript("complete-song-quiz-loader", "quiz-completa-cancion.js?v=20260823-0004");
   }
 
   function loadSongQuiz() {
-    if (document.getElementById("song-extra-artists-loader")) {
-      loadSongQuizCore();
-      return;
-    }
-    const extra = document.createElement("script");
-    extra.id = "song-extra-artists-loader";
-    extra.src = "quiz-musica-extra-artistas.js?v=20260823-0004";
-    extra.onload = loadSongQuizCore;
-    extra.onerror = loadSongQuizCore;
-    document.head.appendChild(extra);
+    appendScript("song-extra-artists-loader", "quiz-musica-extra-artistas.js?v=20260823-0004", loadSongQuizCore);
+  }
+
+  function loadQuizExtras() {
+    if (quizExtrasRequested) return;
+    quizExtrasRequested = true;
+    loadFalseFriendsGame();
+    loadSongQuiz();
+    appendScript("reading-tests-loader", "reading-tests.js?v=20260822-1750");
+    appendScript("quiz-listening-loader", "quiz-listening.js?v=20260822-1920");
+  }
+
+  function installQuizLazyLoading() {
+    const maybeLoad = (event) => {
+      const target = event.target?.closest?.('[data-route="quiz"], #home-ff-play');
+      if (target) loadQuizExtras();
+    };
+    document.addEventListener("pointerover", maybeLoad, { passive: true });
+    document.addEventListener("focusin", maybeLoad);
+    document.addEventListener("click", maybeLoad, true);
+
+    const path = window.location.pathname.replace(/\/+$/, "");
+    if (path.endsWith("/quiz")) loadQuizExtras();
   }
 
   function loadHomeStats() {
-    if (document.getElementById("home-stats-auto-loader")) return;
-    const script = document.createElement("script");
-    script.id = "home-stats-auto-loader";
-    script.src = "home-stats-auto.js?v=20260822-2200";
-    document.head.appendChild(script);
+    appendScript("home-stats-auto-loader", "home-stats-auto.js?v=20260823-0018");
   }
 
-  function install() {
+  function install(attempt = 0) {
     adjustHomeTitle();
     loadHomeTypography();
     loadGrammarDropdown();
-    if (!installMenu()) {
-      setTimeout(install, 200);
-      return;
-    }
-    loadRouteQuery();
-    loadFalseFriendsGame();
-    loadSongQuiz();
+    loadHomeFalseFriends();
     loadHomeStats();
+    installQuizLazyLoading();
+
+    if (!installMenu() && attempt < 40) {
+      window.setTimeout(() => install(attempt + 1), 150);
+    }
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", install, { once: true });
-  } else {
-    install();
-  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", () => install(), { once: true });
+  else install();
 })();
