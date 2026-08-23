@@ -17,11 +17,13 @@
   <title>Área do Estudiante | Vamos a Estudiar Español</title>
   <link rel="stylesheet" href="../auth.css?v=20260823-3" />
   <link rel="stylesheet" href="../student-library.css?v=20260823-2" />
+  <link rel="stylesheet" href="../placement.css?v=20260823-1" />
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script defer src="../auth-config.js?v=20260823-2"></script>
   <script defer src="../auth-client.js?v=20260823-3"></script>
   <script defer src="../aluno.js?v=20260823-3"></script>
   <script defer src="../student-admin-link.js?v=20260823-1"></script>
+  <script defer src="../student-placement-summary.js?v=20260823-1"></script>
 </head>
 <body>
   <header class="auth-header">
@@ -47,7 +49,7 @@
           <div class="student-hero-copy">
             <p class="auth-eyebrow">Mi espacio de estudio</p>
             <h1 id="student-title">Olá, <span id="student-name">estudiante</span>.</h1>
-            <p>Aqui você encontra materiais, videoaulas e atividades reservados para estudantes cadastrados.</p>
+            <p>Aqui você encontra materiais, videoaulas, atividades e ferramentas de acompanhamento reservadas para estudantes cadastrados.</p>
           </div>
           <div class="student-user-chip" title="Conta autenticada">
             <span class="student-avatar" id="student-avatar" aria-hidden="true">Ñ</span>
@@ -64,6 +66,19 @@
             <button class="student-logout" id="student-logout" type="button">Sair da conta</button>
           </div>
         </div>
+      </section>
+
+      <section class="student-section placement-summary" id="placement-summary" aria-labelledby="placement-summary-title">
+        <div class="placement-summary-copy">
+          <p class="student-section-kicker">Acompanhamento de aprendizagem</p>
+          <h2 id="placement-summary-title">Teste de nivelamento</h2>
+          <p>Descubra sua faixa estimada de espanhol entre A1 e C2 com um diagnóstico progressivo de gramática, vocabulário e compreensão escrita.</p>
+          <div class="placement-summary-result">
+            <span class="placement-summary-level" id="placement-summary-level" aria-label="Nível estimado">?</span>
+            <p class="placement-summary-status" id="placement-summary-status">Carregando seu último resultado…</p>
+          </div>
+        </div>
+        <a class="placement-summary-action" id="placement-summary-cta" href="nivelamento/">Descobrir meu nível →</a>
       </section>
 
       <section class="student-section" aria-labelledby="student-library-title">
