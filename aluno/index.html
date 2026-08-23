@@ -18,12 +18,14 @@
   <link rel="stylesheet" href="../auth.css?v=20260823-3" />
   <link rel="stylesheet" href="../student-library.css?v=20260823-2" />
   <link rel="stylesheet" href="../placement.css?v=20260823-1" />
+  <link rel="stylesheet" href="../listening-exclusive.css?v=20260823-1" />
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script defer src="../auth-config.js?v=20260823-2"></script>
   <script defer src="../auth-client.js?v=20260823-3"></script>
   <script defer src="../aluno.js?v=20260823-3"></script>
   <script defer src="../student-admin-link.js?v=20260823-1"></script>
   <script defer src="../student-placement-summary.js?v=20260823-1"></script>
+  <script defer src="../student-listening-summary.js?v=20260823-1"></script>
 </head>
 <body>
   <header class="auth-header">
@@ -79,6 +81,19 @@
           </div>
         </div>
         <a class="placement-summary-action" id="placement-summary-cta" href="nivelamento/">Descobrir meu nível →</a>
+      </section>
+
+      <section class="student-section listening-hub" aria-labelledby="listening-hub-title">
+        <div class="listening-hub-head">
+          <div>
+            <p class="student-section-kicker">Atividades exclusivas</p>
+            <h2 id="listening-hub-title">Práctica de escucha</h2>
+            <p>Exercícios de compreensão auditiva exclusivos para membros, com áudios e roteiros diferentes dos utilizados na área pública. Escolha seu nível de A1 a C1.</p>
+          </div>
+          <span class="student-library-count">A1 → C1</span>
+        </div>
+        <div class="listening-level-grid" id="listening-level-grid" aria-live="polite"></div>
+        <div class="listening-hub-note" id="listening-hub-status">Carregando atividades de escuta…</div>
       </section>
 
       <section class="student-section" aria-labelledby="student-library-title">
