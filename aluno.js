@@ -6,7 +6,7 @@
       const link = document.createElement("link");
       link.id = "video-academy-css";
       link.rel = "stylesheet";
-      link.href = `${rootPath}video-academy.css?v=20260823-1`;
+      link.href = `${rootPath}video-academy.css?v=20260823-2`;
       document.head.appendChild(link);
     }
     if (!document.getElementById("video-academy-script")) {
