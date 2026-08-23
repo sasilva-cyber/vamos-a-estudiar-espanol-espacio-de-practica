@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PLD6NHQNEN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PLD6NHQNEN');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="robots" content="noindex,nofollow" />
+  <meta name="theme-color" content="#8f1d2c" />
+  <meta name="description" content="Teste diagnóstico de nivelamento de espanhol para estudantes cadastrados." />
+  <title>Teste de Nivelamento | Vamos a Estudiar Español</title>
+  <link rel="stylesheet" href="../../auth.css?v=20260823-3" />
+  <link rel="stylesheet" href="../../placement.css?v=20260823-1" />
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="../../auth-config.js?v=20260823-2"></script>
+  <script defer src="../../auth-client.js?v=20260823-3"></script>
+  <script defer src="../../placement.js?v=20260823-1"></script>
+</head>
+<body>
+  <header class="auth-header">
+    <div class="auth-header-inner">
+      <a class="auth-brand" href="../" aria-label="Voltar à Área do Estudiante">
+        <span class="auth-mark" aria-hidden="true">Ñ</span>
+        <span class="auth-brand-copy">
+          <strong>Vamos a Estudiar Español</strong>
+          <small>Teste de Nivelamento</small>
+        </span>
+      </a>
+      <a class="auth-header-action" href="../">← Área do Estudiante</a>
+    </div>
+    <div class="heritage-stripe" aria-hidden="true"></div>
+  </header>
+
+  <main class="placement-main">
+    <div class="auth-loading" id="placement-loading">Preparando seu teste…</div>
+
+    <div class="placement-shell hidden" id="placement-shell">
+      <section class="placement-intro" id="placement-intro" aria-labelledby="placement-title">
+        <p class="placement-eyebrow">Diagnóstico de espanhol</p>
+        <h1 id="placement-title">Descubra seu nível estimado.</h1>
+        <p class="placement-lead">O teste começa com estruturas mais básicas e avança gradualmente até questões de alta complexidade. Ao final, você recebe uma estimativa entre A1 e C2, seu desempenho por faixa e sugestões do que estudar a seguir.</p>
+
+        <div class="placement-facts" aria-label="Informações sobre o teste">
+          <div class="placement-fact"><strong>30</strong><span>questões progressivas</span></div>
+          <div class="placement-fact"><strong>A1–C2</strong><span>seis faixas analisadas</span></div>
+          <div class="placement-fact"><strong>15–25 min</strong><span>tempo aproximado</span></div>
+        </div>
+
+        <div class="placement-note">
+          <strong>Para um resultado mais fiel:</strong> faça o teste sem tradutor, dicionário, inteligência artificial ou consulta externa. Não há correção questão por questão; o resultado aparece somente ao final.
+        </div>
+        <div class="placement-last" id="placement-last"></div>
+        <button class="placement-start" id="placement-start" type="button">Começar nivelamento →</button>
+
+        <div class="placement-disclaimer">
+          Este é um <strong>diagnóstico interno</strong> de conhecimentos de gramática, vocabulário e compreensão escrita. Ele não substitui certificações oficiais como DELE ou SIELE e não avalia integralmente compreensão auditiva, produção oral ou produção escrita.
+        </div>
+      </section>
+
+      <section class="placement-test hidden" id="placement-test" aria-labelledby="placement-question">
+        <div class="placement-progress-top">
+          <span id="placement-progress-text">Questão 1 de 30</span>
+          <span id="placement-answered-text">0 respondidas</span>
+        </div>
+        <div class="placement-progress-track" aria-hidden="true"><div class="placement-progress-bar" id="placement-progress-bar"></div></div>
+
+        <article class="placement-question-card">
+          <p class="placement-question-number" id="placement-question-number">Questão 01</p>
+          <h1 class="placement-question" id="placement-question">Pergunta</h1>
+          <div class="placement-options" id="placement-options" role="group" aria-label="Alternativas"></div>
+        </article>
+
+        <div class="placement-nav">
+          <button class="placement-secondary" id="placement-prev" type="button">← Anterior</button>
+          <button class="placement-primary" id="placement-next" type="button" disabled>Próxima →</button>
+        </div>
+        <div class="placement-submit-status" id="placement-submit-status" role="status" aria-live="polite"></div>
+      </section>
+
+      <section class="placement-result hidden" id="placement-result" aria-labelledby="placement-result-heading">
+        <p class="placement-eyebrow">Seu resultado</p>
+        <h1 id="placement-result-heading">Nivelamento concluído.</h1>
+        <p class="placement-lead">A classificação considera seu desempenho em blocos progressivos: para avançar de faixa, é necessário demonstrar domínio suficiente do nível e das bases anteriores.</p>
+
+        <div class="placement-result-hero">
+          <div class="placement-level-badge" id="placement-result-level">A1</div>
+          <div class="placement-result-copy">
+            <h2 id="placement-result-title">A1 · Iniciante</h2>
+            <p id="placement-result-description"></p>
+            <div class="placement-scoreline">
+              <span class="placement-chip" id="placement-result-score">0/30 acertos</span>
+              <span class="placement-chip" id="placement-result-percentage">0% no teste</span>
+              <span class="placement-chip" id="placement-result-date"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="placement-breakdown">
+          <h3>Desempenho por faixa</h3>
+          <div class="placement-band-list" id="placement-band-list"></div>
+        </div>
+
+        <div class="placement-recommendations">
+          <h3>Próximos passos recomendados</h3>
+          <ul id="placement-recommendation-list"></ul>
+        </div>
+
+        <div class="placement-disclaimer">
+          O nível exibido é uma <strong>estimativa pedagógica</strong> baseada neste teste. O Quadro Europeu Comum de Referência considera diferentes competências; por isso, fala, escrita e escuta podem estar em faixas diferentes da estimativa apresentada aqui.
+        </div>
+
+        <div class="placement-result-actions">
+          <button class="placement-primary" id="placement-retry" type="button">Refazer o teste</button>
+          <a class="placement-secondary" href="../">Voltar à Área do Estudiante</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="auth-footer">Vamos a Estudiar Español · Teste de Nivelamento</footer>
+</body>
+</html>
