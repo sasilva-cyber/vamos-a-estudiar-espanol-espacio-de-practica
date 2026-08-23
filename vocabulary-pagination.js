@@ -115,18 +115,21 @@
   renderVocabularyCards();
 })();
 
-/* A home completa é carregada depois do primeiro paint. Os testes de leitura ficam para a abertura do Quiz. */
+/* Compatibilidade: carrega o runtime da home somente se ele ainda não estiver presente. */
 (function loadHomeGrammarImagesWhenIdle() {
-  if (document.getElementById("home-grammar-images-loader")) return;
+  const alreadyLoaded = () => document.getElementById("home-grammar-images-loader") ||
+    [...document.scripts].some((script) => /(?:^|\/)home-grammar-images\.js(?:\?|$)/.test(script.src || ""));
+  if (alreadyLoaded()) return;
+
   const start = () => {
-    if (document.getElementById("home-grammar-images-loader")) return;
+    if (alreadyLoaded()) return;
     const script = document.createElement("script");
     script.id = "home-grammar-images-loader";
-    script.src = "home-grammar-images.js?v=20260823-0018";
+    script.src = "home-grammar-images.js?v=20260823-0225";
     script.defer = true;
     document.head.appendChild(script);
   };
 
-  if ("requestIdleCallback" in window) window.requestIdleCallback(start, { timeout: 700 });
-  else window.setTimeout(start, 250);
+  if ("requestIdleCallback" in window) window.requestIdleCallback(start, { timeout: 1200 });
+  else window.setTimeout(start, 500);
 })();
