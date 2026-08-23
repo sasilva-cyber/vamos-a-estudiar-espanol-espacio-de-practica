@@ -63,3 +63,57 @@
     installSingleGameView();
   }
 })();
+
+/* Adiciona o Blog ao menu principal, mantendo a mesma identidade visual. */
+(function () {
+  const BLOG_URL = "https://www.vamosaestudiarespanol.com.br/";
+  let navObserver = null;
+
+  function installBlogLink() {
+    const nav = document.querySelector(".main-nav");
+    if (!nav) return false;
+
+    let blog = nav.querySelector(".nav-blog-link");
+    if (!blog) {
+      blog = document.createElement("a");
+      blog.className = "nav-link nav-blog-link";
+      blog.href = BLOG_URL;
+      blog.target = "_blank";
+      blog.rel = "noopener noreferrer";
+      blog.textContent = "Blog";
+      blog.setAttribute("aria-label", "Abrir o blog Vamos a Estudiar Español em uma nova aba");
+    }
+
+    const escucha = nav.querySelector('[data-route="listening"]');
+    const grammarGroup = nav.querySelector(".grammar-nav-group");
+
+    if (escucha) {
+      escucha.insertAdjacentElement("afterend", blog);
+    } else if (grammarGroup) {
+      grammarGroup.insertAdjacentElement("afterend", blog);
+    } else if (!blog.isConnected) {
+      nav.appendChild(blog);
+    }
+
+    return true;
+  }
+
+  function install() {
+    if (!installBlogLink()) {
+      window.setTimeout(install, 180);
+      return;
+    }
+
+    const nav = document.querySelector(".main-nav");
+    if (!nav || navObserver) return;
+
+    navObserver = new MutationObserver(() => installBlogLink());
+    navObserver.observe(nav, { childList: true, subtree: true });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", install, { once: true });
+  } else {
+    install();
+  }
+})();
