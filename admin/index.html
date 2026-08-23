@@ -17,13 +17,11 @@
   <link rel="stylesheet" href="../auth.css?v=20260823-3" />
   <link rel="stylesheet" href="../admin.css?v=20260823-1" />
   <link rel="stylesheet" href="../admin-subscriptions.css?v=20260823-1" />
-  <link rel="stylesheet" href="../admin-analytics.css?v=20260823-1" />
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script defer src="../auth-config.js?v=20260823-2"></script>
   <script defer src="../auth-client.js?v=20260823-3"></script>
   <script defer src="../admin.js?v=20260823-1"></script>
   <script defer src="../admin-subscriptions.js?v=20260823-2"></script>
-  <script defer src="../admin-analytics.js?v=20260823-1"></script>
 </head>
 <body>
   <header class="auth-header">
@@ -53,83 +51,8 @@
       <section class="admin-hero">
         <p class="auth-eyebrow">Painel administrativo</p>
         <h1>Gestão da plataforma</h1>
-        <p>Acompanhe visitas, páginas mais acessadas, assinaturas Premium, newsletter, e-mails automáticos e administre os conteúdos exclusivos disponibilizados aos estudantes.</p>
+        <p>Acompanhe assinaturas Premium, newsletter, e-mails automáticos e administre os conteúdos exclusivos disponibilizados aos estudantes.</p>
         <p><strong>Conta administrativa:</strong> <span id="admin-user-email">—</span></p>
-      </section>
-
-      <section class="admin-analytics-panel" id="admin-analytics-panel" aria-labelledby="admin-analytics-title">
-        <div class="admin-analytics-head">
-          <div>
-            <h2 id="admin-analytics-title">Analytics do site</h2>
-            <p>Acompanhe visitantes, sessões, visualizações, páginas mais acessadas, origem do tráfego e dispositivos diretamente no painel administrativo.</p>
-          </div>
-          <div class="admin-analytics-actions">
-            <select class="admin-analytics-period" id="admin-analytics-period" aria-label="Período do Analytics">
-              <option value="7">Últimos 7 dias</option>
-              <option value="30" selected>Últimos 30 dias</option>
-              <option value="90">Últimos 90 dias</option>
-            </select>
-            <button class="admin-analytics-refresh" id="admin-analytics-refresh" type="button">Atualizar dados</button>
-          </div>
-        </div>
-
-        <div class="admin-analytics-source"><span class="admin-analytics-source-dot" aria-hidden="true"></span><span>Fonte: Google Analytics 4 · propriedade privada da plataforma</span></div>
-
-        <div class="admin-analytics-metrics" aria-label="Resumo do tráfego">
-          <article class="admin-analytics-metric"><span>Visitantes</span><strong id="admin-analytics-visitors">—</strong><small>Usuários ativos no período</small></article>
-          <article class="admin-analytics-metric"><span>Sessões</span><strong id="admin-analytics-sessions">—</strong><small>Visitas iniciadas no site</small></article>
-          <article class="admin-analytics-metric"><span>Visualizações</span><strong id="admin-analytics-views">—</strong><small>Páginas visualizadas</small></article>
-          <article class="admin-analytics-metric"><span>Novos visitantes</span><strong id="admin-analytics-new-users">—</strong><small>Primeiro acesso no período</small></article>
-          <article class="admin-analytics-metric realtime"><span>Ativos agora</span><strong id="admin-analytics-realtime">—</strong><small>Usuários nos últimos 30 minutos</small></article>
-        </div>
-
-        <p class="admin-analytics-status info" id="admin-analytics-status" role="status" aria-live="polite">Preparando dados do Analytics…</p>
-        <div class="admin-analytics-config hidden" id="admin-analytics-config">
-          <strong>Conexão com o GA4 pronta para configurar</strong>
-          <p>A interface e a função segura já estão instaladas. Para liberar os números históricos do Google Analytics, adicione no Supabase os secrets abaixo e conceda à conta de serviço acesso de leitura à propriedade GA4.</p>
-          <div id="admin-analytics-missing"></div>
-        </div>
-
-        <div class="admin-analytics-grid">
-          <article class="admin-analytics-card">
-            <h3>Evolução das visualizações</h3>
-            <p id="admin-analytics-engagement">Visualizações por dia no período selecionado.</p>
-            <div class="admin-analytics-chart" id="admin-analytics-chart" aria-label="Gráfico de visualizações por dia"></div>
-            <div class="admin-analytics-chart-labels" id="admin-analytics-chart-labels"></div>
-          </article>
-          <article class="admin-analytics-card">
-            <h3>Origem dos acessos</h3>
-            <p>Sessões agrupadas pelo canal de aquisição.</p>
-            <div class="admin-analytics-mini-list" id="admin-analytics-acquisition"></div>
-          </article>
-        </div>
-
-        <div class="admin-analytics-bottom">
-          <article class="admin-analytics-card">
-            <h3>Páginas mais acessadas</h3>
-            <p>Conteúdos que mais receberam visualizações no período.</p>
-            <div class="admin-analytics-table-wrap">
-              <table class="admin-analytics-table">
-                <thead><tr><th>Página</th><th>Visualizações</th><th>Visitantes</th></tr></thead>
-                <tbody id="admin-analytics-pages-body"><tr><td colspan="3"><div class="admin-analytics-empty">Carregando…</div></td></tr></tbody>
-              </table>
-            </div>
-          </article>
-          <article class="admin-analytics-card">
-            <h3>Dispositivos</h3>
-            <p>Onde os visitantes acessam a plataforma.</p>
-            <div class="admin-analytics-mini-list" id="admin-analytics-devices"></div>
-          </article>
-          <article class="admin-analytics-card">
-            <h3>Leitura dos dados</h3>
-            <p>Use estes indicadores para decidir quais conteúdos ampliar, quais páginas divulgar e onde melhorar a conversão para cadastro e assinatura.</p>
-            <div class="admin-analytics-mini-list">
-              <div class="admin-analytics-mini-row"><div><strong>Visitantes</strong><div class="admin-analytics-bar"><i style="width:100%"></i></div></div><span>alcance</span></div>
-              <div class="admin-analytics-mini-row"><div><strong>Visualizações</strong><div class="admin-analytics-bar"><i style="width:78%"></i></div></div><span>interesse</span></div>
-              <div class="admin-analytics-mini-row"><div><strong>Páginas principais</strong><div class="admin-analytics-bar"><i style="width:58%"></i></div></div><span>conteúdo</span></div>
-            </div>
-          </article>
-        </div>
       </section>
 
       <section class="admin-panel admin-subscriptions-panel" id="admin-subscriptions-panel" aria-labelledby="admin-subscriptions-title">
