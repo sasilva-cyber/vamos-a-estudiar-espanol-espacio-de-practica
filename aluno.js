@@ -1,5 +1,25 @@
 /* Proteção, dados e biblioteca privada da Área do Estudiante. */
 (function () {
+  function loadVideoAcademyAssets() {
+    const rootPath = window.VAEAuth?.ROOT_PATH || "/";
+    if (!document.getElementById("video-academy-css")) {
+      const link = document.createElement("link");
+      link.id = "video-academy-css";
+      link.rel = "stylesheet";
+      link.href = `${rootPath}video-academy.css?v=20260823-1`;
+      document.head.appendChild(link);
+    }
+    if (!document.getElementById("video-academy-script")) {
+      const script = document.createElement("script");
+      script.id = "video-academy-script";
+      script.src = `${rootPath}video-academy.js?v=20260823-1`;
+      script.defer = true;
+      document.head.appendChild(script);
+    }
+  }
+
+  loadVideoAcademyAssets();
+
   const main = document.getElementById("student-main");
   const loading = document.getElementById("student-loading");
   const content = document.getElementById("student-content");
@@ -213,6 +233,7 @@
       track("student_area_view", { access_type: "authenticated" });
       installLibraryFilters();
       await loadLibrary();
+      window.VAEVideoAcademy?.refresh?.();
     } catch (error) {
       console.error("Falha ao validar sessão da Área do Estudiante", error);
       location.replace(`${window.VAEAuth.ROOT_PATH}login/`);
