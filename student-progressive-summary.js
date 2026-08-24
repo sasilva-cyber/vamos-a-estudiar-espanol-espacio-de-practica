@@ -34,7 +34,45 @@
     pair.append(placement, section);
   }
 
+  function installWritingEntry() {
+    if (document.getElementById("writing-hub")) return;
+    const pair = section.parentElement?.classList.contains("student-dashboard-pair") ? section.parentElement : section;
+    const writing = document.createElement("section");
+    writing.className = "student-section practice-path writing-entry";
+    writing.id = "writing-hub";
+    writing.setAttribute("data-premium-section", "");
+    writing.setAttribute("aria-labelledby", "writing-hub-title");
+    writing.innerHTML = `
+      <div class="practice-path-head">
+        <div class="practice-path-copy">
+          <p class="student-section-kicker">Produção escrita · percurso Premium</p>
+          <h2 id="writing-hub-title">Práctica de escritura</h2>
+          <p>Desenvolva sua escrita em espanhol com 12 propostas progressivas do A1 ao C2. Escreva uma primeira versão, faça uma revisão orientada e acompanhe sua evolução ao longo das produções.</p>
+        </div>
+        <span class="student-library-count">A1 → C2</span>
+      </div>
+      <div class="practice-next">
+        <span class="practice-next-level" aria-hidden="true">✎</span>
+        <div class="practice-next-copy">
+          <strong>Escreva, revise e compare sua evolução</strong>
+          <span>Rascunho + versão final · histórico individual · indicadores de vocabulário, extensão e conectores</span>
+        </div>
+        <a class="practice-next-action" href="escrita/">Praticar escrita →</a>
+      </div>
+      <p class="practice-path-note">As atividades são liberadas em sequência e ficam mais complexas à medida que você avança. A lógica completa é carregada somente ao abrir a área de escrita, mantendo esta página leve.</p>`;
+    pair.insertAdjacentElement("afterend", writing);
+
+    const benefits = document.querySelector(".premium-benefits");
+    if (benefits && !benefits.querySelector("[data-writing-benefit]")) {
+      const item = document.createElement("li");
+      item.dataset.writingBenefit = "true";
+      item.textContent = "Prática de escrita A1–C2 com evolução individual";
+      benefits.appendChild(item);
+    }
+  }
+
   installDashboardLayout();
+  installWritingEntry();
 
   async function boot() {
     try {
