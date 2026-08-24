@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="robots" content="noindex,nofollow" />
+  <meta name="theme-color" content="#8f1d2c" />
+  <meta name="description" content="Prática Premium de escrita em espanhol com progressão A1 a C2." />
+  <title>Práctica de escritura | Área do Estudiante</title>
+  <link rel="stylesheet" href="../../auth.css?v=20260823-3" />
+  <link rel="stylesheet" href="../../writing-practice.css?v=20260824-1" />
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="../../auth-config.js?v=20260823-2"></script>
+  <script defer src="../../auth-client.js?v=20260823-4"></script>
+  <script defer src="../../writing-practice.js?v=20260824-1"></script>
+</head>
+<body>
+  <header class="auth-header">
+    <div class="auth-header-inner">
+      <a class="auth-brand" href="../" aria-label="Voltar para a Área do Estudiante">
+        <span class="auth-mark" aria-hidden="true">Ñ</span>
+        <span class="auth-brand-copy">
+          <strong>Vamos a Estudiar Español</strong>
+          <small>Práctica de escritura</small>
+        </span>
+      </a>
+      <a class="auth-header-action" href="../">← Área do Estudiante</a>
+    </div>
+    <div class="heritage-stripe" aria-hidden="true"></div>
+  </header>
+
+  <main class="writing-main" id="writing-main" aria-busy="true">
+    <div class="auth-loading" id="writing-loading">Preparando seu percurso de escrita…</div>
+
+    <section class="writing-denied hidden" id="writing-denied" aria-live="polite">
+      <span class="writing-denied-icon" aria-hidden="true">🔒</span>
+      <h1>Conteúdo Premium</h1>
+      <p>A Práctica de escritura faz parte do percurso Premium da Área do Estudiante.</p>
+      <a href="../">Voltar para minha área</a>
+    </section>
+
+    <div class="hidden" id="writing-content">
+      <section class="writing-hero" aria-labelledby="writing-title">
+        <div class="writing-hero-copy">
+          <p class="writing-kicker">Produção escrita · A1 → C2</p>
+          <h1 id="writing-title">Práctica de escritura</h1>
+          <p>Escreva em espanhol com propostas progressivamente mais exigentes. Cada produção passa por planejamento, escrita e revisão; seu histórico fica salvo para você acompanhar a evolução ao longo do percurso.</p>
+          <div class="writing-hero-chips" aria-label="Características do percurso">
+            <span>12 práticas progressivas</span>
+            <span>Rascunho + versão final</span>
+            <span>Indicadores de evolução</span>
+            <span>Progresso individual</span>
+          </div>
+        </div>
+        <aside class="writing-hero-progress" aria-label="Seu progresso em escrita">
+          <small>Seu percurso</small>
+          <strong id="writing-progress-title">0 de 12 concluídas</strong>
+          <div class="writing-progress-track"><div class="writing-progress-bar" id="writing-progress-bar"></div></div>
+          <span id="writing-progress-caption">Comece pela primeira produção.</span>
+        </aside>
+      </section>
+
+      <nav class="writing-tabs" role="tablist" aria-label="Seções da prática de escrita">
+        <button class="writing-tab active" type="button" role="tab" aria-selected="true" data-writing-view="practice">Praticar</button>
+        <button class="writing-tab" type="button" role="tab" aria-selected="false" data-writing-view="evolution">Minha evolução</button>
+        <button class="writing-tab" type="button" role="tab" aria-selected="false" data-writing-view="history">Histórico</button>
+      </nav>
+
+      <section class="writing-view" id="writing-view-practice" data-view-panel="practice">
+        <div class="writing-workspace">
+          <aside class="writing-path" aria-labelledby="writing-path-title">
+            <div class="writing-path-head">
+              <div>
+                <p class="writing-kicker">Percurso progressivo</p>
+                <h2 id="writing-path-title">A1 → C2</h2>
+              </div>
+              <span id="writing-path-count">0/12</span>
+            </div>
+            <div class="writing-level-rail" id="writing-level-rail" aria-label="Níveis do percurso"></div>
+            <div class="writing-activity-list" id="writing-activity-list" aria-live="polite"></div>
+          </aside>
+
+          <section class="writing-editor-shell" id="writing-editor-shell" aria-live="polite">
+            <div class="writing-empty-state" id="writing-empty-state">
+              <span aria-hidden="true">✎</span>
+              <h2>Escolha sua próxima prática</h2>
+              <p>As propostas são liberadas em sequência para que a complexidade cresça junto com sua produção escrita.</p>
+            </div>
+            <div class="hidden" id="writing-editor"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="writing-view hidden" id="writing-view-evolution" data-view-panel="evolution">
+        <div class="writing-section-heading">
+          <div>
+            <p class="writing-kicker">Acompanhamento individual</p>
+            <h2>Minha evolução na escrita</h2>
+            <p>Os indicadores abaixo descrevem características observáveis das suas próprias produções. Eles não substituem uma correção linguística humana.</p>
+          </div>
+        </div>
+        <div class="writing-stat-grid" id="writing-stat-grid"></div>
+        <div class="writing-evolution-card">
+          <div class="writing-evolution-head">
+            <h3>Evolução por produção</h3>
+            <span>do primeiro ao texto mais recente</span>
+          </div>
+          <div class="writing-evolution-list" id="writing-evolution-list"></div>
+        </div>
+      </section>
+
+      <section class="writing-view hidden" id="writing-view-history" data-view-panel="history">
+        <div class="writing-section-heading">
+          <div>
+            <p class="writing-kicker">Seu arquivo pessoal</p>
+            <h2>Histórico de produções</h2>
+            <p>Reabra textos concluídos para comparar a primeira versão com a versão final e observar suas escolhas de revisão.</p>
+          </div>
+        </div>
+        <div class="writing-history-list" id="writing-history-list"></div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="auth-footer">Vamos a Estudiar Español · Práctica de escritura Premium</footer>
+</body>
+</html>
