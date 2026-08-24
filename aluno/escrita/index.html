@@ -9,10 +9,12 @@
   <title>Práctica de escritura | Área do Estudiante</title>
   <link rel="stylesheet" href="../../auth.css?v=20260823-3" />
   <link rel="stylesheet" href="../../writing-practice.css?v=20260824-1" />
+  <link rel="stylesheet" href="../../writing-ai-feedback.css?v=20260824-1" />
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script defer src="../../auth-config.js?v=20260823-2"></script>
   <script defer src="../../auth-client.js?v=20260823-4"></script>
   <script defer src="../../writing-practice.js?v=20260824-1"></script>
+  <script defer src="../../writing-ai-feedback.js?v=20260824-1"></script>
 </head>
 <body>
   <header class="auth-header">
@@ -48,6 +50,7 @@
           <div class="writing-hero-chips" aria-label="Características do percurso">
             <span>12 práticas progressivas</span>
             <span>Rascunho + versão final</span>
+            <span>Feedback por IA</span>
             <span>Indicadores de evolução</span>
             <span>Progresso individual</span>
           </div>
@@ -96,7 +99,7 @@
           <div>
             <p class="writing-kicker">Acompanhamento individual</p>
             <h2>Minha evolução na escrita</h2>
-            <p>Os indicadores abaixo descrevem características observáveis das suas próprias produções. Eles não substituem uma correção linguística humana.</p>
+            <p>Combine os indicadores observáveis das suas produções com o feedback linguístico automatizado por IA. Esses dados orientam o estudo, mas não substituem uma avaliação humana ou certificação de proficiência.</p>
           </div>
         </div>
         <div class="writing-stat-grid" id="writing-stat-grid"></div>
@@ -114,7 +117,7 @@
           <div>
             <p class="writing-kicker">Seu arquivo pessoal</p>
             <h2>Histórico de produções</h2>
-            <p>Reabra textos concluídos para comparar a primeira versão com a versão final e observar suas escolhas de revisão.</p>
+            <p>Reabra textos concluídos para comparar a primeira versão com a versão final, consultar o feedback automatizado e observar suas escolhas de revisão.</p>
           </div>
         </div>
         <div class="writing-history-list" id="writing-history-list"></div>
