@@ -18,7 +18,7 @@
   const isGithub = window.location.hostname.toLowerCase().endsWith(".github.io");
   const root = isGithub ? "/vamos-a-estudiar-espanol-espacio-de-practica/" : "/";
 
-  /* Estatísticas próprias no Supabase. O script é leve e registra apenas depois que o navegador fica ocioso. */
+  /* Estatísticas próprias no Supabase. O registro em si ocorre somente quando o navegador fica ocioso. */
   if (!document.getElementById("vae-internal-analytics")) {
     const internalAnalytics = document.createElement("script");
     internalAnalytics.id = "vae-internal-analytics";
@@ -27,50 +27,43 @@
     document.head.appendChild(internalAnalytics);
   }
 
-  /* Carrega os acessos públicos de Login/Cadastro sem duplicar o script. */
+  /* Acessos públicos de Login/Cadastro. */
   if (!document.getElementById("vae-student-nav")) {
     const studentNav = document.createElement("script");
     studentNav.id = "vae-student-nav";
-    studentNav.src = `${root}student-nav.js?v=20260823-1145`;
+    studentNav.src = `${root}student-nav.js?v=20260825-perf1`;
     studentNav.defer = true;
     document.head.appendChild(studentNav);
   }
 
-  /* Conecta o formulário público da newsletter ao Supabase. */
+  /* Runtime de newsletter sem observação contínua do DOM. */
   if (!document.getElementById("vae-newsletter-runtime")) {
     const newsletter = document.createElement("script");
     newsletter.id = "vae-newsletter-runtime";
-    newsletter.src = `${root}newsletter-runtime.js?v=20260823-1455`;
+    newsletter.src = `${root}newsletter-runtime.js?v=20260825-perf1`;
     newsletter.defer = true;
     document.head.appendChild(newsletter);
   }
 
   function simplifyYoutubeIntro() {
     const section = document.getElementById("home-youtube-showcase");
-    if (!section) return false;
+    if (!section) return;
     const description = section.querySelector(".home-youtube-head-copy > p:last-child");
     if (description) description.textContent = "Assista aos vídeos mais recentes do Vamos a Estudiar Español.";
     section.querySelector(".home-youtube-auto")?.remove();
-    return true;
   }
 
-  function watchYoutubeIntro() {
-    if (simplifyYoutubeIntro()) return;
-    const observer = new MutationObserver(() => {
-      if (simplifyYoutubeIntro()) observer.disconnect();
-    });
-    observer.observe(document.documentElement, { childList: true, subtree: true });
-  }
-
-  /* Exibe os vídeos públicos mais recentes do canal abaixo das últimas aulas de gramática. */
-  if (!document.getElementById("vae-home-youtube")) {
+  function loadHomeYoutube() {
+    if (document.getElementById("vae-home-youtube")) return;
     const youtube = document.createElement("script");
     youtube.id = "vae-home-youtube";
-    youtube.src = `${root}home-youtube.js?v=20260823-1725`;
+    youtube.src = `${root}home-youtube.js?v=20260825-perf1`;
     youtube.defer = true;
-    youtube.addEventListener("load", watchYoutubeIntro, { once: true });
+    youtube.addEventListener("load", simplifyYoutubeIntro, { once: true });
     document.head.appendChild(youtube);
-  } else {
-    watchYoutubeIntro();
   }
+
+  /* O YouTube não participa mais da abertura da home. Só entra quando o usuário chega ao conteúdo inferior. */
+  window.addEventListener("vae:home-showcase-ready", loadHomeYoutube, { once: true });
+  if (document.getElementById("home-grammar-showcase") && window.scrollY >= 320) loadHomeYoutube();
 })();
