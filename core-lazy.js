@@ -1,4 +1,4 @@
-/* Carregamento sob demanda dos módulos centrais. Nada pesado é baixado por ociosidade na home. */
+/* Carregamento sob demanda dos módulos centrais. Nada pesado é baixado por hover/ociosidade na home. */
 (function () {
   const root = window.__VAE_ROOT__ || (location.hostname.toLowerCase().endsWith('.github.io') ? '/vamos-a-estudiar-espanol-espacio-de-practica/' : '/');
   const loads = new Map();
@@ -40,15 +40,15 @@
 
   function ensureModule(route) {
     if (loaded(route)) return Promise.resolve();
-    if (route === 'grammar') return loadScript('grammar-core-lazy', 'grammar.js?v=20260823-0225');
-    if (route === 'vocabulary') return loadScript('vocabulary-core-lazy', 'vocabulary.js?v=20260823-0225');
-    if (route === 'readings') return loadScript('readings-core-lazy', 'readings.js?v=20260823-0225');
+    if (route === 'grammar') return loadScript('grammar-core-lazy', 'grammar.js?v=20260825-perf1');
+    if (route === 'vocabulary') return loadScript('vocabulary-core-lazy', 'vocabulary.js?v=20260825-perf1');
+    if (route === 'readings') return loadScript('readings-core-lazy', 'readings.js?v=20260825-perf1');
     return Promise.resolve();
   }
 
   async function loadQuizEnhancements() {
     await Promise.allSettled([ensureModule('grammar'), ensureModule('vocabulary')]);
-    await loadScript('quiz-activities-lazy', 'quiz-activities.js?v=20260823-0225');
+    await loadScript('quiz-activities-lazy', 'quiz-activities.js?v=20260825-perf1');
     window.dispatchEvent(new Event('vae:content-counts-changed'));
   }
 
@@ -86,15 +86,6 @@
       setBusy(target, false);
     }
   }, true);
-
-  const prefetch = (event) => {
-    const target = event.target.closest?.('[data-route]');
-    const route = target?.dataset?.route;
-    if (['grammar','vocabulary','readings'].includes(route)) ensureModule(route).catch(() => {});
-    else if (route === 'quiz') loadQuizEnhancements().catch(() => {});
-  };
-  document.addEventListener('pointerover', prefetch, { passive:true });
-  document.addEventListener('focusin', prefetch);
 
   function initialRoute() {
     const params = new URLSearchParams(location.search);

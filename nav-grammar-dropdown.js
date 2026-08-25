@@ -1,8 +1,7 @@
-/* Menu principal com submenu suspenso em Gramática. */
+/* Menu principal com submenu suspenso em Gramática, sem observação contínua do DOM. */
 (function () {
   const SUB_ROUTES = ["vocabulary", "readings", "writing"];
   const LABELS = { vocabulary: "Vocabulario", readings: "Lectura", writing: "Escritura" };
-  let observer = null;
 
   function injectStyles() {
     if (document.getElementById("grammar-dropdown-nav-styles")) return;
@@ -35,6 +34,7 @@
   }
 
   function syncActive(group) {
+    if (!group) return;
     const subActive = SUB_ROUTES.some((route) => document.querySelector(`.main-nav [data-route="${route}"]`)?.classList.contains("active"));
     group.classList.toggle("has-sub-active", subActive);
   }
@@ -46,23 +46,18 @@
 
   function installMenu() {
     const nav = document.querySelector(".main-nav");
-    if (!nav) return false;
-
+    if (!nav) return null;
     const existing = nav.querySelector(".grammar-nav-group");
-    if (existing) {
-      syncActive(existing);
-      return true;
-    }
+    if (existing) return existing;
 
     const grammar = nav.querySelector('[data-route="grammar"]');
     const vocabulary = nav.querySelector('[data-route="vocabulary"]');
     const readings = nav.querySelector('[data-route="readings"]');
     const writing = nav.querySelector('[data-route="writing"]');
-    if (!grammar || !vocabulary || !readings || !writing) return false;
+    if (!grammar || !vocabulary || !readings || !writing) return null;
 
     const group = document.createElement("div");
     group.className = "grammar-nav-group";
-
     grammar.classList.add("grammar-nav-main");
     grammar.insertAdjacentElement("beforebegin", group);
     group.appendChild(grammar);
@@ -92,27 +87,18 @@
       const open = group.classList.toggle("open");
       toggle.setAttribute("aria-expanded", String(open));
     });
-
     dropdown.querySelectorAll(".nav-link").forEach((button) => button.addEventListener("click", () => close(group)));
     document.addEventListener("click", (event) => { if (!group.contains(event.target)) close(group); });
     document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(group); });
-
-    syncActive(group);
-    return true;
+    return group;
   }
 
   function install() {
     injectStyles();
-    if (!installMenu()) { setTimeout(install, 220); return; }
-
-    const nav = document.querySelector(".main-nav");
-    if (!nav || observer) return;
-    observer = new MutationObserver(() => {
-      const group = nav.querySelector(".grammar-nav-group");
-      if (!group) installMenu();
-      else syncActive(group);
-    });
-    observer.observe(nav, { childList:true, subtree:true, attributes:true, attributeFilter:["class"] });
+    const group = installMenu();
+    if (!group) return;
+    syncActive(group);
+    window.addEventListener("vae:routechange", () => syncActive(group));
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", install, { once:true });

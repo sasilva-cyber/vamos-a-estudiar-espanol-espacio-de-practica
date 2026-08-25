@@ -1,4 +1,4 @@
-/* Home leve: imagens, menu e módulos secundários sob demanda. */
+/* Home leve: menu e módulos secundários somente sob demanda ou após rolagem real. */
 (function () {
   const images = [
     "assets/grammar-home/contrastes-portugues-espanol.webp",
@@ -8,6 +8,7 @@
   const root = window.__VAE_ROOT__ || (location.hostname.toLowerCase().endsWith('.github.io') ? '/vamos-a-estudiar-espanol-espacio-de-practica/' : '/');
   const promises = new Map();
   let replaying = false;
+  let lowerHomeStarted = false;
 
   function loadScript(id, file) {
     if (promises.has(id)) return promises.get(id);
@@ -55,24 +56,12 @@
   function removeBlogFromMenu() {
     const nav = document.querySelector('.main-nav');
     if (!nav) return;
-
     nav.querySelectorAll('a, button, [data-route]').forEach((item) => {
       const route = (item.dataset?.route || '').trim().toLowerCase();
       const label = (item.textContent || '').trim().toLowerCase();
       const href = (item.getAttribute?.('href') || '').trim().toLowerCase();
-      if (route === 'blog' || label === 'blog' || /(^|\/)blog(?:\/|$)/.test(href)) {
-        item.remove();
-      }
+      if (route === 'blog' || label === 'blog' || /(^|\/)blog(?:\/|$)/.test(href)) item.remove();
     });
-  }
-
-  function watchNavForBlog() {
-    const nav = document.querySelector('.main-nav');
-    if (!nav) return;
-    removeBlogFromMenu();
-    if (nav.dataset.vaeNoBlogObserver === '1') return;
-    nav.dataset.vaeNoBlogObserver = '1';
-    new MutationObserver(removeBlogFromMenu).observe(nav, { childList: true, subtree: true });
   }
 
   function ensureLightShell() {
@@ -111,20 +100,20 @@
   }
 
   async function loadListening() {
-    await loadScript('listening-area-loader', 'listening.js?v=20260823-0225');
-    loadScript('listening-filters-loader', 'listening-filters.js?v=20260823-0225');
-    await loadScript('listening-expanded-loader', 'listening-expanded.js?v=20260823-0225');
-    loadScript('listening-expanded-fixes-loader', 'listening-expanded-fixes.js?v=20260823-0225');
+    await loadScript('listening-area-loader', 'listening.js?v=20260825-perf1');
+    loadScript('listening-filters-loader', 'listening-filters.js?v=20260825-perf1');
+    await loadScript('listening-expanded-loader', 'listening-expanded.js?v=20260825-perf1');
+    loadScript('listening-expanded-fixes-loader', 'listening-expanded-fixes.js?v=20260825-perf1');
   }
 
   async function loadWriting() {
-    await loadScript('writing-area-loader', 'writing.js?v=20260823-0225');
-    loadScript('writing-search-loader', 'writing-search.js?v=20260823-0225');
-    loadScript('home-writing-card-loader', 'home-writing-card.js?v=20260823-0225');
+    await loadScript('writing-area-loader', 'writing.js?v=20260825-perf1');
+    loadScript('writing-search-loader', 'writing-search.js?v=20260825-perf1');
+    loadScript('home-writing-card-loader', 'home-writing-card.js?v=20260825-perf1');
   }
 
   async function loadReadingExpansion() {
-    await loadScript('readings-casa-loader', 'readings-cuentos-casa.js?v=20260823-0225');
+    await loadScript('readings-casa-loader', 'readings-cuentos-casa.js?v=20260825-perf1');
   }
 
   async function loadRoute(route) {
@@ -160,14 +149,6 @@
       target.click();
       replaying = false;
     }, true);
-
-    const prefetch = (event) => {
-      const target = event.target.closest?.('[data-route]');
-      const route = target?.dataset?.route;
-      if (['listening','writing','readings'].includes(route)) loadRoute(route);
-    };
-    document.addEventListener('pointerover', prefetch, { passive:true });
-    document.addEventListener('focusin', prefetch);
   }
 
   function openInitialLazyRoute() {
@@ -189,53 +170,47 @@
 
   function installImages(attempt=0) {
     injectImageStyles();
-    if (!applyGrammarImages() && attempt < 28) return setTimeout(() => installImages(attempt+1), 220);
-    const container = document.getElementById('home-grammar-items');
-    if (container && !container.dataset.vaeImageObserver) {
-      container.dataset.vaeImageObserver = '1';
-      new MutationObserver(applyGrammarImages).observe(container,{childList:true});
+    if (applyGrammarImages() || attempt >= 3) return;
+    requestAnimationFrame(() => installImages(attempt + 1));
+  }
+
+  function loadHomeNewsletter() {
+    loadScript('home-newsletter-loader', 'home-newsletter.js?v=20260825-perf1');
+    loadScript('home-game-order-loader', 'home-game-before-grammar.js?v=20260825-perf1');
+  }
+
+  function loadLowerHome() {
+    if (lowerHomeStarted) return;
+    lowerHomeStarted = true;
+    loadHomeNewsletter();
+    if (typeof window.__vaeLoadQuizExtras === 'function') {
+      window.__vaeLoadQuizExtras().then(() => {
+        installImages();
+        window.dispatchEvent(new Event('vae:home-showcase-ready'));
+      }).catch(() => {});
     }
+    loadScript('enhanced-footer-loader', 'footer-enhanced.js?v=20260825-perf1')
+      .then(() => loadScript('footer-menu-simple-loader', 'footer-menu-simple.js?v=20260825-perf1'));
   }
 
-  function loadHomeShowcaseNearViewport() {
-    const target = document.querySelector('#home-screen .feature-grid');
-    if (!target || typeof window.__vaeLoadQuizExtras !== 'function') return;
-    let started = false;
-    const start = () => {
-      if (started) return;
-      started = true;
-      window.__vaeLoadQuizExtras().then(() => installImages()).catch(() => {});
+  function installLowerHomeGate() {
+    if (!document.getElementById('home-screen')) return;
+    const maybeStart = () => {
+      if (window.scrollY < 320) return;
+      window.removeEventListener('scroll', maybeStart);
+      loadLowerHome();
     };
-    if (!('IntersectionObserver' in window)) return;
-    const observer = new IntersectionObserver((entries) => {
-      if (entries.some((entry) => entry.isIntersecting)) {
-        observer.disconnect();
-        start();
-      }
-    }, { rootMargin: '180px 0px' });
-    observer.observe(target);
-  }
-
-  function installHomeNewsletter() {
-    loadScript('home-newsletter-loader', 'home-newsletter.js?v=20260823-1042');
-    loadScript('home-game-order-loader', 'home-game-before-grammar.js?v=20260823-1042');
+    window.addEventListener('scroll', maybeStart, { passive:true });
+    maybeStart();
   }
 
   function install() {
     ensureLightShell();
-    watchNavForBlog();
     installRouteGate();
     injectImageStyles();
-    installHomeNewsletter();
-    loadScript('grammar-dropdown-nav-loader', 'nav-grammar-dropdown.js?v=20260823-0225');
+    loadScript('grammar-dropdown-nav-loader', 'nav-grammar-dropdown.js?v=20260825-perf1');
     openInitialLazyRoute();
-    loadHomeShowcaseNearViewport();
-
-    const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 1400));
-    idle(() => {
-      loadScript('enhanced-footer-loader', 'footer-enhanced.js?v=20260823-0225')
-        .then(() => loadScript('footer-menu-simple-loader', 'footer-menu-simple.js?v=20260823-0225'));
-    }, { timeout: 3500 });
+    installLowerHomeGate();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', install, { once:true });
