@@ -1,0 +1,7 @@
+.club-cover.has-image,.club-candidate-cover.has-image{padding:0;overflow:hidden;display:grid;place-items:center;background:#f6efe5;border:1px solid rgba(110,21,33,.12);box-shadow:0 12px 26px rgba(63,42,28,.10)}
+.club-cover.has-image{min-height:0;aspect-ratio:2/3}
+.club-cover.has-image::after{content:none}
+.club-candidate-cover.has-image{height:auto;aspect-ratio:2/3}
+.club-book-cover-image{width:100%;height:100%;display:block;object-fit:contain;background:#f6efe5}
+@media(max-width:760px){.club-current-book{grid-template-columns:130px minmax(0,1fr)}.club-candidate-cover.has-image{max-height:360px}}
+@media(max-width:520px){.club-current-book{grid-template-columns:1fr}.club-cover.has-image{width:min(190px,70vw);margin:0 auto}.club-candidate-cover.has-image{width:min(230px,78vw);margin:0 auto}}
