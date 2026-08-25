@@ -1,9 +1,8 @@
-/* Acessos públicos da Área do Estudiante no menu principal. */
+/* Acessos públicos da Área do Estudiante no menu principal. Instalação única e leve. */
 (function () {
   const REPOSITORY_PATH = "/vamos-a-estudiar-espanol-espacio-de-practica";
   const IS_GITHUB = window.location.hostname.toLowerCase().endsWith(".github.io");
   const ROOT = IS_GITHUB ? `${REPOSITORY_PATH}/` : "/";
-  let navObserver = null;
 
   function injectStyles() {
     if (document.getElementById("student-nav-styles")) return;
@@ -87,11 +86,8 @@
 
   function track(action) {
     try {
-      if (typeof window.vaeTrack === "function") {
-        window.vaeTrack("student_auth_nav_click", { action });
-      } else if (typeof window.gtag === "function") {
-        window.gtag("event", "student_auth_nav_click", { action });
-      }
+      if (typeof window.vaeTrack === "function") window.vaeTrack("student_auth_nav_click", { action });
+      else if (typeof window.gtag === "function") window.gtag("event", "student_auth_nav_click", { action });
     } catch (_) {}
   }
 
@@ -107,48 +103,20 @@
 
   function install() {
     injectStyles();
-
     const nav = document.querySelector(".main-nav");
-    if (!nav) {
-      window.setTimeout(install, 180);
-      return;
-    }
+    if (!nav) return;
 
     let group = nav.querySelector(".student-auth-group");
     if (!group) {
       group = document.createElement("span");
       group.className = "student-auth-group";
       group.setAttribute("aria-label", "Acesso do estudante");
-      group.appendChild(makeLink(
-        "student-auth-login",
-        `${ROOT}login/`,
-        "Entrar",
-        "login",
-        "Entrar na Área do Estudiante"
-      ));
-      group.appendChild(makeLink(
-        "student-auth-signup",
-        `${ROOT}cadastro/`,
-        "Criar conta",
-        "signup",
-        "Criar conta gratuita na Área do Estudiante"
-      ));
-    }
-
-    /* Mantém os acessos como o último grupo do menu mesmo quando outros links são inseridos dinamicamente. */
-    if (nav.lastElementChild !== group) nav.appendChild(group);
-
-    if (!navObserver) {
-      navObserver = new MutationObserver(() => {
-        if (nav.lastElementChild !== group) nav.appendChild(group);
-      });
-      navObserver.observe(nav, { childList: true });
+      group.appendChild(makeLink("student-auth-login", `${ROOT}login/`, "Entrar", "login", "Entrar na Área do Estudiante"));
+      group.appendChild(makeLink("student-auth-signup", `${ROOT}cadastro/`, "Criar conta", "signup", "Criar conta gratuita na Área do Estudiante"));
+      nav.appendChild(group);
     }
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", install, { once: true });
-  } else {
-    install();
-  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", install, { once: true });
+  else install();
 })();
