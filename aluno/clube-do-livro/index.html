@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="robots" content="noindex,nofollow" />
+  <meta name="theme-color" content="#6e1521" />
+  <meta name="description" content="Clube Español entre Páginas — clube de leitura Premium de literatura latino-americana e hispano-americana." />
+  <title>Clube Español entre Páginas | Área do Estudiante</title>
+  <link rel="stylesheet" href="../../auth.css?v=20260823-3" />
+  <link rel="stylesheet" href="../../book-club.css?v=20260825-1" />
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="../../auth-config.js?v=20260823-2"></script>
+  <script defer src="../../auth-client.js?v=20260823-4"></script>
+  <script defer src="../../book-club.js?v=20260825-1"></script>
+</head>
+<body>
+  <header class="auth-header">
+    <div class="auth-header-inner">
+      <a class="auth-brand" href="../" aria-label="Voltar à Área do Estudiante">
+        <span class="auth-mark" aria-hidden="true">Ñ</span>
+        <span class="auth-brand-copy">
+          <strong>Vamos a Estudiar Español</strong>
+          <small>Clube Español entre Páginas</small>
+        </span>
+      </a>
+      <a class="auth-header-action" href="../">← Área do Estudiante</a>
+    </div>
+    <div class="heritage-stripe" aria-hidden="true"></div>
+  </header>
+
+  <main class="club-main" id="club-main" aria-busy="true">
+    <div class="auth-loading" id="club-loading">Abrindo as portas do clube…</div>
+
+    <section class="club-denied hidden" id="club-denied" aria-live="polite">
+      <div class="club-lock" aria-hidden="true">📚</div>
+      <p class="club-kicker">Clube Premium</p>
+      <h1>Español entre Páginas</h1>
+      <p>O clube de leitura faz parte da assinatura Premium da Área do Estudiante.</p>
+      <a href="../">Voltar para minha área</a>
+    </section>
+
+    <div class="hidden" id="club-content">
+      <section class="club-hero" aria-labelledby="club-title">
+        <div class="club-hero-copy">
+          <p class="club-kicker">Literatura · Español · Comunidad</p>
+          <h1 id="club-title">Clube Español<br><em>entre Páginas</em></h1>
+          <p>Um livro por mês, escolhido pelos membros. Lemos literatura latino-americana e hispano-americana em espanhol, avançamos juntos por um cronograma e conversamos sobre língua, contexto, personagens e formas de narrar.</p>
+          <div class="club-hero-tags" aria-label="Recursos do clube">
+            <span>1 livro por mês</span><span>Votação dos membros</span><span>Leitura compartilhada</span><span>Chat do clube</span>
+          </div>
+        </div>
+        <aside class="club-hero-card">
+          <span class="club-hero-card-label">Círculo de leitura Premium</span>
+          <div class="club-monogram" aria-hidden="true">EP</div>
+          <strong>Leer. Conversar.<br>Volver a leer.</strong>
+          <p>Um espaço para praticar espanhol por meio da literatura e da comunidade.</p>
+        </aside>
+      </section>
+
+      <nav class="club-nav" aria-label="Navegação do clube">
+        <a href="#club-month">Este mês</a>
+        <a href="#club-vote">Votação</a>
+        <a href="#club-schedule">Cronograma</a>
+        <a href="#club-conversation">Conversa</a>
+        <a href="#club-community">Comunidade</a>
+      </nav>
+
+      <section class="club-month" id="club-month" aria-live="polite">
+        <div class="club-section-heading">
+          <div><p class="club-kicker">Edição atual</p><h2 id="club-month-label">Carregando mês…</h2></div>
+          <span class="club-status-pill" id="club-status-pill">Preparando</span>
+        </div>
+        <div id="club-month-content"></div>
+      </section>
+
+      <section class="club-section" id="club-vote" aria-labelledby="club-vote-title">
+        <div class="club-section-heading">
+          <div>
+            <p class="club-kicker">A escolha é do clube</p>
+            <h2 id="club-vote-title">Próxima leitura</h2>
+            <p id="club-vote-description">Vote em uma obra. Você pode mudar seu voto enquanto a votação estiver aberta.</p>
+          </div>
+          <span class="club-section-meta" id="club-vote-deadline">—</span>
+        </div>
+        <div class="club-candidate-grid" id="club-candidate-grid"></div>
+        <div class="club-inline-status" id="club-vote-status" role="status" aria-live="polite"></div>
+      </section>
+
+      <section class="club-section" id="club-schedule" aria-labelledby="club-schedule-title">
+        <div class="club-section-heading">
+          <div>
+            <p class="club-kicker">Leitura em companhia</p>
+            <h2 id="club-schedule-title">Cronograma do mês</h2>
+            <p>As divisões são proporcionais para funcionar com diferentes edições do livro. Marque cada etapa quando concluir sua leitura.</p>
+          </div>
+          <div class="club-progress-badge"><strong id="club-progress-value">0%</strong><span>concluído</span></div>
+        </div>
+        <div class="club-progress-track"><div class="club-progress-bar" id="club-progress-bar"></div></div>
+        <div class="club-week-list" id="club-week-list"></div>
+      </section>
+
+      <section class="club-language-panel" aria-labelledby="club-language-title">
+        <div>
+          <p class="club-kicker">Español entre páginas</p>
+          <h2 id="club-language-title">Frases para entrar na conversa</h2>
+          <p>Use estas estruturas para comentar a leitura em espanhol no chat ou no encontro do clube.</p>
+        </div>
+        <div class="club-language-grid">
+          <span>Desde mi punto de vista…</span>
+          <span>Me llamó la atención que…</span>
+          <span>No estoy del todo de acuerdo porque…</span>
+          <span>Yo interpretaría esta escena como…</span>
+          <span>El narrador parece sugerir que…</span>
+          <span>Esta parte me hizo pensar en…</span>
+        </div>
+      </section>
+
+      <section class="club-conversation" id="club-conversation" aria-labelledby="club-conversation-title">
+        <div class="club-conversation-main">
+          <div class="club-section-heading compact">
+            <div>
+              <p class="club-kicker">Sala do clube</p>
+              <h2 id="club-conversation-title">Conversación del club</h2>
+              <p>Converse em espanhol ou português sobre a leitura. Respeite o ritmo de quem ainda não chegou ao final e sinalize spoilers.</p>
+            </div>
+            <button class="club-refresh" id="club-chat-refresh" type="button">Atualizar</button>
+          </div>
+          <div class="club-weekly-question" id="club-weekly-question"></div>
+          <div class="club-chat" id="club-chat" aria-live="polite"></div>
+          <form class="club-composer" id="club-composer">
+            <label for="club-message">Sua mensagem</label>
+            <textarea id="club-message" maxlength="1200" rows="3" placeholder="Comparte una idea sobre la lectura…"></textarea>
+            <div class="club-composer-footer">
+              <span id="club-message-count">0/1200</span>
+              <button type="submit" id="club-send-message">Enviar para o clube →</button>
+            </div>
+            <p class="club-inline-status" id="club-chat-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+        <aside class="club-etiquette">
+          <span aria-hidden="true">☕</span>
+          <h3>Convivencia del club</h3>
+          <p>Leia no seu ritmo, dialogue com respeito e não transforme divergência de interpretação em conflito pessoal.</p>
+          <ul>
+            <li>Sinalize spoilers.</li>
+            <li>Critique ideias, não pessoas.</li>
+            <li>Evite reproduzir trechos extensos de obras protegidas.</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section class="club-community" id="club-community" aria-labelledby="club-community-title">
+        <div class="club-community-icon" aria-hidden="true">💬</div>
+        <div class="club-community-copy">
+          <p class="club-kicker">Comunidade fora da plataforma</p>
+          <h2 id="club-community-title">Grupo do WhatsApp</h2>
+          <p>O chat da plataforma organiza a discussão da leitura. O WhatsApp será o espaço para avisos rápidos, lembretes e conversa espontânea entre os membros.</p>
+        </div>
+        <a class="club-whatsapp hidden" id="club-whatsapp" href="#" target="_blank" rel="noopener noreferrer">Entrar no grupo →</a>
+        <span class="club-whatsapp-pending" id="club-whatsapp-pending">Link do grupo será liberado em breve.</span>
+      </section>
+
+      <section class="club-rights-note">
+        <strong>Sobre os livros do clube</strong>
+        <p>A plataforma organiza votação, cronograma, progresso e discussão. Obras integrais só serão hospedadas quando houver autorização ou base legal aplicável; nos demais casos, o clube orientará a aquisição ou o acesso legal à edição escolhida.</p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="auth-footer">Vamos a Estudiar Español · Clube Español entre Páginas</footer>
+</body>
+</html>
