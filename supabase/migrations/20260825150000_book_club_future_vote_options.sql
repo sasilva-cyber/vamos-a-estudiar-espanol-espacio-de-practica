@@ -19,10 +19,10 @@ begin
   values
     ('pedro-paramo-juan-rulfo','Pedro Páramo','Juan Rulfo','México','MX',1955,
       'Juan Preciado chega a Comala em busca de seu pai, Pedro Páramo, e encontra um espaço atravessado por memória, vozes, ausências e mortos. Um romance central da literatura latino-americana do século XX.',
-      'assets/book-club/pedro-paramo.svg'),
+      'assets/book-club/pedro-paramo.jpg'),
     ('a-cachorra-pilar-quintana','A cachorra','Pilar Quintana','Colômbia','CO',2017,
       'Narrativa ambientada na costa colombiana que acompanha a relação de uma mulher com uma cadela e articula desejo de maternidade, solidão, afeto e violência em uma prosa concentrada.',
-      'assets/book-club/a-cachorra.svg'),
+      'assets/book-club/a-cachorra.jpg'),
     ('primavera-numa-esquina-partida-mario-benedetti','Primavera numa esquina partida','Mario Benedetti','Uruguai','UY',1982,
       'Romance sobre exílio, prisão, afetos e reconstrução da vida de uma família uruguaia, articulando diferentes vozes e perspectivas sobre distância, memória e retorno.',
       'assets/book-club/primavera-numa-esquina-partida.svg')
