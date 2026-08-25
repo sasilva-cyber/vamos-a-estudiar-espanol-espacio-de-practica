@@ -6,8 +6,14 @@
   function track(name,params={}){
     try{if(typeof window.vaeTrack==='function')window.vaeTrack(name,params);else if(typeof window.gtag==='function')window.gtag('event',name,params);}catch(_){ }
   }
+  function parseDate(value){
+    const raw=String(value||'');
+    const match=raw.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if(match)return new Date(Number(match[1]),Number(match[2])-1,Number(match[3]),12,0,0);
+    return new Date(raw);
+  }
   function formatDate(value){
-    const d=new Date(value||'');
+    const d=parseDate(value);
     if(Number.isNaN(d.getTime()))return '—';
     return new Intl.DateTimeFormat('pt-BR',{day:'2-digit',month:'short',year:'numeric'}).format(d);
   }
@@ -76,7 +82,7 @@
     const open=month.status==='voting'&&(!month.voting_ends_at||Date.now()<new Date(month.voting_ends_at).getTime());
     $('club-vote-deadline').textContent=open?`Encerra ${formatDateTime(month.voting_ends_at)}`:`${home.total_votes||0} voto(s)`;
     $('club-vote-description').textContent=open?'Vote em uma obra. Você pode mudar seu voto enquanto a votação estiver aberta.':'A votação desta edição foi encerrada. Os percentuais finais ficam registrados no clube.';
-    (home.candidates||[]).forEach((book,index)=>{
+    (home.candidates||[]).forEach(book=>{
       const article=document.createElement('article');article.className=`club-candidate${book.user_voted?' user-voted':''}`;
       article.appendChild(makeCover(book,'club-candidate-cover'));
       const h=document.createElement('h3');h.textContent=book.title;
