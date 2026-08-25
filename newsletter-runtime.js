@@ -1,4 +1,4 @@
-/* Newsletter pública: cadastro no Supabase + boas-vindas por e-mail. */
+/* Newsletter pública: cadastro no Supabase + boas-vindas por e-mail. Sem observador global do DOM. */
 (function () {
   const ENDPOINT = "https://clfwoywzalttkvhstsgh.supabase.co/functions/v1/newsletter-subscribe";
 
@@ -44,7 +44,7 @@
   }
 
   function install(form) {
-    if (form.dataset.vaeNewsletterInstalled === "1") return;
+    if (!looksLikeNewsletter(form) || form.dataset.vaeNewsletterInstalled === "1") return;
     form.dataset.vaeNewsletterInstalled = "1";
     ensureHoneypot(form);
     const status = ensureStatus(form);
@@ -99,15 +99,24 @@
     });
   }
 
-  function scan() {
-    document.querySelectorAll("form").forEach((form) => {
-      if (looksLikeNewsletter(form)) install(form);
-    });
+  function scanOnce() {
+    document.querySelectorAll("form").forEach(install);
   }
 
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", scan, { once: true });
-  else scan();
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", scanOnce, { once: true });
+  else scanOnce();
 
-  const observer = new MutationObserver(scan);
-  observer.observe(document.documentElement, { childList: true, subtree: true });
+  /* Formulários inseridos depois são preparados apenas quando a pessoa interage com eles. */
+  document.addEventListener("focusin", (event) => {
+    const form = event.target?.closest?.("form");
+    if (form) install(form);
+  }, true);
+
+  document.addEventListener("submit", (event) => {
+    const form = event.target;
+    if (!(form instanceof HTMLFormElement) || !looksLikeNewsletter(form) || form.dataset.vaeNewsletterInstalled === "1") return;
+    event.preventDefault();
+    install(form);
+    queueMicrotask(() => form.requestSubmit());
+  }, true);
 })();
