@@ -13,14 +13,14 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="robots" content="noindex,nofollow" />
   <meta name="theme-color" content="#8f1d2c" />
-  <meta name="description" content="Teste diagnóstico de nivelamento de espanhol para estudantes cadastrados." />
-  <title>Teste de Nivelamento | Vamos a Estudiar Español</title>
+  <meta name="description" content="Diagnóstico Premium de espanhol A1–C2 com escuta, leitura, escrita e fala." />
+  <title>Diagnóstico Premium A1–C2 | Vamos a Estudiar Español</title>
   <link rel="stylesheet" href="../../auth.css?v=20260823-3" />
-  <link rel="stylesheet" href="../../placement.css?v=20260823-1" />
+  <link rel="stylesheet" href="../../placement-diagnostic.css?v=20260825-1" />
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script defer src="../../auth-config.js?v=20260823-2"></script>
-  <script defer src="../../auth-client.js?v=20260823-3"></script>
-  <script defer src="../../placement.js?v=20260823-1"></script>
+  <script defer src="../../auth-client.js?v=20260823-4"></script>
+  <script defer src="../../placement-diagnostic.js?v=20260825-1"></script>
 </head>
 <body>
   <header class="auth-header">
@@ -29,7 +29,7 @@
         <span class="auth-mark" aria-hidden="true">Ñ</span>
         <span class="auth-brand-copy">
           <strong>Vamos a Estudiar Español</strong>
-          <small>Teste de Nivelamento</small>
+          <small>Diagnóstico Premium · A1–C2</small>
         </span>
       </a>
       <a class="auth-header-action" href="../">← Área do Estudiante</a>
@@ -37,92 +37,210 @@
     <div class="heritage-stripe" aria-hidden="true"></div>
   </header>
 
-  <main class="placement-main">
-    <div class="auth-loading" id="placement-loading">Preparando seu teste…</div>
+  <main class="diagnostic-main" id="diagnostic-main" aria-busy="true">
+    <div class="auth-loading" id="diagnostic-loading">Preparando seu diagnóstico…</div>
 
-    <div class="placement-shell hidden" id="placement-shell">
-      <section class="placement-intro" id="placement-intro" aria-labelledby="placement-title">
-        <p class="placement-eyebrow">Diagnóstico de espanhol</p>
-        <h1 id="placement-title">Descubra seu nível estimado.</h1>
-        <p class="placement-lead">O teste começa com estruturas mais básicas e avança gradualmente até questões de alta complexidade. Ao final, você recebe uma estimativa entre A1 e C2, seu desempenho por faixa e sugestões do que estudar a seguir.</p>
-
-        <div class="placement-facts" aria-label="Informações sobre o teste">
-          <div class="placement-fact"><strong>30</strong><span>questões progressivas</span></div>
-          <div class="placement-fact"><strong>A1–C2</strong><span>seis faixas analisadas</span></div>
-          <div class="placement-fact"><strong>15–25 min</strong><span>tempo aproximado</span></div>
+    <div class="diagnostic-shell hidden" id="diagnostic-shell">
+      <section class="diagnostic-intro" id="diagnostic-intro" aria-labelledby="diagnostic-title">
+        <div class="diagnostic-intro-grid">
+          <div>
+            <p class="diagnostic-kicker">Diagnóstico Premium de Espanhol</p>
+            <h1 id="diagnostic-title">Descubra seu perfil nas quatro habilidades.</h1>
+            <p class="diagnostic-lead">O percurso analisa compreensão auditiva, compreensão leitora, produção escrita e produção oral para estimar sua faixa geral entre A1 e C2 — e mostrar em qual habilidade concentrar os próximos estudos.</p>
+            <div class="diagnostic-skill-chips" aria-label="Habilidades avaliadas">
+              <span>🎧 Escuta</span><span>📖 Leitura</span><span>✍️ Escrita</span><span>🎙️ Fala</span>
+            </div>
+          </div>
+          <aside class="diagnostic-intro-card" aria-label="Resumo do diagnóstico">
+            <span class="diagnostic-intro-card-kicker">Seu perfil linguístico</span>
+            <strong>A1 → C2</strong>
+            <p>Quatro habilidades, um resultado geral e recomendações individuais.</p>
+            <div class="diagnostic-mini-track"><span></span><span></span><span></span><span></span></div>
+          </aside>
         </div>
 
-        <div class="placement-note">
-          <strong>Para um resultado mais fiel:</strong> faça o teste sem tradutor, dicionário, inteligência artificial ou consulta externa. Não há correção questão por questão; o resultado aparece somente ao final.
+        <div class="diagnostic-facts" aria-label="Informações sobre o diagnóstico">
+          <div><strong>4</strong><span>habilidades centrais</span></div>
+          <div><strong>24</strong><span>itens de escuta e leitura</span></div>
+          <div><strong>1 + 1</strong><span>produção escrita e oral</span></div>
+          <div><strong>25–40 min</strong><span>tempo aproximado</span></div>
         </div>
-        <div class="placement-last" id="placement-last"></div>
-        <button class="placement-start" id="placement-start" type="button">Começar nivelamento →</button>
 
-        <div class="placement-disclaimer">
-          Este é um <strong>diagnóstico interno</strong> de conhecimentos de gramática, vocabulário e compreensão escrita. Ele não substitui certificações oficiais como DELE ou SIELE e não avalia integralmente compreensão auditiva, produção oral ou produção escrita.
+        <div class="diagnostic-note">
+          <strong>Para um resultado mais fiel:</strong> faça o diagnóstico sem tradutor, dicionário, inteligência artificial ou consulta externa. Na etapa de escuta, cada áudio pode ser reproduzido até duas vezes.
+        </div>
+        <div class="diagnostic-last" id="diagnostic-last"></div>
+        <button class="diagnostic-primary diagnostic-start" id="diagnostic-start" type="button">Iniciar meu diagnóstico →</button>
+
+        <div class="diagnostic-disclaimer">
+          Este é um <strong>diagnóstico pedagógico interno</strong>, não uma certificação oficial. Escuta e leitura são corrigidas objetivamente; a escrita recebe análise automática baseada em indicadores textuais; e a fala combina gravação com autoavaliação orientada. Por isso, o resultado oral é identificado como <strong>autoestimado</strong> e não como correção humana de pronúncia.
         </div>
       </section>
 
-      <section class="placement-test hidden" id="placement-test" aria-labelledby="placement-question">
-        <div class="placement-progress-top">
-          <span id="placement-progress-text">Questão 1 de 30</span>
-          <span id="placement-answered-text">0 respondidas</span>
+      <section class="diagnostic-flow hidden" id="diagnostic-flow" aria-live="polite">
+        <div class="diagnostic-stage-header">
+          <div class="diagnostic-stage-copy">
+            <p class="diagnostic-kicker" id="diagnostic-stage-kicker">Etapa 1 de 4</p>
+            <h1 id="diagnostic-stage-title">Comprensión auditiva</h1>
+            <p id="diagnostic-stage-description">Ouça com atenção e escolha a alternativa mais adequada.</p>
+          </div>
+          <span class="diagnostic-stage-badge" id="diagnostic-stage-badge">🎧 Escuta</span>
         </div>
-        <div class="placement-progress-track" aria-hidden="true"><div class="placement-progress-bar" id="placement-progress-bar"></div></div>
 
-        <article class="placement-question-card">
-          <p class="placement-question-number" id="placement-question-number">Questão 01</p>
-          <h1 class="placement-question" id="placement-question">Pergunta</h1>
-          <div class="placement-options" id="placement-options" role="group" aria-label="Alternativas"></div>
-        </article>
-
-        <div class="placement-nav">
-          <button class="placement-secondary" id="placement-prev" type="button">← Anterior</button>
-          <button class="placement-primary" id="placement-next" type="button" disabled>Próxima →</button>
+        <div class="diagnostic-stage-nav" aria-label="Etapas do diagnóstico">
+          <span class="active" data-stage-pill="listening"><b>1</b> Escuta</span>
+          <span data-stage-pill="reading"><b>2</b> Leitura</span>
+          <span data-stage-pill="writing"><b>3</b> Escrita</span>
+          <span data-stage-pill="speaking"><b>4</b> Fala</span>
         </div>
-        <div class="placement-submit-status" id="placement-submit-status" role="status" aria-live="polite"></div>
+        <div class="diagnostic-progress-track" aria-hidden="true"><div class="diagnostic-progress-bar" id="diagnostic-progress-bar"></div></div>
+
+        <div id="diagnostic-objective-panel">
+          <div class="diagnostic-question-meta">
+            <span id="diagnostic-question-progress">Questão 1 de 12</span>
+            <span id="diagnostic-answer-progress">0 respondidas</span>
+          </div>
+          <article class="diagnostic-question-card">
+            <div class="diagnostic-audio-box hidden" id="diagnostic-audio-box">
+              <div>
+                <span class="diagnostic-audio-label">Áudio do diagnóstico</span>
+                <strong id="diagnostic-audio-title">Ouça antes de responder</strong>
+                <small id="diagnostic-audio-plays">2 reproduções disponíveis</small>
+              </div>
+              <button type="button" id="diagnostic-play-audio">▶ Ouvir áudio</button>
+            </div>
+            <div class="diagnostic-reading-text hidden" id="diagnostic-reading-text"></div>
+            <p class="diagnostic-question-number" id="diagnostic-question-number">Questão 01</p>
+            <h2 class="diagnostic-question" id="diagnostic-question">Pergunta</h2>
+            <div class="diagnostic-options" id="diagnostic-options" role="group" aria-label="Alternativas"></div>
+          </article>
+          <div class="diagnostic-nav">
+            <button class="diagnostic-secondary" id="diagnostic-prev" type="button">← Anterior</button>
+            <button class="diagnostic-primary" id="diagnostic-next" type="button" disabled>Próxima →</button>
+          </div>
+        </div>
+
+        <section class="diagnostic-production hidden" id="diagnostic-writing-panel" aria-labelledby="diagnostic-writing-title">
+          <div class="diagnostic-production-prompt">
+            <span id="diagnostic-writing-level">B1</span>
+            <div>
+              <p class="diagnostic-kicker">Producción escrita</p>
+              <h2 id="diagnostic-writing-title">Sua proposta de escrita</h2>
+              <p id="diagnostic-writing-prompt"></p>
+            </div>
+          </div>
+          <div class="diagnostic-writing-targets" id="diagnostic-writing-targets"></div>
+          <textarea class="diagnostic-textarea" id="diagnostic-writing-text" lang="es" spellcheck="true" placeholder="Escribe aquí tu texto en español…" aria-label="Produção escrita em espanhol"></textarea>
+          <div class="diagnostic-live-metrics">
+            <div><span>Palavras</span><strong id="diagnostic-writing-words">0</strong></div>
+            <div><span>Palavras diferentes</span><strong id="diagnostic-writing-unique">0</strong></div>
+            <div><span>Frases</span><strong id="diagnostic-writing-sentences">0</strong></div>
+            <div><span>Conectores</span><strong id="diagnostic-writing-connectors">0</strong></div>
+          </div>
+          <p class="diagnostic-production-status" id="diagnostic-writing-status"></p>
+          <div class="diagnostic-nav diagnostic-production-nav">
+            <button class="diagnostic-secondary" id="diagnostic-writing-back" type="button">← Voltar à leitura</button>
+            <button class="diagnostic-primary" id="diagnostic-writing-next" type="button">Ir para a fala →</button>
+          </div>
+        </section>
+
+        <section class="diagnostic-production hidden" id="diagnostic-speaking-panel" aria-labelledby="diagnostic-speaking-title">
+          <div class="diagnostic-production-prompt speaking">
+            <span id="diagnostic-speaking-level">B1</span>
+            <div>
+              <p class="diagnostic-kicker">Expresión oral</p>
+              <h2 id="diagnostic-speaking-title">Grave uma resposta em espanhol</h2>
+              <p id="diagnostic-speaking-prompt"></p>
+            </div>
+          </div>
+
+          <div class="diagnostic-recorder">
+            <div class="diagnostic-recorder-top">
+              <div>
+                <span class="diagnostic-audio-label">Gravação privada</span>
+                <strong id="diagnostic-recorder-state">Microfone pronto para iniciar</strong>
+                <small id="diagnostic-recorder-help">A gravação é opcional para o cálculo automático, mas permite praticar a produção oral e fica protegida na sua conta.</small>
+              </div>
+              <span class="diagnostic-recorder-time" id="diagnostic-recorder-time">00:00</span>
+            </div>
+            <div class="diagnostic-recorder-actions">
+              <button class="diagnostic-primary" id="diagnostic-record-start" type="button">● Iniciar gravação</button>
+              <button class="diagnostic-secondary hidden" id="diagnostic-record-stop" type="button">■ Parar</button>
+              <button class="diagnostic-secondary hidden" id="diagnostic-record-reset" type="button">Gravar novamente</button>
+            </div>
+            <audio class="diagnostic-audio-preview hidden" id="diagnostic-audio-preview" controls preload="metadata"></audio>
+          </div>
+
+          <div class="diagnostic-self-assessment">
+            <div class="diagnostic-self-head">
+              <div>
+                <p class="diagnostic-kicker">Autoavaliação orientada</p>
+                <h3>Como foi sua produção oral?</h3>
+              </div>
+              <span>1 = ainda não · 5 = com segurança</span>
+            </div>
+            <div id="diagnostic-speaking-ratings"></div>
+          </div>
+
+          <label class="diagnostic-no-recording">
+            <input type="checkbox" id="diagnostic-no-recording" />
+            <span>Não posso ou não quero salvar uma gravação neste dispositivo. Quero concluir apenas com a autoavaliação orientada.</span>
+          </label>
+
+          <p class="diagnostic-production-status" id="diagnostic-speaking-status"></p>
+          <div class="diagnostic-nav diagnostic-production-nav">
+            <button class="diagnostic-secondary" id="diagnostic-speaking-back" type="button">← Voltar à escrita</button>
+            <button class="diagnostic-primary" id="diagnostic-finish" type="button">Concluir diagnóstico →</button>
+          </div>
+        </section>
+
+        <div class="diagnostic-submit-status" id="diagnostic-submit-status" role="status" aria-live="polite"></div>
       </section>
 
-      <section class="placement-result hidden" id="placement-result" aria-labelledby="placement-result-heading">
-        <p class="placement-eyebrow">Seu resultado</p>
-        <h1 id="placement-result-heading">Nivelamento concluído.</h1>
-        <p class="placement-lead">A classificação considera seu desempenho em blocos progressivos: para avançar de faixa, é necessário demonstrar domínio suficiente do nível e das bases anteriores.</p>
+      <section class="diagnostic-result hidden" id="diagnostic-result" aria-labelledby="diagnostic-result-heading">
+        <p class="diagnostic-kicker">Tu perfil de español</p>
+        <h1 id="diagnostic-result-heading">Diagnóstico concluído.</h1>
+        <p class="diagnostic-lead">Seu nível geral combina as quatro dimensões do percurso. Use o perfil abaixo para entender a diferença entre aquilo que você compreende e aquilo que já consegue produzir.</p>
 
-        <div class="placement-result-hero">
-          <div class="placement-level-badge" id="placement-result-level">A1</div>
-          <div class="placement-result-copy">
-            <h2 id="placement-result-title">A1 · Iniciante</h2>
-            <p id="placement-result-description"></p>
-            <div class="placement-scoreline">
-              <span class="placement-chip" id="placement-result-score">0/30 acertos</span>
-              <span class="placement-chip" id="placement-result-percentage">0% no teste</span>
-              <span class="placement-chip" id="placement-result-date"></span>
+        <div class="diagnostic-result-hero">
+          <div class="diagnostic-level-badge" id="diagnostic-result-level">B1</div>
+          <div>
+            <span class="diagnostic-result-label">Nível geral estimado</span>
+            <h2 id="diagnostic-result-title">B1 · Intermediário</h2>
+            <p id="diagnostic-result-description"></p>
+            <div class="diagnostic-result-chips">
+              <span id="diagnostic-result-date"></span>
+              <span>Diagnóstico Premium · 4 habilidades</span>
             </div>
           </div>
         </div>
 
-        <div class="placement-breakdown">
-          <h3>Desempenho por faixa</h3>
-          <div class="placement-band-list" id="placement-band-list"></div>
+        <div class="diagnostic-profile-section">
+          <div class="diagnostic-section-heading">
+            <div><p class="diagnostic-kicker">Perfil por habilidade</p><h3>Onde você está mais forte — e o que desenvolver agora</h3></div>
+          </div>
+          <div class="diagnostic-profile-grid" id="diagnostic-profile-grid"></div>
         </div>
 
-        <div class="placement-recommendations">
+        <div class="diagnostic-priority" id="diagnostic-priority"></div>
+
+        <div class="diagnostic-recommendations">
           <h3>Próximos passos recomendados</h3>
-          <ul id="placement-recommendation-list"></ul>
+          <ul id="diagnostic-recommendation-list"></ul>
         </div>
 
-        <div class="placement-disclaimer">
-          O nível exibido é uma <strong>estimativa pedagógica</strong> baseada neste teste. O Quadro Europeu Comum de Referência considera diferentes competências; por isso, fala, escrita e escuta podem estar em faixas diferentes da estimativa apresentada aqui.
+        <div class="diagnostic-disclaimer">
+          O resultado é uma <strong>estimativa pedagógica interna</strong>. A faixa de fala é derivada de autoavaliação guiada e limitada pelo desempenho de compreensão; o sistema não atribui automaticamente uma nota de pronúncia ou fluência ao áudio. Para certificação oficial, utilize exames reconhecidos como DELE ou SIELE.
         </div>
 
-        <div class="placement-result-actions">
-          <button class="placement-primary" id="placement-retry" type="button">Refazer o teste</button>
-          <a class="placement-secondary" href="../">Voltar à Área do Estudiante</a>
+        <div class="diagnostic-result-actions">
+          <button class="diagnostic-primary" id="diagnostic-retry" type="button">Refazer diagnóstico</button>
+          <a class="diagnostic-secondary" href="../">Voltar à Área do Estudiante</a>
         </div>
       </section>
     </div>
   </main>
 
-  <footer class="auth-footer">Vamos a Estudiar Español · Teste de Nivelamento</footer>
+  <footer class="auth-footer">Vamos a Estudiar Español · Diagnóstico Premium A1–C2</footer>
 </body>
 </html>
