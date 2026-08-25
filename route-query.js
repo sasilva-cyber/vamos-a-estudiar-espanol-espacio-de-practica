@@ -123,7 +123,6 @@
     ensureCanonical().href = url;
     ensureManifest();
     updateStructuredData();
-
     window.dispatchEvent(new CustomEvent("vae:routechange", { detail: { route, title: item.title, path: routePath(route), url } }));
   }
 
@@ -164,7 +163,7 @@
     const root = IS_GITHUB_HOST ? `${REPOSITORY_PATH}/` : "/";
     const config = document.createElement("script");
     config.id = "vae-analytics-config";
-    config.src = `${root}analytics-config.js?v=20260823-1612`;
+    config.src = `${root}analytics-config.js?v=20260825-perf1`;
     config.onload = () => {
       const analytics = document.createElement("script");
       analytics.id = "vae-analytics-runtime";
