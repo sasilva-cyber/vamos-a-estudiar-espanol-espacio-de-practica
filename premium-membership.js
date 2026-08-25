@@ -1,5 +1,8 @@
 /* Assinatura Premium, checkout e cancelamento Mercado Pago. */
 (function () {
+  const PREMIUM_PRICE = 19.90;
+  const PREMIUM_PRICE_LABEL = "R$ 19,90";
+
   function ensureManagementUi() {
     const offer = document.getElementById("premium-offer");
     if (!offer) return;
@@ -160,7 +163,7 @@
     managementStatus.textContent = "Ativa";
     managementStatus.className = "premium-management-state active";
     managementDateLabel.textContent = endDate ? "Próxima renovação" : "Cobrança";
-    managementDate.textContent = endDate ? formatDate(endDate) : "Mensal · R$ 9,90";
+    managementDate.textContent = endDate ? formatDate(endDate) : `Mensal · ${PREMIUM_PRICE_LABEL}`;
     cancelButton?.classList.remove("hidden");
     setManagementFeedback("O cancelamento interrompe apenas as próximas cobranças; o período já pago continua disponível até o vencimento.");
   }
@@ -188,12 +191,12 @@
 
     if (subscriptionStatus === "pending") {
       button.textContent = "Continuar assinatura →";
-      setStatus("Sua assinatura foi iniciada. Conclua o pagamento no Mercado Pago para liberar o acesso.", "success");
+      setStatus(`O plano Premium agora custa ${PREMIUM_PRICE_LABEL}/mês. Ao continuar, um checkout pendente com valor anterior será substituído automaticamente.`, "info");
     } else if (subscriptionStatus === "cancelled") {
-      button.textContent = "Assinar novamente por R$ 9,90/mês →";
+      button.textContent = `Assinar novamente por ${PREMIUM_PRICE_LABEL}/mês →`;
       setStatus("Sua assinatura anterior foi encerrada. Você pode iniciar uma nova assinatura quando quiser.", "info");
     } else {
-      button.textContent = "Assinar por R$ 9,90/mês →";
+      button.textContent = `Assinar por ${PREMIUM_PRICE_LABEL}/mês →`;
       setStatus("Pagamento processado com segurança pelo Mercado Pago.", "info");
     }
   }
@@ -213,7 +216,7 @@
     button.disabled = true;
     button.textContent = "Abrindo Mercado Pago…";
     setStatus("Preparando sua assinatura segura…");
-    track("premium_checkout_start", { plan: "premium_monthly", value: 9.90, currency: "BRL" });
+    track("premium_checkout_start", { plan: "premium_monthly", value: PREMIUM_PRICE, currency: "BRL" });
 
     try {
       const supabase = window.VAEAuth.getClient();
@@ -230,7 +233,7 @@
       setStatus("Não foi possível abrir o Mercado Pago agora. Aguarde um instante e tente novamente.", "error");
       button.disabled = false;
       const status = summary?.subscription?.status || "";
-      button.textContent = status === "pending" ? "Continuar assinatura →" : status === "cancelled" ? "Assinar novamente por R$ 9,90/mês →" : "Assinar por R$ 9,90/mês →";
+      button.textContent = status === "pending" ? "Continuar assinatura →" : status === "cancelled" ? `Assinar novamente por ${PREMIUM_PRICE_LABEL}/mês →` : `Assinar por ${PREMIUM_PRICE_LABEL}/mês →`;
     }
   }
 
