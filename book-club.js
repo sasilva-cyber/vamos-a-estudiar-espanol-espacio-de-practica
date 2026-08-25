@@ -1,6 +1,8 @@
 /* Clube Español entre Páginas — módulo Premium isolado da Área do Estudiante. */
 (function(){
   const $=id=>document.getElementById(id);
+  const isGithub=location.hostname.toLowerCase().endsWith('.github.io');
+  const root=isGithub?'/vamos-a-estudiar-espanol-espacio-de-practica/':'/';
   const state={session:null,home:null,monthId:null,pollTimer:null,sending:false};
 
   function track(name,params={}){
@@ -30,6 +32,12 @@
   function safeHttpUrl(value){
     try{const u=new URL(String(value||''));return ['https:','http:'].includes(u.protocol)?u.href:null;}catch(_){return null;}
   }
+  function coverUrl(value){
+    const raw=String(value||'').trim();
+    if(!raw)return '';
+    if(/^https?:\/\//i.test(raw))return safeHttpUrl(raw)||'';
+    return `${root}${raw.replace(/^\/+/, '')}`;
+  }
   function showDenied(){
     $('club-loading')?.classList.add('hidden');$('club-content')?.classList.add('hidden');$('club-denied')?.classList.remove('hidden');$('club-main')?.setAttribute('aria-busy','false');
   }
@@ -42,6 +50,12 @@
 
   function makeCover(book,className='club-cover'){
     const cover=document.createElement('div');cover.className=className;
+    const src=coverUrl(book.cover_url);
+    if(src){
+      cover.classList.add('has-image');
+      const img=document.createElement('img');img.className='club-book-cover-image';img.src=src;img.alt=`Capa de ${book.title||'livro'} — ${book.author||''}`;img.loading='lazy';img.decoding='async';
+      cover.appendChild(img);return cover;
+    }
     const country=document.createElement('small');country.textContent=`${book.country_code?`${book.country_code} · `:''}${book.country||'Literatura hispânica'}`;
     const title=document.createElement('strong');title.textContent=book.title||'Lectura del mes';
     const author=document.createElement('span');author.textContent=book.author||'';
