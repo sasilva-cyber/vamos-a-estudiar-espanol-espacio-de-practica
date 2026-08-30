@@ -1,15 +1,4 @@
-.book-club-entry{position:relative;overflow:hidden;padding:clamp(24px,4vw,34px);border:1px solid rgba(143,29,44,.14);border-radius:26px;background:radial-gradient(circle at 100% 0,rgba(224,163,41,.14),transparent 28%),linear-gradient(145deg,#fffaf2,#fff 62%,#f8efe7);box-shadow:0 14px 36px rgba(70,40,20,.06)}
-.book-club-entry::after{content:"📚";position:absolute;right:-8px;bottom:-18px;font-size:7rem;opacity:.055;pointer-events:none}
-.book-club-entry-head{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:22px;align-items:start}
-.book-club-entry h2{margin:0;color:#6e1521;font:700 clamp(1.75rem,3vw,2.45rem)/1.08 Georgia,"Times New Roman",serif;letter-spacing:-.02em}
-.book-club-entry-copy>p:not(.student-section-kicker){max-width:760px;margin:10px 0 0;color:#5e534c;font-size:.9rem;line-height:1.7}
-.book-club-entry-badge{display:inline-flex;align-items:center;min-height:34px;padding:7px 11px;border:1px solid rgba(143,29,44,.12);border-radius:999px;background:#fff;color:#8f1d2c;font-size:.72rem;font-weight:900;white-space:nowrap}
-.book-club-entry-features{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:20px}
-.book-club-entry-feature{padding:13px;border:1px solid rgba(143,29,44,.09);border-radius:15px;background:rgba(255,255,255,.78)}
-.book-club-entry-feature strong{display:block;color:#6e1521;font-size:.79rem}.book-club-entry-feature span{display:block;margin-top:4px;color:#82746b;font-size:.68rem;line-height:1.45}
-.book-club-entry-action{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:18px;margin-top:18px;padding:16px 17px;border-radius:17px;background:linear-gradient(150deg,#8f1d2c,#71131f);color:#fff}
-.book-club-entry-action-copy strong{display:block;font:700 1.06rem/1.2 Georgia,"Times New Roman",serif}.book-club-entry-action-copy span{display:block;margin-top:4px;color:rgba(255,255,255,.78);font-size:.72rem;line-height:1.5}
-.book-club-entry-link{display:inline-flex;flex:0 0 auto;min-height:44px;align-items:center;justify-content:center;padding:9px 14px;border-radius:12px;background:#efb43a;color:#512100;text-decoration:none;font-size:.78rem;font-weight:950;white-space:nowrap}
-.book-club-entry-link:hover,.book-club-entry-link:focus-visible{filter:brightness(1.04);outline:2px solid rgba(255,255,255,.45);outline-offset:2px}
-@media(max-width:780px){.book-club-entry-head{grid-template-columns:1fr}.book-club-entry-badge{justify-self:start}.book-club-entry-features{grid-template-columns:repeat(2,minmax(0,1fr))}.book-club-entry-action{align-items:flex-start;flex-direction:column}.book-club-entry-link{width:100%}}
-@media(max-width:480px){.book-club-entry{padding:22px 18px;border-radius:22px}.book-club-entry-features{grid-template-columns:1fr}}
+/* Clube de leitura temporariamente fora da oferta Premium.
+   Mantemos o HTML histórico apenas para facilitar uma futura reativação, sem exibi-lo aos estudantes. */
+#book-club-entry{display:none!important}
+#premium-offer .premium-benefits li:nth-child(4){display:none!important}
